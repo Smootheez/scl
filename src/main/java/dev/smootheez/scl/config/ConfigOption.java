@@ -1,6 +1,6 @@
 package dev.smootheez.scl.config;
 
-import dev.smootheez.scl.config.option.ConfigOptionList;
+import dev.smootheez.scl.config.option.OptionList;
 import dev.smootheez.scl.handler.*;
 import dev.smootheez.scl.serializer.*;
 
@@ -193,8 +193,8 @@ public class ConfigOption<T> {
      * @return A new ConfigOptionList configuration option instance
      * @since 1.0
      */
-    public static ConfigOption<ConfigOptionList> create(String key, String... defaultValue) {
-        return new ConfigOption<>(key, new ConfigOptionList(Arrays.asList(defaultValue)), ConfigOptionList.class, new ConfigOptionListSerializer(), new TextWidgetHandler());
+    public static ConfigOption<OptionList> create(String key, String... defaultValue) {
+        return new ConfigOption<>(key, new OptionList(Arrays.asList(defaultValue)), OptionList.class, new OptionListSerializer(), new TextWidgetHandler());
     }
 
     /**

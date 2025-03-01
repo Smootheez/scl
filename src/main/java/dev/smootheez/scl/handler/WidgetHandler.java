@@ -3,6 +3,7 @@ package dev.smootheez.scl.handler;
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.widget.AbstractConfigWidget;
 import net.minecraft.text.OrderedText;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface WidgetHandler<T> {
      * @return An instance of AbstractConfigWidget that provides the GUI
      *         for modifying the configuration option's value
      */
-    AbstractConfigWidget createWidget(ConfigOption<T> option, List<OrderedText> description);
+    AbstractConfigWidget createWidget(ConfigOption<T> option, @Nullable List<OrderedText> description);
 }

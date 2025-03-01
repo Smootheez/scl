@@ -7,13 +7,13 @@ import java.util.List;
  * Represents a mutable list of configuration values that can be modified through add/remove operations.
  * This class provides thread-safe modifications and defensive copying of its contents.
  */
-public record ConfigOptionList(List<String> values) {
+public record OptionList(List<String> values) {
     /**
      * Creates a new ConfigOptionList instance with the specified initial values.
      * The input list is copied to prevent external modifications.
      * @param values the initial values to be stored in the list
      */
-    public ConfigOptionList(List<String> values) {
+    public OptionList(List<String> values) {
         this.values = new ArrayList<>(values);
     }
 

@@ -1,7 +1,8 @@
-package dev.smootheez.scl.widget;
+package dev.smootheez.scl.widget.option;
 
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.helper.ConfigWidgetHelper;
+import dev.smootheez.scl.widget.NamedConfigWidget;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;

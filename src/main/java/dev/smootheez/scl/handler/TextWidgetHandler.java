@@ -1,9 +1,9 @@
 package dev.smootheez.scl.handler;
 
 import dev.smootheez.scl.config.ConfigOption;
-import dev.smootheez.scl.config.option.ConfigOptionList;
+import dev.smootheez.scl.config.option.OptionList;
 import dev.smootheez.scl.widget.AbstractConfigWidget;
-import dev.smootheez.scl.widget.TextConfigWidget;
+import dev.smootheez.scl.widget.option.TextConfigWidget;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * This widget handler creates a TextConfigWidget which provides a display
  * and management interface for a list of ConfigOption objects within the configuration.
  */
-public class TextWidgetHandler implements WidgetHandler<ConfigOptionList> {
+public class TextWidgetHandler implements WidgetHandler<OptionList> {
 
     /**
      * Creates and returns a new TextConfigWidget instance for the given ConfigOption.
@@ -26,7 +26,7 @@ public class TextWidgetHandler implements WidgetHandler<ConfigOptionList> {
      * @return A new TextConfigWidget instance
      */
     @Override
-    public AbstractConfigWidget createWidget(ConfigOption<ConfigOptionList> option, List<OrderedText> description) {
+    public AbstractConfigWidget createWidget(ConfigOption<OptionList> option, List<OrderedText> description) {
         return new TextConfigWidget(Text.translatable(option.getTranslation()), description, option);
     }
 }

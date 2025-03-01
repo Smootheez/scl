@@ -1,8 +1,9 @@
-package dev.smootheez.scl.widget;
+package dev.smootheez.scl.widget.option;
 
 import dev.smootheez.scl.config.ConfigOption;
-import dev.smootheez.scl.config.option.ConfigOptionList;
+import dev.smootheez.scl.config.option.OptionList;
 import dev.smootheez.scl.helper.ConfigWidgetHelper;
+import dev.smootheez.scl.widget.NamedConfigWidget;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -15,9 +16,9 @@ import java.util.List;
 public class TextConfigWidget extends NamedConfigWidget {
     private final TextFieldWidget textFieldWidget;
     private final ButtonWidget resetButton;
-    private final ConfigOption<ConfigOptionList> option;
+    private final ConfigOption<OptionList> option;
 
-    public TextConfigWidget(Text name, @Nullable List<OrderedText> description, ConfigOption<ConfigOptionList> option) {
+    public TextConfigWidget(Text name, @Nullable List<OrderedText> description, ConfigOption<OptionList> option) {
         super(name, description);
         this.option = option;
 
@@ -42,12 +43,12 @@ public class TextConfigWidget extends NamedConfigWidget {
         updateResetButtonState();
     }
 
-    private ConfigOptionList stringToConfigOptionList(String value) {
+    private OptionList stringToConfigOptionList(String value) {
         String cleanedValue = value.replace(" ", "").replace("\"", "");
-        return new ConfigOptionList(List.of(cleanedValue.split(",")));
+        return new OptionList(List.of(cleanedValue.split(",")));
     }
 
-    private String getConfigOptionListString(ConfigOptionList configOptionList) {
+    private String getConfigOptionListString(OptionList configOptionList) {
         StringBuilder sb = new StringBuilder();
         for (String option : configOptionList.values()) {
             if (!sb.isEmpty()) {
@@ -59,7 +60,7 @@ public class TextConfigWidget extends NamedConfigWidget {
     }
 
     private void resetValue() {
-        ConfigOptionList defaultValue = option.getDefaultValue();
+        OptionList defaultValue = option.getDefaultValue();
         textFieldWidget.setText(getConfigOptionListString(defaultValue));
         option.setValue(defaultValue);
         updateResetButtonState();

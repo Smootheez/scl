@@ -1,8 +1,9 @@
-package dev.smootheez.scl.widget;
+package dev.smootheez.scl.widget.option;
 
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.helper.ConfigWidgetHelper;
 import dev.smootheez.scl.util.ValidateConfigValue;
+import dev.smootheez.scl.widget.NamedConfigWidget;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -12,17 +13,17 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class IntConfigWidget extends NamedConfigWidget{
+public class DoubleConfigWidget extends NamedConfigWidget {
     private final TextFieldWidget textFieldWidget;
     private final ButtonWidget resetButton;
-    private final ConfigOption<Integer> option;
+    private final ConfigOption<Double> option;
 
-    public IntConfigWidget(Text name, @Nullable List<OrderedText> description, ConfigOption<Integer> option) {
+    public DoubleConfigWidget(Text name, @Nullable List<OrderedText> description, ConfigOption<Double> option) {
         super(name, description);
         this.option = option;
 
         textFieldWidget = ConfigWidgetHelper.createTextFieldWidget(name);
-        textFieldWidget.setText(Integer.toString(option.getValue()));
+        textFieldWidget.setText(Double.toString(option.getValue()));
         textFieldWidget.setChangedListener(this::onTextChanged);
 
         resetButton = ConfigWidgetHelper.createResetButton(this::resetValue);
@@ -33,25 +34,25 @@ public class IntConfigWidget extends NamedConfigWidget{
         updateResetButtonState();
     }
 
-    private void onTextChanged(String value) {
-        if (ValidateConfigValue.validateIntValue(value) && Integer.parseInt(value) >= option.getMinValue() && Integer.parseInt(value) <= option.getMaxValue()) {
-            textFieldWidget.setEditableColor(14737632);
-            option.setValue(Integer.valueOf(value));
-        } else textFieldWidget.setEditableColor(16711680);
-        updateResetButtonState();
-    }
-
     private void resetValue() {
-        int defaultValue = option.getDefaultValue();
-        textFieldWidget.setText(Integer.toString(defaultValue));
+        double defaultValue = option.getDefaultValue();
+        textFieldWidget.setText(Double.toString(defaultValue));
         option.setValue(defaultValue);
         textFieldWidget.setEditableColor(14737632);
         updateResetButtonState();
     }
 
+    private void onTextChanged(String value) {
+        if (ValidateConfigValue.validateDoubleValue(value) && Double.parseDouble(value) >= option.getMinValue() && Double.parseDouble(value) <= option.getMaxValue()) {
+            textFieldWidget.setEditableColor(14737632);
+            option.setValue(Double.valueOf(value));
+        } else textFieldWidget.setEditableColor(16711680);
+        updateResetButtonState();
+    }
+
     private void updateResetButtonState() {
-        int currentValue = option.getValue();
-        int defaultValue = option.getDefaultValue();
+        double currentValue = option.getValue();
+        double defaultValue = option.getDefaultValue();
         resetButton.active = currentValue != defaultValue;
     }
 

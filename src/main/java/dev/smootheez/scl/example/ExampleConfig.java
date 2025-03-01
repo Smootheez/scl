@@ -3,7 +3,7 @@ package dev.smootheez.scl.example;
 import dev.smootheez.scl.annotation.Config;
 import dev.smootheez.scl.api.ConfigProvider;
 import dev.smootheez.scl.config.ConfigOption;
-import dev.smootheez.scl.config.option.ConfigOptionList;
+import dev.smootheez.scl.config.option.OptionList;
 
 @Config("exampleConfig")
 public class ExampleConfig implements ConfigProvider {
@@ -14,7 +14,7 @@ public class ExampleConfig implements ConfigProvider {
     private final ConfigOption<Integer> exampleInteger = ConfigOption.create("exampleInteger", 1, 0, 5);
     private final ConfigOption<Double> exampleDouble = ConfigOption.create("exampleDouble", 1.0, 0.0, 5.0);
     private final ConfigOption<ExampleEnum> exampleEnum = ConfigOption.create("exampleEnum", ExampleEnum.ONE);
-    private final ConfigOption<ConfigOptionList> exampleString = ConfigOption.create("exampleString", "exampleString, exampleString1, exampleString2, exampleString3");
+    private final ConfigOption<OptionList> exampleString = ConfigOption.create("exampleString", "exampleString", "exampleString1", "exampleString2", "exampleString3");
 
     public static ExampleConfig getInstance() {
         return INSTANCE;

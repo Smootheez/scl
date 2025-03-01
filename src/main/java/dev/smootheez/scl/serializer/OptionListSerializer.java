@@ -3,13 +3,12 @@ package dev.smootheez.scl.serializer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
-import dev.smootheez.scl.config.ConfigOption;
-import dev.smootheez.scl.config.option.ConfigOptionList;
+import dev.smootheez.scl.config.option.OptionList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigOptionListSerializer implements ConfigSerializer<ConfigOptionList> {
+public class OptionListSerializer implements ConfigSerializer<OptionList> {
     /**
      * Serializes the given ConfigOptionList into a JsonElement. The serialized form
      * is a JsonArray where each element is a JsonPrimitive containing the value
@@ -19,7 +18,7 @@ public class ConfigOptionListSerializer implements ConfigSerializer<ConfigOption
      * @return a JsonElement containing the serialized ConfigOptionList
      */
     @Override
-    public JsonElement serialize(ConfigOptionList value) {
+    public JsonElement serialize(OptionList value) {
         JsonArray array = new JsonArray();
         for (String s : value.values()) {
             array.add(new JsonPrimitive(s));
@@ -36,12 +35,12 @@ public class ConfigOptionListSerializer implements ConfigSerializer<ConfigOption
      * @return a ConfigOptionList containing the deserialized values
      */
     @Override
-    public ConfigOptionList deserialize(JsonElement json) {
+    public OptionList deserialize(JsonElement json) {
         JsonArray array = json.getAsJsonArray();
         List<String> list = new ArrayList<>();
         for (JsonElement element : array) {
             list.add(element.getAsString());
         }
-        return new ConfigOptionList(list);
+        return new OptionList(list);
     }
 }

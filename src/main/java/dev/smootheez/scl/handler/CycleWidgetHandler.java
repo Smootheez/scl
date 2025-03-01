@@ -2,7 +2,7 @@ package dev.smootheez.scl.handler;
 
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.widget.AbstractConfigWidget;
-import dev.smootheez.scl.widget.CycleConfigWidget;
+import dev.smootheez.scl.widget.option.CycleConfigWidget;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 
