@@ -14,12 +14,36 @@ import net.minecraft.util.Formatting;
 import java.util.List;
 
 public class ConfigListWidget extends ElementListWidget<AbstractConfigWidget> {
+    private String filter = "";
+
     public ConfigListWidget(MinecraftClient minecraftClient, int width, int height, int v1, int v2, int entryHeight) {
         super(minecraftClient, width, height, v1, v2, entryHeight);
+        updateEntries();
+    }
+
+    public void setFilter (String filter) {
+        this.filter = filter.toLowerCase();
+        updateEntries();
+    }
+
+    private void updateEntries() {
+        clearEntries();
         List<ConfigOption<?>> configOptions = ConfigRegistry.getConfigOptions();
-        for (ConfigOption<?> option : configOptions) {
+        List<ConfigOption<?>> filteredOptions = configOptions.stream()
+                .filter(configOption -> matchesSearchTerm(configOption, filter))
+                .toList();
+        for (ConfigOption<?> option : filteredOptions) {
             addEntry(createWidget(option));
         }
+    }
+
+    private boolean matchesSearchTerm(ConfigOption<?> option, String searchTerm) {
+        String lowercaseSearchTerm = searchTerm.toLowerCase();
+
+        String translation = option.getTranslation();
+        String translatedText = Text.translatable(translation).getString();
+
+        return translatedText.toLowerCase().contains(lowercaseSearchTerm) || option.getKey().toLowerCase().contains(lowercaseSearchTerm);
     }
 
     public <T> AbstractConfigWidget createWidget(ConfigOption<T> option) {
