@@ -1,6 +1,7 @@
 package dev.smootheez.scl.widget;
 
 import dev.smootheez.scl.config.ConfigOption;
+import dev.smootheez.scl.helper.ConfigWidgetHelper;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
@@ -43,9 +44,8 @@ public class BooleanConfigWidget extends NamedConfigWidget {
                     option.setValue(value);
                     updateResetButtonState();
                 }));
-        resetButton = ButtonWidget.builder(Text.of("⭮"), button -> resetValue())
-                .dimensions(0, 0, 20, 20)
-                .build();
+
+        resetButton = ConfigWidgetHelper.createResetButton(this::resetValue);
 
         this.children.add(this.toggleButton);
         this.children.add(this.resetButton);
@@ -90,8 +90,6 @@ public class BooleanConfigWidget extends NamedConfigWidget {
         this.toggleButton.setY(y);
         this.toggleButton.render(context, mouseX, mouseY, tickDelta);
 
-        this.resetButton.setX(x + entryWidth - 20);
-        this.resetButton.setY(y);
-        this.resetButton.render(context, mouseX, mouseY, tickDelta);
+        ConfigWidgetHelper.setResetButtonPosition(this.resetButton, context, x, y, entryWidth, mouseX, mouseY, tickDelta);
     }
 }

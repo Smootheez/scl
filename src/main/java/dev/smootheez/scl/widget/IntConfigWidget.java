@@ -1,8 +1,8 @@
 package dev.smootheez.scl.widget;
 
 import dev.smootheez.scl.config.ConfigOption;
+import dev.smootheez.scl.helper.ConfigWidgetHelper;
 import dev.smootheez.scl.util.ValidateConfigValue;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -21,13 +21,11 @@ public class IntConfigWidget extends NamedConfigWidget{
         super(name, description);
         this.option = option;
 
-        textFieldWidget = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 76, 16, name);
+        textFieldWidget = ConfigWidgetHelper.createTextFieldWidget(name);
         textFieldWidget.setText(Integer.toString(option.getValue()));
         textFieldWidget.setChangedListener(this::onTextChanged);
 
-        resetButton = ButtonWidget.builder(Text.of("⭮"), button -> resetValue())
-                .dimensions(0, 0, 20, 20)
-                .build();
+        resetButton = ConfigWidgetHelper.createResetButton(this::resetValue);
 
         this.children.add(textFieldWidget);
         this.children.add(resetButton);
@@ -65,8 +63,6 @@ public class IntConfigWidget extends NamedConfigWidget{
         this.textFieldWidget.setY(y + 2);
         this.textFieldWidget.render(context, mouseX, mouseY, tickDelta);
 
-        this.resetButton.setX(x + entryWidth - 20);
-        this.resetButton.setY(y);
-        this.resetButton.render(context, mouseX, mouseY, tickDelta);
+        ConfigWidgetHelper.setResetButtonPosition(this.resetButton, context, x, y, entryWidth, mouseX, mouseY, tickDelta);
     }
 }
