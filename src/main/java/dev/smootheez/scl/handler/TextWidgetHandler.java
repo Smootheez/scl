@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TextWidgetHandler implements WidgetHandler<ConfigOptionList> {
     @Override
-    public AbstractConfigWidget createWidget(ConfigOption<ConfigOptionList> option, List<OrderedText> description, String modId) {
-        return new TextConfigWidget(Text.translatable(option.setTranslation(modId)), description, option);
+    public AbstractConfigWidget createWidget(ConfigOption<ConfigOptionList> option, List<OrderedText> description) {
+        return new TextConfigWidget(Text.translatable(option.getTranslation()), description, option);
     }
 }

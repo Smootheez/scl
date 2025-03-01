@@ -12,7 +12,10 @@ import java.util.Arrays;
 
 /**
  * Represents a generic configuration option with type safety and metadata.
- * <T> The type of the configuration value (e.g., Boolean, Integer, String)
+ * Provides features like serialization, deserialization, GUI widget handling,
+ * value validation, and localization support.
+ *
+ * @param <T> The type of the configuration value (e.g., Boolean, Integer, String)
  */
 public class ConfigOption<T> {
     protected final String key;
@@ -25,14 +28,16 @@ public class ConfigOption<T> {
     protected final ConfigSerializer<T> serializer;
     protected final WidgetHandler<T> widgetHandler;
     protected String translation;
+    protected String modId;
 
     /**
      * Constructs a new ConfigOption instance with the specified key, default value,
      * and configuration metadata.
-     * @param <T> The type of the configuration value
-     * @param key The unique identifier for this configuration option
+     *
+     * @param <T>       The type of the configuration value
+     * @param key       The unique identifier for this configuration option
      * @param defaultValue The default value to use when no value is set
-     * @param type The class representing the type of the configuration value
+     * @param type      The class representing the type of the configuration value
      * @param serializer The serializer used to convert values to/from JSON
      * @param widgetHandler The handler used to create the configuration GUI widget
      */
@@ -48,14 +53,15 @@ public class ConfigOption<T> {
     /**
      * Constructs a new ConfigOption instance with the specified key, default value,
      * and configuration metadata, including minimum and maximum values.
-     * @param <T> The type of the configuration value
-     * @param key The unique identifier for this configuration option
+     *
+     * @param <T>       The type of the configuration value
+     * @param key       The unique identifier for this configuration option
      * @param defaultValue The default value to use when no value is set
-     * @param type The class representing the type of the configuration value
+     * @param type      The class representing the type of the configuration value
      * @param serializer The serializer used to convert values to/from JSON
      * @param widgetHandler The handler used to create the configuration GUI widget
-     * @param minValue The minimum allowed value for this configuration option
-     * @param maxValue The maximum allowed value for this configuration option
+     * @param minValue  The minimum allowed value for this configuration option
+     * @param maxValue  The maximum allowed value for this configuration option
      */
     public ConfigOption(String key, T defaultValue, Class<T> type, ConfigSerializer<T> serializer, WidgetHandler<T> widgetHandler, T minValue, T maxValue) {
         this.key = key;
@@ -80,12 +86,11 @@ public class ConfigOption<T> {
      * Sets the translation key for this configuration option to a value of the form
      * "options.$modId.$key". This translation key is typically used for localization
      * purposes in the configuration GUI.
+     *
      * @param modId The mod ID this configuration option belongs to
-     * @return The constructed translation key
      */
-    public String setTranslation(String modId) {
-        this.translation = "options." + modId + "." + key;
-        return translation;
+    public void setModId(String modId) {
+        this.modId = modId;
     }
 
     /**
@@ -93,7 +98,7 @@ public class ConfigOption<T> {
      * @return the translation key as a String
      */
     public String getTranslation() {
-        return translation;
+        return this.translation = "options." + modId + "." + key;
     }
 
     /**
@@ -175,11 +180,20 @@ public class ConfigOption<T> {
      * @param key The unique identifier for this configuration option
      * @param defaultValue The default value to use when no value is set
      * @return A new Boolean configuration option instance
+     * @since 1.0
      */
     public static ConfigOption<Boolean> create(String key, Boolean defaultValue) {
         return new ConfigOption<>(key, defaultValue, Boolean.class, new BooleanSerializer(), new BooleanWidgetHandler());
     }
 
+    /**
+     * Creates a new configuration option for a list of strings with the specified key
+     * and default values.
+     * @param key The unique identifier for this configuration option
+     * @param defaultValue The default values to use when no values are set
+     * @return A new ConfigOptionList configuration option instance
+     * @since 1.0
+     */
     public static ConfigOption<ConfigOptionList> create(String key, String... defaultValue) {
         return new ConfigOption<>(key, new ConfigOptionList(Arrays.asList(defaultValue)), ConfigOptionList.class, new ConfigOptionListSerializer(), new TextWidgetHandler());
     }

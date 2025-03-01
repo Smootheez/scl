@@ -21,7 +21,7 @@ public class ConfigRegistry {
                 for (Field field : configFields) {
                     field.setAccessible(true);
                     ConfigOption<?> option = (ConfigOption<?>) field.get(config);
-                    option.setTranslation(modId);
+                    option.setModId(modId);
                     configOptions.add(option);
                 }
             } catch (Exception e) {

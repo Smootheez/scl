@@ -20,5 +20,5 @@ public interface WidgetHandler<T> {
      * @return An instance of AbstractConfigWidget that provides the GUI
      *         for modifying the configuration option's value
      */
-    AbstractConfigWidget createWidget(ConfigOption<T> option, List<OrderedText> description, String modId);
+    AbstractConfigWidget createWidget(ConfigOption<T> option, List<OrderedText> description);
 }

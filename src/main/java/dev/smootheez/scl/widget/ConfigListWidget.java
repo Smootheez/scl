@@ -23,11 +23,11 @@ public class ConfigListWidget extends ElementListWidget<AbstractConfigWidget> {
     }
 
     public <T> AbstractConfigWidget createWidget(ConfigOption<T> option) {
-        List<OrderedText> description = createOrderedTextList(option);
-        return option.getWidgetHandler().createWidget(option, description, ConfigRegistry.getModId());
+        List<OrderedText> description = createDescriptionText(option);
+        return option.getWidgetHandler().createWidget(option, description);
     }
 
-    private List<OrderedText> createOrderedTextList(ConfigOption<?> option) {
+    private List<OrderedText> createDescriptionText(ConfigOption<?> option) {
         String descriptionKey = option.getTranslation() + ".description";
         Text descriptionText = Text.translatable(descriptionKey);
 

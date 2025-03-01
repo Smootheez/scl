@@ -27,7 +27,7 @@ public class BooleanWidgetHandler implements WidgetHandler<Boolean> {
      *         for modifying the boolean option's value
      */
     @Override
-    public AbstractConfigWidget createWidget(ConfigOption<Boolean> option, List<OrderedText> description, String modId) {
-        return new BooleanConfigWidget(Text.translatable(option.setTranslation(modId)), description, option);
+    public AbstractConfigWidget createWidget(ConfigOption<Boolean> option, List<OrderedText> description) {
+        return new BooleanConfigWidget(Text.translatable(option.getTranslation()), description, option);
     }
 }

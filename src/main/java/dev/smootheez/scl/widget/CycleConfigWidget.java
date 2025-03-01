@@ -81,6 +81,7 @@ public class CycleConfigWidget<T extends Enum<T>> extends NamedConfigWidget {
     @Override
     public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
         this.drawName(context, x, y);
+
         this.cycleButton.setX(x + entryWidth - 105);
         this.cycleButton.setY(y);
         this.cycleButton.render(context, mouseX, mouseY, tickDelta);

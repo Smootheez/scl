@@ -19,10 +19,9 @@ public class TextConfigWidget extends NamedConfigWidget {
 
     public TextConfigWidget(Text name, @Nullable List<OrderedText> description, ConfigOption<ConfigOptionList> option) {
         super(name, description);
-        this.option = option; // Store the option for later use
-        final MinecraftClient client = MinecraftClient.getInstance();
+        this.option = option;
 
-        textField = new TextFieldWidget(client.textRenderer, 10, 5, 80, 20, name);
+        textField = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 10, 5, 80, 20, name);
         textField.setMaxLength(Integer.MAX_VALUE);
         textField.setText(getConfigOptionListString(option.getValue()));
         textField.setChangedListener(value -> {
@@ -41,6 +40,7 @@ public class TextConfigWidget extends NamedConfigWidget {
 
         this.children.add(textField);
         this.children.add(resetButton);
+
         updateResetButtonState();
     }
 
@@ -74,6 +74,7 @@ public class TextConfigWidget extends NamedConfigWidget {
     @Override
     public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
         this.drawName(context, x, y);
+
         this.textField.setX(x + entryWidth - 105);
         this.textField.setY(y);
         this.textField.render(context, mouseX, mouseY, tickDelta);
