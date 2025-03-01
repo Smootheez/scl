@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "${modid}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": ["Smootheez"],
+  "license": "${mod_license}",
+  "icon": "assets/scl/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.smootheez.scl.Scl"
+    ],
+    "modmenu": [
+      "dev.smootheez.scl.example.ModMenuImpl"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": ">=${minecraft_version}"
+  }
+}
