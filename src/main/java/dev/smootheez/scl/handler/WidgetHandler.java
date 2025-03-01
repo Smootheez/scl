@@ -16,7 +16,6 @@ public interface WidgetHandler<T> {
      * Creates a new configuration widget for the specified option.
      * @param option The configuration option this widget represents
      * @param description The description text to display for this option
-     * @param modId The mod ID this configuration option belongs to
      * @return An instance of AbstractConfigWidget that provides the GUI
      *         for modifying the configuration option's value
      */

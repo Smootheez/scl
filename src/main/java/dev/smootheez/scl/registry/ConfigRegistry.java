@@ -10,12 +10,11 @@ import java.util.List;
 
 public class ConfigRegistry {
     private static final List<ConfigOption<?>> configOptions = new ArrayList<>();
-    private static String modId;
 
     public static <T extends ConfigProvider> void registerConfig(T config){
         var configClass = config.getClass();
         if (configClass.getAnnotation(Config.class) != null) {
-            modId = configClass.getAnnotation(Config.class).value();
+            String modId = configClass.getAnnotation(Config.class).value();
             try {
                 List<Field> configFields = getConfigFields(configClass);
                 for (Field field : configFields) {
@@ -40,9 +39,5 @@ public class ConfigRegistry {
 
     public static List<ConfigOption<?>> getConfigOptions() {
         return configOptions;
-    }
-
-    public static String getModId() {
-        return modId;
     }
 }

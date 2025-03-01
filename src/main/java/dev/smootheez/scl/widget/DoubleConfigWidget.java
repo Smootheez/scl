@@ -21,7 +21,7 @@ public class DoubleConfigWidget extends NamedConfigWidget{
         super(name, description);
         this.option = option;
 
-        textFieldWidget = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 10, 5, 80, 20, name);
+        textFieldWidget = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 76, 16, name);
         textFieldWidget.setText(Double.toString(option.getValue()));
         textFieldWidget.setChangedListener(this::onTextChanged);
 
@@ -61,8 +61,8 @@ public class DoubleConfigWidget extends NamedConfigWidget{
     public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
         this.drawName(context, x, y);
 
-        this.textFieldWidget.setX(x + entryWidth - 105);
-        this.textFieldWidget.setY(y);
+        this.textFieldWidget.setX(x + entryWidth - 103);
+        this.textFieldWidget.setY(y + 2);
         this.textFieldWidget.render(context, mouseX, mouseY, tickDelta);
 
         this.resetButton.setX(x + entryWidth - 20);

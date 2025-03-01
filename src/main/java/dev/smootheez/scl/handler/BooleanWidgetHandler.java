@@ -22,7 +22,6 @@ public class BooleanWidgetHandler implements WidgetHandler<Boolean> {
      *
      * @param option The boolean configuration option this widget represents
      * @param description The description text to display for this option
-     * @param modId The mod ID this configuration option belongs to
      * @return An AbstractConfigWidget instance that provides a checkbox
      *         for modifying the boolean option's value
      */

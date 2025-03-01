@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class TextConfigWidget extends NamedConfigWidget {
-    private final TextFieldWidget textField;
+    private final TextFieldWidget textFieldWidget;
     private final ButtonWidget resetButton;
     private final ConfigOption<ConfigOptionList> option;
 
@@ -21,12 +21,12 @@ public class TextConfigWidget extends NamedConfigWidget {
         super(name, description);
         this.option = option;
 
-        textField = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 10, 5, 80, 20, name);
-        textField.setMaxLength(Integer.MAX_VALUE);
-        textField.setText(getConfigOptionListString(option.getValue()));
-        textField.setChangedListener(value -> {
+        textFieldWidget = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 76, 16, name);
+        textFieldWidget.setMaxLength(Integer.MAX_VALUE);
+        textFieldWidget.setText(getConfigOptionListString(option.getValue()));
+        textFieldWidget.setChangedListener(value -> {
             try {
-                textField.setEditableColor(14737632);
+                textFieldWidget.setEditableColor(14737632);
                 option.setValue(stringToConfigOptionList(value));
                 updateResetButtonState();
             } catch (Exception e) {
@@ -38,7 +38,7 @@ public class TextConfigWidget extends NamedConfigWidget {
                 .dimensions(0, 0, 20, 20)
                 .build();
 
-        this.children.add(textField);
+        this.children.add(textFieldWidget);
         this.children.add(resetButton);
 
         updateResetButtonState();
@@ -62,7 +62,7 @@ public class TextConfigWidget extends NamedConfigWidget {
 
     private void resetValue() {
         ConfigOptionList defaultValue = option.getDefaultValue();
-        textField.setText(getConfigOptionListString(defaultValue));
+        textFieldWidget.setText(getConfigOptionListString(defaultValue));
         option.setValue(defaultValue);
         updateResetButtonState();
     }
@@ -75,9 +75,9 @@ public class TextConfigWidget extends NamedConfigWidget {
     public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
         this.drawName(context, x, y);
 
-        this.textField.setX(x + entryWidth - 105);
-        this.textField.setY(y);
-        this.textField.render(context, mouseX, mouseY, tickDelta);
+        this.textFieldWidget.setX(x + entryWidth - 103);
+        this.textFieldWidget.setY(y + 2);
+        this.textFieldWidget.render(context, mouseX, mouseY, tickDelta);
 
         this.resetButton.setX(x + entryWidth - 20);
         this.resetButton.setY(y);
