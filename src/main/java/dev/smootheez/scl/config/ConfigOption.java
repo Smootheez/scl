@@ -1,12 +1,8 @@
 package dev.smootheez.scl.config;
 
 import dev.smootheez.scl.config.option.ConfigOptionList;
-import dev.smootheez.scl.handler.BooleanWidgetHandler;
-import dev.smootheez.scl.handler.TextWidgetHandler;
-import dev.smootheez.scl.handler.WidgetHandler;
-import dev.smootheez.scl.serializer.BooleanSerializer;
-import dev.smootheez.scl.serializer.ConfigOptionListSerializer;
-import dev.smootheez.scl.serializer.ConfigSerializer;
+import dev.smootheez.scl.handler.*;
+import dev.smootheez.scl.serializer.*;
 
 import java.util.Arrays;
 
@@ -76,7 +72,7 @@ public class ConfigOption<T> {
 
     /**
      * Returns the key of this configuration option.
-     * @return the key of this configuration option
+     * @return the unique identifier for this configuration option
      */
     public String getKey() {
         return key;
@@ -95,7 +91,8 @@ public class ConfigOption<T> {
 
     /**
      * Retrieves the translation key for this configuration option.
-     * @return the translation key as a String
+     * The translation key is automatically generated in the format "options.$modId.$key"
+     * @return the generated translation key for this configuration option
      */
     public String getTranslation() {
         return this.translation = "options." + modId + "." + key;
@@ -103,6 +100,7 @@ public class ConfigOption<T> {
 
     /**
      * Retrieves the default value of this configuration option.
+     * This value is used when no specific value has been set.
      * @return the default value of this configuration option
      */
     public T getDefaultValue() {
@@ -111,6 +109,7 @@ public class ConfigOption<T> {
 
     /**
      * Retrieves the current value of this configuration option.
+     * This value may have been modified from the default value.
      * @return the current value of this configuration option
      */
     public T getValue() {
@@ -119,7 +118,7 @@ public class ConfigOption<T> {
 
     /**
      * Retrieves the minimum value for this configuration option, if specified.
-     * @return the minimum value of this configuration option, or null if not specified
+     * @return the minimum allowed value, or null if no minimum is specified
      */
     public T getMinValue() {
         return minValue;
@@ -127,7 +126,7 @@ public class ConfigOption<T> {
 
     /**
      * Retrieves the maximum value for this configuration option, if specified.
-     * @return the maximum value of this configuration option, or null if not specified
+     * @return the maximum allowed value, or null if no maximum is specified
      */
     public T getMaxValue() {
         return maxValue;
@@ -148,7 +147,7 @@ public class ConfigOption<T> {
 
     /**
      * Retrieves the type of the configuration option.
-     * @return the type of the configuration option
+     * @return the runtime class representing the type T
      */
     public Class<T> getType() {
         return type;
@@ -196,5 +195,45 @@ public class ConfigOption<T> {
      */
     public static ConfigOption<ConfigOptionList> create(String key, String... defaultValue) {
         return new ConfigOption<>(key, new ConfigOptionList(Arrays.asList(defaultValue)), ConfigOptionList.class, new ConfigOptionListSerializer(), new TextWidgetHandler());
+    }
+
+    /**
+     * Creates a new Integer configuration option with the specified key, default value,
+     * minimum, and maximum values.
+     * @param key The unique identifier for this configuration option
+     * @param defaultValue The default value to use when no value is set
+     * @param minValue The minimum allowed value for this configuration option
+     * @param maxValue The maximum allowed value for this configuration option
+     * @return A new Integer configuration option instance
+     */
+    public static ConfigOption<Integer> create(String key, Integer defaultValue, Integer minValue, Integer maxValue) {
+        return new ConfigOption<>(key, defaultValue, Integer.class, new IntegerSerializer(), new IntWidgetHandler(), minValue, maxValue);
+    }
+
+    /**
+     * Creates a new Double configuration option with the specified key, default value,
+     * minimum, and maximum values.
+     * @param key The unique identifier for this configuration option
+     * @param defaultValue The default value to use when no value is set
+     * @param minValue The minimum allowed value for this configuration option
+     * @param maxValue The maximum allowed value for this configuration option
+     * @return A new Double configuration option instance
+     */
+    public static ConfigOption<Double> create(String key, Double defaultValue, Double minValue, Double maxValue) {
+        return new ConfigOption<>(key, defaultValue, Double.class, new DoubleSerializer(), new DoubleWidgetHandler(), minValue, maxValue);
+    }
+
+    /**
+     * Creates a new configuration option for an Enum type with the specified key
+     * and default value.
+     * @param <E> The Enum type
+     * @param key The unique identifier for this configuration option
+     * @param defaultValue The default Enum value to use
+     * @return A new Enum configuration option instance
+     */
+    public static <E extends Enum<E>> ConfigOption<E> create(String key, E defaultValue) {
+        @SuppressWarnings("unchecked")
+        Class<E> clazz = (Class<E>) defaultValue.getClass();
+        return new ConfigOption<>(key, defaultValue, clazz, new EnumSerializer<>(clazz), new CycleWidgetHandler<>());
     }
 }
