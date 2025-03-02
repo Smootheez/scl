@@ -3,9 +3,10 @@ package dev.smootheez.scl.handler;
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.config.option.OptionList;
 import dev.smootheez.scl.widget.AbstractConfigWidget;
-import dev.smootheez.scl.widget.option.TextConfigWidget;
+import dev.smootheez.scl.widget.entry.TextConfigEntries;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class TextWidgetHandler implements WidgetHandler<OptionList> {
      * @return A new TextConfigWidget instance
      */
     @Override
-    public AbstractConfigWidget createWidget(ConfigOption<OptionList> option, List<OrderedText> description) {
-        return new TextConfigWidget(Text.translatable(option.getTranslation()), description, option);
+    public AbstractConfigWidget createWidget(ConfigOption<OptionList> option, @Nullable List<OrderedText> description) {
+        return new TextConfigEntries(Text.translatable(option.getTranslation()), description, option);
     }
 }

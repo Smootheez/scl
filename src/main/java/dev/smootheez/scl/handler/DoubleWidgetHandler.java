@@ -2,9 +2,10 @@ package dev.smootheez.scl.handler;
 
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.widget.AbstractConfigWidget;
-import dev.smootheez.scl.widget.option.DoubleConfigWidget;
+import dev.smootheez.scl.widget.entry.DoubleConfigEntries;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ public class DoubleWidgetHandler implements WidgetHandler<Double> {
      * @return A new DoubleConfigWidget instance
      */
     @Override
-    public AbstractConfigWidget createWidget(ConfigOption<Double> option, List<OrderedText> description) {
-        return new DoubleConfigWidget(Text.translatable(option.getTranslation()), description, option);
+    public AbstractConfigWidget createWidget(ConfigOption<Double> option, @Nullable List<OrderedText> description) {
+        return new DoubleConfigEntries(Text.translatable(option.getTranslation()), description, option);
     }
 }
 

@@ -2,9 +2,10 @@ package dev.smootheez.scl.handler;
 
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.widget.AbstractConfigWidget;
-import dev.smootheez.scl.widget.option.BooleanConfigWidget;
+import dev.smootheez.scl.widget.entry.BooleanConfigEntries;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class BooleanWidgetHandler implements WidgetHandler<Boolean> {
      *         for modifying the boolean option's value
      */
     @Override
-    public AbstractConfigWidget createWidget(ConfigOption<Boolean> option, List<OrderedText> description) {
-        return new BooleanConfigWidget(Text.translatable(option.getTranslation()), description, option);
+    public AbstractConfigWidget createWidget(ConfigOption<Boolean> option, @Nullable List<OrderedText> description) {
+        return new BooleanConfigEntries(Text.translatable(option.getTranslation()), description, option);
     }
 }

@@ -2,9 +2,10 @@ package dev.smootheez.scl.handler;
 
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.widget.AbstractConfigWidget;
-import dev.smootheez.scl.widget.option.IntConfigWidget;
+import dev.smootheez.scl.widget.entry.IntConfigEntries;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class IntWidgetHandler implements WidgetHandler<Integer> {
      * @return A new IntConfigWidget instance
      */
     @Override
-    public AbstractConfigWidget createWidget(ConfigOption<Integer> option, List<OrderedText> description) {
-        return new IntConfigWidget(Text.translatable(option.getTranslation()), description, option);
+    public AbstractConfigWidget createWidget(ConfigOption<Integer> option, @Nullable List<OrderedText> description) {
+        return new IntConfigEntries(Text.translatable(option.getTranslation()), description, option);
     }
 }
