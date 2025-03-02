@@ -179,7 +179,6 @@ public class ConfigOption<T> {
      * @param key The unique identifier for this configuration option
      * @param defaultValue The default value to use when no value is set
      * @return A new Boolean configuration option instance
-     * @since 1.0
      */
     public static ConfigOption<Boolean> create(String key, Boolean defaultValue) {
         return new ConfigOption<>(key, defaultValue, Boolean.class, new BooleanSerializer(), new BooleanWidgetHandler());
@@ -191,10 +190,9 @@ public class ConfigOption<T> {
      * @param key The unique identifier for this configuration option
      * @param defaultValue The default values to use when no values are set
      * @return A new ConfigOptionList configuration option instance
-     * @since 1.0
      */
     public static ConfigOption<OptionList> create(String key, String... defaultValue) {
-        return new ConfigOption<>(key, new OptionList(Arrays.asList(defaultValue)), OptionList.class, new OptionListSerializer(), new TextWidgetHandler());
+        return new ConfigOption<>(key, new OptionList(Arrays.asList(defaultValue)), OptionList.class, new OptionListSerializer(), new OptionListWidgetHandler());
     }
 
     /**

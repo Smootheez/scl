@@ -19,4 +19,8 @@ public class ExampleConfig implements ConfigProvider {
     public static ExampleConfig getInstance() {
         return INSTANCE;
     }
+
+    public ConfigOption<OptionList> getExampleString() {
+        return exampleString;
+    }
 }
