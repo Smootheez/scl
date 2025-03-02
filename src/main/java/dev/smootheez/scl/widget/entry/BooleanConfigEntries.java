@@ -1,4 +1,4 @@
-package dev.smootheez.scl.widget.option;
+package dev.smootheez.scl.widget.entry;
 
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.helper.ConfigWidgetHelper;
@@ -23,7 +23,7 @@ import java.util.List;
  * @see NamedConfigWidget
  * @see ConfigOption
  */
-public class BooleanConfigWidget extends NamedConfigWidget {
+public class BooleanConfigEntries extends NamedConfigWidget {
     private final CyclingButtonWidget<Boolean> toggleButton;
     private final ButtonWidget resetButton;
     private final ConfigOption<Boolean> option;
@@ -35,13 +35,13 @@ public class BooleanConfigWidget extends NamedConfigWidget {
      * @param description Optional description text to be displayed below the option
      * @param option     The boolean configuration option being controlled
      */
-    public BooleanConfigWidget(Text name, @Nullable List<OrderedText> description, ConfigOption<Boolean> option) {
+    public BooleanConfigEntries(Text name, @Nullable List<OrderedText> description, ConfigOption<Boolean> option) {
         super(name, description);
         this.option = option;
 
         this.toggleButton = CyclingButtonWidget.onOffBuilder(option.getValue())
                 .omitKeyText()
-                .build(10, 5, 80, 20, name, ((button, value) -> {
+                .build(0, 0, 80, 20, name, ((button, value) -> {
                     option.setValue(value);
                     updateResetButtonState();
                 }));

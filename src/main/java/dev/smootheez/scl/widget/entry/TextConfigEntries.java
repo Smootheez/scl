@@ -1,4 +1,4 @@
-package dev.smootheez.scl.widget.option;
+package dev.smootheez.scl.widget.entry;
 
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.config.option.OptionList;
@@ -13,12 +13,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class TextConfigWidget extends NamedConfigWidget {
+public class TextConfigEntries extends NamedConfigWidget {
     private final TextFieldWidget textFieldWidget;
     private final ButtonWidget resetButton;
     private final ConfigOption<OptionList> option;
 
-    public TextConfigWidget(Text name, @Nullable List<OrderedText> description, ConfigOption<OptionList> option) {
+    public TextConfigEntries(Text name, @Nullable List<OrderedText> description, ConfigOption<OptionList> option) {
         super(name, description);
         this.option = option;
 

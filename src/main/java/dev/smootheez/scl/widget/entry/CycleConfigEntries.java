@@ -1,4 +1,4 @@
-package dev.smootheez.scl.widget.option;
+package dev.smootheez.scl.widget.entry;
 
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.helper.ConfigWidgetHelper;
@@ -14,12 +14,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class CycleConfigWidget<T extends Enum<T>> extends NamedConfigWidget {
+public class CycleConfigEntries<T extends Enum<T>> extends NamedConfigWidget {
     private final CyclingButtonWidget<T> cycleButton;
     private final ButtonWidget resetButton;
     private final ConfigOption<T> option;
 
-    public CycleConfigWidget(Text name, @Nullable List<OrderedText> description, ConfigOption<T> option) {
+    public CycleConfigEntries(Text name, @Nullable List<OrderedText> description, ConfigOption<T> option) {
         super(name, description);
         this.option = option;
         T[] enumValues = option.getType().getEnumConstants();
