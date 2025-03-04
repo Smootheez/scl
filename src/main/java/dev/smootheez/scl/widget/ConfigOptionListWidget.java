@@ -1,19 +1,26 @@
 package dev.smootheez.scl.widget;
 
-import dev.smootheez.scl.config.ConfigOption;
-import dev.smootheez.scl.config.option.OptionList;
+import dev.smootheez.scl.helper.OptionListHelper;
 import dev.smootheez.scl.widget.entry.AddOptionListEntries;
+import dev.smootheez.scl.widget.entry.ListOptionEntries;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ElementListWidget;
+import net.minecraft.text.Text;
 
 public class ConfigOptionListWidget extends ElementListWidget<AbstractConfigWidget> {
-    private final OptionList optionList;
 
-    public ConfigOptionListWidget(MinecraftClient minecraftClient, int width, int height, int v1, int v2, int entryHeight, ConfigOption<OptionList> option) {
+    public ConfigOptionListWidget(MinecraftClient minecraftClient, int width, int height, int v1, int v2, int entryHeight) {
         super(minecraftClient, width, height, v1, v2, entryHeight);
-        this.optionList = option.getValue();
+        var optionList = OptionListHelper.getOptionList().getValue();
 
+        for (int i = 0; i < optionList.values().size(); i++) {
+            addEntry(new ListOptionEntries(Text.of(optionList.getValue(i))));
+        }
         addEntry(new AddOptionListEntries());
+    }
+
+    private void removeList(int index) {
+        remove(index);
     }
 
     @Override

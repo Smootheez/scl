@@ -37,6 +37,7 @@ public record OptionList(List<String> values) {
 
     /**
      * Removes the first occurrence of the specified value from the list.
+     *
      * @param value the value to remove
      */
     public void removeValue(String value) {

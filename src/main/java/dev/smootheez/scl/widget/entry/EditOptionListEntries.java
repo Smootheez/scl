@@ -3,6 +3,7 @@ package dev.smootheez.scl.widget.entry;
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.config.option.OptionList;
 import dev.smootheez.scl.helper.ConfigWidgetHelper;
+import dev.smootheez.scl.helper.OptionListHelper;
 import dev.smootheez.scl.screen.OptionListScreen;
 import dev.smootheez.scl.widget.NamedConfigWidget;
 import net.minecraft.client.MinecraftClient;
@@ -15,12 +16,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class OptionListConfigEntries extends NamedConfigWidget {
+public class EditOptionListEntries extends NamedConfigWidget {
     private final ButtonWidget openOptionListScreen;
     private final ButtonWidget resetButton;
     private final ConfigOption<OptionList> option;
 
-    public OptionListConfigEntries(Text name, @Nullable List<OrderedText> description, ConfigOption<OptionList> option) {
+    public EditOptionListEntries(Text name, @Nullable List<OrderedText> description, ConfigOption<OptionList> option) {
         super(name, description);
         this.option = option;
 
@@ -28,7 +29,8 @@ public class OptionListConfigEntries extends NamedConfigWidget {
                     var client = MinecraftClient.getInstance();
                     Screen currentScreen = client.currentScreen;
                     if (currentScreen != null) {
-                        client.setScreen(new OptionListScreen(currentScreen, this.option));
+                        OptionListHelper.setOptionList(option);
+                        client.setScreen(new OptionListScreen(currentScreen));
                     }
                 })
                 .dimensions(0, 0,80, 20).build();
@@ -36,9 +38,18 @@ public class OptionListConfigEntries extends NamedConfigWidget {
 
         this.children.add(openOptionListScreen);
         this.children.add(resetButton);
+
+        updateResetButtonState();
     }
 
     private void resetValue() {
+        var defaultValue = this.option.getDefaultValue();
+        this.option.setValue(defaultValue);
+        updateResetButtonState();
+    }
+
+    private void updateResetButtonState() {
+        this.resetButton.active = !this.option.getValue().equals(this.option.getDefaultValue());
     }
 
     @Override

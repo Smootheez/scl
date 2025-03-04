@@ -70,16 +70,6 @@ public class CycleConfigEntries<T extends Enum<T>> extends NamedConfigWidget {
     }
 
     @Override
-    public List<? extends Selectable> selectableChildren() {
-        return List.of(this.cycleButton);
-    }
-
-    @Override
-    public List<? extends Element> children() {
-        return List.of(this.cycleButton, this.resetButton);
-    }
-
-    @Override
     public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
         this.drawName(context, x, y);
 

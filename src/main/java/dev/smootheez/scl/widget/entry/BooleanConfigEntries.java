@@ -4,8 +4,6 @@ import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.helper.ConfigWidgetHelper;
 import dev.smootheez.scl.widget.NamedConfigWidget;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.CyclingButtonWidget;
 import net.minecraft.text.OrderedText;
@@ -41,10 +39,7 @@ public class BooleanConfigEntries extends NamedConfigWidget {
 
         this.toggleButton = CyclingButtonWidget.onOffBuilder(option.getValue())
                 .omitKeyText()
-                .build(0, 0, 80, 20, name, ((button, value) -> {
-                    option.setValue(value);
-                    updateResetButtonState();
-                }));
+                .build(0, 0, 80, 20, name, ((button, value) -> option.setValue(value)));
 
         resetButton = ConfigWidgetHelper.createResetButton(this::resetValue);
 
@@ -71,16 +66,6 @@ public class BooleanConfigEntries extends NamedConfigWidget {
      */
     private void updateResetButtonState() {
         resetButton.active = option.getValue() != option.getDefaultValue();
-    }
-
-    @Override
-    public List<? extends Selectable> selectableChildren() {
-        return List.of(this.toggleButton);
-    }
-
-    @Override
-    public List<? extends Element> children() {
-        return List.of(this.toggleButton, this.resetButton);
     }
 
     @Override
