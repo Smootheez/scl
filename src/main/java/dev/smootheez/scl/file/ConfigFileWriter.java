@@ -22,7 +22,7 @@ public class ConfigFileWriter {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.adapterMap = new TreeMap<>();
 
-        this.configFile = FabricLoader.getInstance().getConfigDir().resolve(ConfigRegistry.getModId() + ".json").toFile();
+        this.configFile = FabricLoader.getInstance().getConfigDir().resolve(ConfigRegistry.getConfigName() + ".json").toFile();
 
         Set<String> usedKeys = new HashSet<>();
         List<ConfigOption<?>> configOptions = ConfigRegistry.getConfigOptions();

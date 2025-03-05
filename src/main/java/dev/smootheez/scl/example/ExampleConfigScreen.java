@@ -14,7 +14,7 @@ public class ExampleConfigScreen extends Screen {
     private ConfigListWidget configListWidget;
 
     protected ExampleConfigScreen(Screen screen) {
-        super(Text.translatable("screen." + ConfigRegistry.getModId() + ".title"));
+        super(Text.translatable("screen." + ConfigRegistry.getConfigName() + ".title"));
         this.screen = screen;
     }
 
@@ -23,7 +23,7 @@ public class ExampleConfigScreen extends Screen {
         configListWidget = new ConfigListWidget(this.client, this.width, this.height, 36, this.height - 32, 24);
         addDrawableChild(configListWidget);
 
-        TextFieldWidget searchField = new TextFieldWidget(this.textRenderer, this.width / 2 - 100, 6, 200, 20, Text.translatable("gui." + Constants.MOD_ID +".search"));
+        TextFieldWidget searchField = new TextFieldWidget(this.textRenderer, this.width / 2 - 100, 6, 200, 20, Text.translatable("config.gui." + Constants.MOD_ID +".search"));
         searchField.setMaxLength(50);
         searchField.setChangedListener(this::filterEntries);
         addDrawableChild(searchField);

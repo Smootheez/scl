@@ -12,13 +12,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The ConfigRegistry class manages the registration, saving, and retrieval of configuration options
- * for a mod. It uses reflection to identify fields annotated with {@link ConfigOption} and associates
- * them with a specific mod ID. The class provides methods to register a configuration provider,
- * save the current configuration, and retrieve configuration options.
+ * Manages the registration, storage, and retrieval of configuration options for a mod.
+ * This class acts as a central registry for configuration providers and their associated options.
+ * It uses reflection to identify and process fields annotated with {@link ConfigOption}.
  *
- * <p>The configuration provider must be annotated with {@link Config} to be registered. The
- * {@link ConfigFileWriter} is responsible for loading and saving the configuration to a file.
+ * <p>Configuration providers must implement {@link ConfigProvider} and be annotated with
+ * {@link Config}. The registry handles:
+ * <ul>
+ *     <li>Registering configuration providers</li>
+ *     <li>Storing and retrieving configuration options</li>
+ *     <li>Handling configuration file operations through {@link ConfigFileWriter}</li>
+ * </ul>
  *
  * @see Config
  * @see ConfigProvider
@@ -27,29 +31,35 @@ import java.util.Map;
  */
 public class ConfigRegistry {
     private static final List<ConfigOption<?>> configOptions = new ArrayList<>();
-    private static String modId;
+    private static String configName;
     private static final Map<Class<? extends ConfigProvider>, ConfigFileWriter> configWriters = new HashMap<>();
     private static ConfigProvider configProvider;
 
     /**
-     * Registers a configuration provider with the registry. The provider must be annotated with {@link Config}.
-     * This method sets the mod ID, processes fields annotated with {@link ConfigOption}, and initializes
-     * a {@link ConfigFileWriter} to handle configuration file operations.
+     * Registers a configuration provider with the registry.
+     * The provider must be annotated with {@link Config}.
+     * <p>
+     * This method:
+     * <ul>
+     *     <li>Sets the configuration name from the {@link Config} annotation</li>
+     *     <li>Processes fields annotated with {@link ConfigOption}</li>
+     *     <li>Initializes a {@link ConfigFileWriter} for file operations</li>
+     * </ul>
      *
      * @param config the configuration provider to register
-     * @throws IllegalArgumentException if the configuration provider is not annotated with {@link Config}
+     * @throws IllegalArgumentException if the provider is not annotated with {@link Config}
      */
     public static <T extends ConfigProvider> void registerConfig(T config){
         var configClass = config.getClass();
         if (configClass.getAnnotation(Config.class) != null) {
-            modId = configClass.getAnnotation(Config.class).value();
+            configName = configClass.getAnnotation(Config.class).value();
             configProvider = config;
             try {
                 List<Field> configFields = getConfigFields(configClass);
                 for (Field field : configFields) {
                     field.setAccessible(true);
                     ConfigOption<?> option = (ConfigOption<?>) field.get(config);
-                    option.setModId(modId);
+                    option.setConfigName(configName);
                     configOptions.add(option);
                 }
             } catch (Exception e) {
@@ -62,10 +72,10 @@ public class ConfigRegistry {
     }
 
     /**
-     * Saves the current configuration to a file using the associated {@link ConfigFileWriter}.
-     * Throws an exception if no configuration provider is registered or if the writer is not found.
+     * Saves the current configuration to file.
+     * Uses the associated {@link ConfigFileWriter} for the registered configuration provider.
      *
-     * @throws IllegalArgumentException if no config provider is registered or if the writer is not found
+     * @throws IllegalArgumentException if no configuration provider is registered
      */
     public static void save() {
         if (configProvider != null) {
@@ -78,10 +88,9 @@ public class ConfigRegistry {
     }
 
     /**
-     * Retrieves all fields of the specified class that are of type {@link ConfigOption}.
-     *
+     * Retrieves all fields of the specified class that are annotated with {@link ConfigOption}.
      * @param clazz the class to inspect
-     * @return a list of fields of type {@link ConfigOption}
+     * @return list of fields annotated with {@link ConfigOption}
      */
     private static List<Field> getConfigFields(Class<?> clazz) {
         List<Field> configFields = new ArrayList<>();
@@ -92,18 +101,16 @@ public class ConfigRegistry {
     }
 
     /**
-     * Returns the mod ID associated with the registered configuration provider.
-     *
-     * @return the mod ID
+     * Returns the configuration name associated with the registered provider.
+     * @return the configuration name
      */
-    public static String getModId() {
-        return modId;
+    public static String getConfigName() {
+        return configName;
     }
 
     /**
      * Returns the list of all registered configuration options.
-     *
-     * @return the list of configuration options
+     * @return list of configuration options
      */
     public static List<ConfigOption<?>> getConfigOptions() {
         return configOptions;

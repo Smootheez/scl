@@ -1,7 +1,7 @@
 {
-  "gui.scl.search": "Search...",
   "options.exampleConfig.exampleBoolean": "Boolean",
   "options.exampleConfig.exampleBoolean.description": "This is a description",
+  "config.gui.scl.search": "Search...",
   "config.gui.scl.editOptionList": "Edit",
   "config.gui.scl.removeOptionList": "Remove",
   "config.gui.scl.addOptionList": "Add Value",
