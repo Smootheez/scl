@@ -8,6 +8,8 @@ import net.minecraft.text.Text;
 
 public class ConfigOptionListWidget extends ElementListWidget<AbstractConfigWidget> {
 
+    private String filter = "";
+
     public ConfigOptionListWidget(MinecraftClient minecraftClient, int width, int height, int v1, int v2, int entryHeight) {
         super(minecraftClient, width, height, v1, v2, entryHeight);
         var optionList = OptionListHelper.getOptionList().getValue();
@@ -37,5 +39,18 @@ public class ConfigOptionListWidget extends ElementListWidget<AbstractConfigWidg
     @Override
     public int getRowWidth() {
         return 350;
+    }
+
+    public void setFilter(String filter) {
+        this.filter = filter.toLowerCase();
+        updateEntries();
+    }
+
+    private void updateEntries() {
+        clearEntries();
+        var optionList = OptionListHelper.getOptionList().getValue();
+        for (String value : optionList.values()) {
+            if (value.toLowerCase().contains(filter)) addEntry(new ListOptionEntries(Text.of(value), this));
+        }
     }
 }

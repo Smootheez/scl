@@ -6,6 +6,7 @@ import dev.smootheez.scl.widget.ConfigOptionListWidget;
 import dev.smootheez.scl.widget.entry.ListOptionEntries;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
@@ -23,6 +24,11 @@ public class OptionListScreen extends Screen {
         optionListWidget = new ConfigOptionListWidget(this.client, this.width, this.height, 36, this.height - 32, 24);
         addDrawableChild(optionListWidget);
 
+        TextFieldWidget searchField = new TextFieldWidget(this.textRenderer, this.width / 2 - 100, 6, 200, 20, Text.translatable("gui." + Constants.MOD_ID +".search"));
+        searchField.setMaxLength(50);
+        searchField.setChangedListener(this::filterEntries);
+        addDrawableChild(searchField);
+
         var width = 150;
         var height = 20;
         addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, button -> close())
@@ -31,6 +37,10 @@ public class OptionListScreen extends Screen {
         addDrawableChild(ButtonWidget.builder(Text.translatable("config.gui." + Constants.MOD_ID + ".addOptionList"), action -> openAddListScreen())
                 .dimensions(this.width / 2 + 5, this.height - 27, width, height)
                 .build());
+    }
+
+    private void filterEntries(String filter) {
+        optionListWidget.setFilter(filter);
     }
 
     private void openAddListScreen() {

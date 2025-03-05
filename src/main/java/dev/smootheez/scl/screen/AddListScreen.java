@@ -37,11 +37,11 @@ public class AddListScreen extends Screen {
         super.init();
 
         if (client == null) return;
-        var buttonWidth = 200;
-        var buttonHeight = 20;
-        var buttonPositionX = this.width / 2 - buttonWidth / 2;
+        var widgetWidth = 200;
+        var widgetHeight = 20;
+        var widgetPositionX = this.width / 2 - widgetWidth / 2;
 
-        textFieldWidget = new TextFieldWidget(this.client.textRenderer, buttonPositionX, this.height / 2 - 25, buttonWidth, buttonHeight, Text.translatable("config.gui.scl.enterValue"));
+        textFieldWidget = new TextFieldWidget(this.client.textRenderer, widgetPositionX + 2, this.height / 2 - 30, widgetWidth - 4, widgetHeight, Text.translatable("config.gui.scl.enterValue"));
         textFieldWidget.setChangedListener( listener -> {
             try {
                 textFieldWidget.setEditableColor(14737632);
@@ -56,10 +56,10 @@ public class AddListScreen extends Screen {
                     close();
                     addWidget();
                 })
-                .dimensions(buttonPositionX, this.height / 2, buttonWidth, buttonHeight)
+                .dimensions(widgetPositionX, this.height / 2, widgetWidth, widgetHeight)
                 .build());
         addDrawableChild(ButtonWidget.builder(ScreenTexts.CANCEL, action -> close())
-                .dimensions(buttonPositionX, this.height / 2 + 25, buttonWidth, buttonHeight)
+                .dimensions(widgetPositionX, this.height / 2 + 25, widgetWidth, widgetHeight)
                 .build());
     }
 
