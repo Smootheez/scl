@@ -4,6 +4,7 @@ import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.config.option.OptionList;
 import dev.smootheez.scl.helper.ConfigWidgetHelper;
 import dev.smootheez.scl.helper.OptionListHelper;
+import dev.smootheez.scl.widget.ConfigOptionListWidget;
 import dev.smootheez.scl.widget.NamedConfigWidget;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -16,9 +17,11 @@ public class ListOptionEntries extends NamedConfigWidget {
     private final ButtonWidget editValue;
     private final ButtonWidget removeButton;
     private final ConfigOption<OptionList> option;
+    private final ConfigOptionListWidget listWidget;
 
-    public ListOptionEntries(Text name) {
+    public ListOptionEntries(Text name, ConfigOptionListWidget listWidget) {
         super(name, null);
+        this.listWidget = listWidget;
         this.option = OptionListHelper.getOptionList();
 
         this.editValue = ButtonWidget.builder(Text.translatable("config.scl.editOptionList"), action -> System.out.println("Hello World"))
@@ -36,6 +39,7 @@ public class ListOptionEntries extends NamedConfigWidget {
         OptionList currentList = option.getValue();
         List<String> values = new ArrayList<>(currentList.values());
         values.remove(value);
+        this.listWidget.removeList(this);
         option.setValue(new OptionList(values));
     }
 

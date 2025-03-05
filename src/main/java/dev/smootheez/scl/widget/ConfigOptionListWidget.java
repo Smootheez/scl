@@ -14,13 +14,13 @@ public class ConfigOptionListWidget extends ElementListWidget<AbstractConfigWidg
         var optionList = OptionListHelper.getOptionList().getValue();
 
         for (int i = 0; i < optionList.values().size(); i++) {
-            addEntry(new ListOptionEntries(Text.of(optionList.getValue(i))));
+            addEntry(new ListOptionEntries(Text.of(optionList.getValue(i)), this));
         }
         addEntry(new AddOptionListEntries());
     }
 
-    private void removeList(int index) {
-        remove(index);
+    public void removeList(AbstractConfigWidget configWidget) {
+        removeEntry(configWidget);
     }
 
     @Override
