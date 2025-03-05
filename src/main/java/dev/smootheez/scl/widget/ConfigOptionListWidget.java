@@ -21,6 +21,10 @@ public class ConfigOptionListWidget extends ElementListWidget<AbstractConfigWidg
         addEntry(configWidget);
     }
 
+    public void clearList() {
+        clearEntries();
+    }
+
     public void removeList(AbstractConfigWidget configWidget) {
         removeEntry(configWidget);
     }

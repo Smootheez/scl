@@ -20,7 +20,4 @@ public class ExampleConfig implements ConfigProvider {
         return INSTANCE;
     }
 
-    public ConfigOption<OptionList> getExampleString() {
-        return exampleString;
-    }
 }

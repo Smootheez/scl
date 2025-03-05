@@ -1,5 +1,6 @@
 package dev.smootheez.scl.widget.entry;
 
+import dev.smootheez.scl.Constants;
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.config.option.OptionList;
 import dev.smootheez.scl.helper.ConfigWidgetHelper;
@@ -25,7 +26,7 @@ public class EditOptionListEntries extends NamedConfigWidget {
         super(name, description);
         this.option = option;
 
-        this.openOptionListScreen = ButtonWidget.builder(Text.translatable("options.scl.editOptionList"), button -> {
+        this.openOptionListScreen = ButtonWidget.builder(Text.translatable("config.gui." + Constants.MOD_ID + ".editOptionList"), button -> {
                     var client = MinecraftClient.getInstance();
                     Screen currentScreen = client.currentScreen;
                     if (currentScreen != null) {

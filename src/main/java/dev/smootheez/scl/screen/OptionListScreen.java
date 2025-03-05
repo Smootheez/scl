@@ -1,6 +1,9 @@
 package dev.smootheez.scl.screen;
 
+import dev.smootheez.scl.Constants;
+import dev.smootheez.scl.helper.OptionListHelper;
 import dev.smootheez.scl.widget.ConfigOptionListWidget;
+import dev.smootheez.scl.widget.entry.ListOptionEntries;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.screen.ScreenTexts;
@@ -25,7 +28,7 @@ public class OptionListScreen extends Screen {
         addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, button -> close())
                 .dimensions(this.width / 2 - 155, this.height - 27, width, height)
                 .build());
-        addDrawableChild(ButtonWidget.builder(Text.translatable("config.scl.addOptionList"), action -> openAddListScreen())
+        addDrawableChild(ButtonWidget.builder(Text.translatable("config.gui." + Constants.MOD_ID + ".addOptionList"), action -> openAddListScreen())
                 .dimensions(this.width / 2 + 5, this.height - 27, width, height)
                 .build());
     }
@@ -33,8 +36,14 @@ public class OptionListScreen extends Screen {
     private void openAddListScreen() {
         if (client != null) {
             var currentScreen = this.client.currentScreen;
-            this.client.setScreen(new AddListScreen(currentScreen, optionListWidget));
+            this.client.setScreen(new AddListScreen(currentScreen, optionListWidget, this));
         }
+    }
+
+    public void refreshList() {
+        optionListWidget.clearList();
+        var optionList = OptionListHelper.getOptionList().getValue();
+        for (String value : optionList.values()) optionListWidget.addList(new ListOptionEntries(Text.of(value), optionListWidget));
     }
 
     @Override
