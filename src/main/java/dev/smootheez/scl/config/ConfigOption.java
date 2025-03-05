@@ -2,6 +2,7 @@ package dev.smootheez.scl.config;
 
 import dev.smootheez.scl.config.option.OptionList;
 import dev.smootheez.scl.handler.*;
+import dev.smootheez.scl.registry.ConfigRegistry;
 import dev.smootheez.scl.serializer.*;
 
 import java.util.Arrays;
@@ -140,6 +141,7 @@ public class ConfigOption<T> {
     public void setValue(T value) {
         if (type.isInstance(value)) {
             this.value = value;
+            ConfigRegistry.save();
         } else {
             throw new IllegalArgumentException("Value must be of type " + type.getSimpleName());
         }

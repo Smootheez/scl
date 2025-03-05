@@ -28,14 +28,9 @@ public class ExampleConfigScreen extends Screen {
         searchField.setChangedListener(this::filterEntries);
         addDrawableChild(searchField);
 
-        addDrawableChild(ButtonWidget.builder(ScreenTexts.CANCEL, button -> close())
-                .dimensions(this.width / 2 + 5, this.height - 27, 150, 20)
-                .build());
-        addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, button -> {
-                    ConfigRegistry.save();
-                    close();
-                })
-                .dimensions(this.width / 2 -155 , this.height - 27, 150, 20)
+        var width = 220;
+        addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, button -> close())
+                .dimensions(this.width / 2 - width / 2, this.height - 27, width, 20)
                 .build());
     }
 

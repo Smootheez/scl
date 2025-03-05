@@ -1,7 +1,6 @@
 package dev.smootheez.scl.widget;
 
 import dev.smootheez.scl.helper.OptionListHelper;
-import dev.smootheez.scl.widget.entry.AddOptionListEntries;
 import dev.smootheez.scl.widget.entry.ListOptionEntries;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ElementListWidget;
@@ -16,7 +15,10 @@ public class ConfigOptionListWidget extends ElementListWidget<AbstractConfigWidg
         for (int i = 0; i < optionList.values().size(); i++) {
             addEntry(new ListOptionEntries(Text.of(optionList.getValue(i)), this));
         }
-        addEntry(new AddOptionListEntries());
+    }
+
+    public void addList(AbstractConfigWidget configWidget) {
+        addEntry(configWidget);
     }
 
     public void removeList(AbstractConfigWidget configWidget) {
@@ -25,11 +27,11 @@ public class ConfigOptionListWidget extends ElementListWidget<AbstractConfigWidg
 
     @Override
     protected int getScrollbarPositionX() {
-        return this.width / 2 + 135;
+        return this.width / 2 + 185;
     }
 
     @Override
     public int getRowWidth() {
-        return 250;
+        return 350;
     }
 }
