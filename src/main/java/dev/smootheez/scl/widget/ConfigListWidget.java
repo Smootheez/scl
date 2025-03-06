@@ -1,6 +1,7 @@
 package dev.smootheez.scl.widget;
 
 import com.google.common.collect.ImmutableList;
+import dev.smootheez.scl.api.ConfigProvider;
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.registry.ConfigRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -15,9 +16,11 @@ import java.util.List;
 
 public class ConfigListWidget extends ElementListWidget<AbstractConfigWidget> {
     private String filter = "";
+    private final ConfigProvider configProvider;
 
-    public ConfigListWidget(MinecraftClient minecraftClient, int width, int height, int v1, int v2, int entryHeight) {
+    public ConfigListWidget(MinecraftClient minecraftClient, int width, int height, int v1, int v2, int entryHeight, ConfigProvider configProvider) {
         super(minecraftClient, width, height, v1, v2, entryHeight);
+        this.configProvider = configProvider;
         updateEntries();
     }
 
@@ -28,7 +31,7 @@ public class ConfigListWidget extends ElementListWidget<AbstractConfigWidget> {
 
     private void updateEntries() {
         clearEntries();
-        List<ConfigOption<?>> configOptions = ConfigRegistry.getConfigOptions();
+        List<ConfigOption<?>> configOptions = ConfigRegistry.getConfigOptions(configProvider.getClass());
         List<ConfigOption<?>> filteredOptions = configOptions.stream()
                 .filter(configOption -> matchesSearchTerm(configOption, filter))
                 .toList();

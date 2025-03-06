@@ -3,6 +3,8 @@ package dev.smootheez.scl.file;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import dev.smootheez.scl.annotation.Config;
+import dev.smootheez.scl.api.ConfigProvider;
 import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.registry.ConfigRegistry;
 import net.fabricmc.loader.api.FabricLoader;
@@ -18,14 +20,14 @@ public class ConfigFileWriter {
     private final File configFile;
     private final Map<String, ConfigOptionAdapter<?>> adapterMap;
 
-    public ConfigFileWriter() {
+    public ConfigFileWriter(ConfigProvider configProvider) {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.adapterMap = new TreeMap<>();
 
-        this.configFile = FabricLoader.getInstance().getConfigDir().resolve(ConfigRegistry.getConfigName() + ".json").toFile();
+        this.configFile = FabricLoader.getInstance().getConfigDir().resolve(configProvider.getClass().getAnnotation(Config.class).value() + ".json").toFile();
 
         Set<String> usedKeys = new HashSet<>();
-        List<ConfigOption<?>> configOptions = ConfigRegistry.getConfigOptions();
+        List<ConfigOption<?>> configOptions = ConfigRegistry.getConfigOptions(configProvider.getClass());
         for (ConfigOption<?> option : configOptions) {
             String key = option.getKey();
             if (usedKeys.contains(key)) throw new IllegalStateException("Duplicate key found: " + key);

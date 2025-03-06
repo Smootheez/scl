@@ -6,92 +6,46 @@ import dev.smootheez.scl.config.ConfigOption;
 import dev.smootheez.scl.file.ConfigFileWriter;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-/**
- * Manages the registration, storage, and retrieval of configuration options for a mod.
- * This class acts as a central registry for configuration providers and their associated options.
- * It uses reflection to identify and process fields annotated with {@link ConfigOption}.
- *
- * <p>Configuration providers must implement {@link ConfigProvider} and be annotated with
- * {@link Config}. The registry handles:
- * <ul>
- *     <li>Registering configuration providers</li>
- *     <li>Storing and retrieving configuration options</li>
- *     <li>Handling configuration file operations through {@link ConfigFileWriter}</li>
- * </ul>
- *
- * @see Config
- * @see ConfigProvider
- * @see ConfigOption
- * @see ConfigFileWriter
- */
 public class ConfigRegistry {
-    private static final List<ConfigOption<?>> configOptions = new ArrayList<>();
-    private static String configName;
+    private static final Map<Class<? extends ConfigProvider>, List<ConfigOption<?>>> configOptionsMap = new HashMap<>();
+    private static final Set<String> usedConfigIdentifiers = new HashSet<>();
     private static final Map<Class<? extends ConfigProvider>, ConfigFileWriter> configWriters = new HashMap<>();
-    private static ConfigProvider configProvider;
 
-    /**
-     * Registers a configuration provider with the registry.
-     * The provider must be annotated with {@link Config}.
-     * <p>
-     * This method:
-     * <ul>
-     *     <li>Sets the configuration name from the {@link Config} annotation</li>
-     *     <li>Processes fields annotated with {@link ConfigOption}</li>
-     *     <li>Initializes a {@link ConfigFileWriter} for file operations</li>
-     * </ul>
-     *
-     * @param config the configuration provider to register
-     * @throws IllegalArgumentException if the provider is not annotated with {@link Config}
-     */
-    public static <T extends ConfigProvider> void registerConfig(T config){
+    public static <T extends ConfigProvider> void registerConfig(T config) {
         var configClass = config.getClass();
         if (configClass.getAnnotation(Config.class) != null) {
-            configName = configClass.getAnnotation(Config.class).value();
-            configProvider = config;
+            String configIdentifier = configClass.getAnnotation(Config.class).value();
+            if (usedConfigIdentifiers.contains(configIdentifier)) {
+                throw new IllegalArgumentException("Config identifier '" + configIdentifier + "' is already in use.");
+            }
+            usedConfigIdentifiers.add(configIdentifier);
             try {
                 List<Field> configFields = getConfigFields(configClass);
+                List<ConfigOption<?>> options = new ArrayList<>();
                 for (Field field : configFields) {
                     field.setAccessible(true);
                     ConfigOption<?> option = (ConfigOption<?>) field.get(config);
-                    option.setConfigName(configName);
-                    configOptions.add(option);
+                    option.setConfigIdentifier(configIdentifier);
+                    options.add(option);
                 }
+                configOptionsMap.put(configClass, options);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            ConfigFileWriter fileWriter = new ConfigFileWriter();
+            ConfigFileWriter fileWriter = new ConfigFileWriter(config);
             configWriters.put(config.getClass(), fileWriter);
             fileWriter.loadConfig();
         } else throw new IllegalArgumentException("ConfigFileWriter must be annotated with @Config");
     }
 
-    /**
-     * Saves the current configuration to file.
-     * Uses the associated {@link ConfigFileWriter} for the registered configuration provider.
-     *
-     * @throws IllegalArgumentException if no configuration provider is registered
-     */
     public static void save() {
-        if (configProvider != null) {
-            ConfigFileWriter writer = configWriters.get(configProvider.getClass());
-            if (writer != null) writer.saveConfig();
-            else throw new IllegalArgumentException("Config class not registered: " + configProvider.getClass().getName());
-        } else {
-            throw new IllegalArgumentException("No config provider registered.");
+        for (ConfigFileWriter writer : configWriters.values()) {
+            writer.saveConfig();
         }
     }
 
-    /**
-     * Retrieves all fields of the specified class that are annotated with {@link ConfigOption}.
-     * @param clazz the class to inspect
-     * @return list of fields annotated with {@link ConfigOption}
-     */
     private static List<Field> getConfigFields(Class<?> clazz) {
         List<Field> configFields = new ArrayList<>();
         for (Field field : clazz.getDeclaredFields()) {
@@ -100,19 +54,7 @@ public class ConfigRegistry {
         return configFields;
     }
 
-    /**
-     * Returns the configuration name associated with the registered provider.
-     * @return the configuration name
-     */
-    public static String getConfigName() {
-        return configName;
-    }
-
-    /**
-     * Returns the list of all registered configuration options.
-     * @return list of configuration options
-     */
-    public static List<ConfigOption<?>> getConfigOptions() {
-        return configOptions;
+    public static List<ConfigOption<?>> getConfigOptions(Class<? extends ConfigProvider> clazz) {
+        return configOptionsMap.getOrDefault(clazz, new ArrayList<>());
     }
 }

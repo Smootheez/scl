@@ -25,7 +25,7 @@ public class ConfigOption<T> {
     protected final ConfigSerializer<T> serializer;
     protected final WidgetHandler<T> widgetHandler;
     protected String translation;
-    protected String configName;
+    protected String configIdentifier;
 
     /**
      * Constructs a new ConfigOption instance with the specified key, default value,
@@ -84,10 +84,10 @@ public class ConfigOption<T> {
      * "options.$modId.$key". This translation key is typically used for localization
      * purposes in the configuration GUI.
      *
-     * @param configName The config name this configuration option belongs to
+     * @param configIdentifier The config name this configuration option belongs to
      */
-    public void setConfigName(String configName) {
-        this.configName = configName;
+    public void setConfigIdentifier(String configIdentifier) {
+        this.configIdentifier = configIdentifier;
     }
 
     /**
@@ -96,7 +96,7 @@ public class ConfigOption<T> {
      * @return the generated translation key for this configuration option
      */
     public String getTranslation() {
-        return this.translation = "options." + configName + "." + key;
+        return this.translation = "options." + configIdentifier + "." + key;
     }
 
     /**

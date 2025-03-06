@@ -1,7 +1,8 @@
 package dev.smootheez.scl.screen;
 
 import dev.smootheez.scl.Constants;
-import dev.smootheez.scl.registry.ConfigRegistry;
+import dev.smootheez.scl.annotation.Config;
+import dev.smootheez.scl.api.ConfigProvider;
 import dev.smootheez.scl.widget.ConfigListWidget;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -12,15 +13,17 @@ import net.minecraft.text.Text;
 public class ConfigScreen extends Screen {
     private final Screen screen;
     private ConfigListWidget configListWidget;
+    private final ConfigProvider configProvider;
 
-    public ConfigScreen(Screen screen) {
-        super(Text.translatable("config.screen." + ConfigRegistry.getConfigName() + ".title"));
+    public ConfigScreen(Screen screen, ConfigProvider configProvider) {
+        super(Text.translatable("config.screen." + configProvider.getClass().getAnnotation(Config.class).value() + ".title"));
         this.screen = screen;
+        this.configProvider = configProvider;
     }
 
     @Override
     protected void init() {
-        configListWidget = new ConfigListWidget(this.client, this.width, this.height, 36, this.height - 32, 24);
+        configListWidget = new ConfigListWidget(this.client, this.width, this.height, 36, this.height - 32, 24, configProvider);
         addDrawableChild(configListWidget);
 
         TextFieldWidget searchField = new TextFieldWidget(this.textRenderer, this.width / 2 - 100, 6, 200, 20, Text.translatable("config.gui." + Constants.MOD_ID +".search"));
