@@ -61,11 +61,11 @@ jobs:
       - name: Upload Mod
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          modrinth-id: ${{ secrets.MODRINTH_PROJECT_ID }}
+          modrinth-id: zLVNfWvA
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           modrinth-featured: true
 
-          curseforge-id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
+          curseforge-id: 1107934
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           files: ${{ steps.find_jar.outputs.jar_file }}
