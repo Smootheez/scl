@@ -58,25 +58,15 @@ jobs:
           echo "jar_file=build/libs/$JAR_FILE" >> $GITHUB_OUTPUT
           echo "Found JAR file: $JAR_FILE"
 
-      - name: Upload to CurseForge
-        uses: itsmeow/curseforge-upload@v3
-        with:
-          file_path: ${{ steps.find_jar.outputs.jar_file }}
-          game_endpoint: minecraft
-          game_versions: ${{ vars.MINECRAFT_VERSIONS }}  # Set this in your repo variables
-          project_id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
-          token: ${{ secrets.CURSEFORGE_TOKEN }}
-          release_type: release  # Can be alpha, beta, or release
-          changelog: ${{ github.event.release.body }}
-          display_name: "Smootheez Config Lib-${{ steps.get_version.outputs.version }}"
-          changelog_type: markdown
-
-      - name: Upload to Modrinth
+      - name: Upload Mod
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: ${{ secrets.MODRINTH_PROJECT_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           modrinth-featured: true
+
+          curseforge-id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           files: ${{ steps.find_jar.outputs.jar_file }}
           version-type: release  # Can be alpha, beta, or release
