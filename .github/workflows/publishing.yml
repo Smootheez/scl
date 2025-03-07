@@ -46,10 +46,10 @@ jobs:
       - name: Get mod version
         id: get_version
         run: |
-          # Extract version from the JAR filename
-          MOD_VERSION=$(ls build/libs/ | grep -v "sources\|dev" | grep "\.jar$" | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)\.jar$/\1/')
-          echo "version=$MOD_VERSION" >> $GITHUB_OUTPUT
-          echo "JAR found with version $MOD_VERSION"
+          # Extract version from the tag filename
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
 
       - name: Find main JAR file
         id: find_jar
