@@ -35,6 +35,7 @@ dependencies {
     modImplementation "com.github.smootheez:scl:version"
 }
 ```
+[![](https://jitpack.io/v/Smootheez/scl.svg)](https://jitpack.io/#Smootheez/scl)
 ## Important Notes
 - Compatible with Minecraft 1.20.1+
 - Licensed under MIT License

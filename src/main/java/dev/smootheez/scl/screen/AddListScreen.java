@@ -25,7 +25,7 @@ public class AddListScreen extends Screen {
     private final OptionListScreen optionListScreen;
 
     protected AddListScreen(Screen screen, ConfigOptionListWidget optionListWidget, OptionListScreen optionListScreen) {
-        super(Text.of("Add List Screen"));
+        super(Text.translatable("config.screen." + Constants.MOD_ID + ".title.addList"));
         this.screen = screen;
         this.optionListWidget = optionListWidget;
         this.optionListScreen = optionListScreen;
@@ -75,6 +75,7 @@ public class AddListScreen extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context);
+        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, this.height / 2 - 60, 16777215);
         super.render(context, mouseX, mouseY, delta);
     }
 

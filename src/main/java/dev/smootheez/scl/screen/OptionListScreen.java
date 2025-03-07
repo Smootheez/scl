@@ -15,7 +15,7 @@ public class OptionListScreen extends Screen {
     private ConfigOptionListWidget optionListWidget;
 
     public OptionListScreen(Screen screen) {
-        super(Text.of("title"));
+        super(Text.translatable("config.screen." + Constants.MOD_ID + ".title.optionList"));
         this.screen = screen;
     }
 
