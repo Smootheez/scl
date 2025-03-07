@@ -33,7 +33,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          name: Release SCL ${{ env.VERSION }}
+          name: SCL ${{ env.VERSION }}
           draft: false
           prerelease: false
           generate_release_notes: true
