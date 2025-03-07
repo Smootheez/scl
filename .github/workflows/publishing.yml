@@ -69,7 +69,7 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           files: ${{ steps.find_jar.outputs.jar_file }}
-          name: "Smootheez Config Lib-${{ steps.get_version.outputs.version }}"
+          name: "Smootheez Config Lib ${{ steps.get_version.outputs.version }}"
           version-type: release  # Can be alpha, beta, or release
           version-number: ${{ steps.get_version.outputs.version }}
           changelog: ${{ github.event.release.body }}
