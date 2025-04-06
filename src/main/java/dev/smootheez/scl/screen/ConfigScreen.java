@@ -2,6 +2,7 @@ package dev.smootheez.scl.screen;
 
 import dev.smootheez.scl.Constants;
 import dev.smootheez.scl.widget.ConfigListWidget;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -42,5 +43,10 @@ public class ConfigScreen extends Screen {
     @Override
     public void close() {
         if (this.client != null) this.client.setScreen(screen);
+    }
+
+    @Override
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderBackgroundTexture(context);
     }
 }
