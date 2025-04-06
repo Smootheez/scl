@@ -5,6 +5,11 @@
   "name": "${mod_name}",
   "description": "${mod_description}",
   "authors": ["Smootheez"],
+  "contact": {
+    "homepage": "https://github.com/Smootheez/scl",
+    "sources": "https://github.com/Smootheez/scl",
+    "issues": "https://github.com/Smootheez/scl/issues"
+  },
   "license": "${mod_license}",
   "icon": "assets/scl/icon.png",
   "environment": "client",

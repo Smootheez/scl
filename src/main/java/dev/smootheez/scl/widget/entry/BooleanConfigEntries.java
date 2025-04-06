@@ -39,7 +39,10 @@ public class BooleanConfigEntries extends NamedConfigWidget {
 
         this.toggleButton = CyclingButtonWidget.onOffBuilder(option.getValue())
                 .omitKeyText()
-                .build(0, 0, 80, 20, name, ((button, value) -> option.setValue(value)));
+                .build(0, 0, 80, 20, name, ((button, value) -> {
+                    option.setValue(value);
+                    updateResetButtonState();
+                }));
 
         resetButton = ConfigWidgetHelper.createResetButton(this::resetValue);
 
@@ -65,7 +68,9 @@ public class BooleanConfigEntries extends NamedConfigWidget {
      * differs from the default value.
      */
     private void updateResetButtonState() {
-        resetButton.active = option.getValue() != option.getDefaultValue();
+        boolean currentValue = option.getValue();
+        boolean defaultValue = option.getDefaultValue();
+        resetButton.active = currentValue != defaultValue;
     }
 
     @Override
