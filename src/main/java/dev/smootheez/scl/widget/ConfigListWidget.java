@@ -17,8 +17,8 @@ public class ConfigListWidget extends ElementListWidget<AbstractConfigWidget> {
     private String filter = "";
     private final String configIdentifier;
 
-    public ConfigListWidget(MinecraftClient minecraftClient, int width, int height, int v1, int v2, String configIdentifier) {
-        super(minecraftClient, width, height, v1, v2);
+    public ConfigListWidget(MinecraftClient minecraftClient, int width, int height, int v1, int v2, int entryHeight, String configIdentifier) {
+        super(minecraftClient, width, height, v1, v2, entryHeight);
         this.configIdentifier = configIdentifier;
         updateEntries();
     }
@@ -78,8 +78,8 @@ public class ConfigListWidget extends ElementListWidget<AbstractConfigWidget> {
     }
 
     @Override
-    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
-        super.renderWidget(context, mouseX, mouseY, delta);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
         AbstractConfigWidget abstractConfigWidget = this.getHoveredEntry();
         if (abstractConfigWidget != null && abstractConfigWidget.description != null && this.client.currentScreen != null) {
             this.client.currentScreen.setTooltip(abstractConfigWidget.description);
