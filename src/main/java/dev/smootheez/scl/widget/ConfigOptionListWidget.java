@@ -10,8 +10,8 @@ public class ConfigOptionListWidget extends ElementListWidget<AbstractConfigWidg
 
     private String filter = "";
 
-    public ConfigOptionListWidget(MinecraftClient minecraftClient, int width, int height, int v1, int v2, int entryHeight) {
-        super(minecraftClient, width, height, v1, v2, entryHeight);
+    public ConfigOptionListWidget(MinecraftClient minecraftClient, int width, int height, int v1, int v2) {
+        super(minecraftClient, width, height, v1, v2);
         var optionList = OptionListHelper.getOptionList().getValue();
 
         for (int i = 0; i < optionList.values().size(); i++) {

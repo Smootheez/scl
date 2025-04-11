@@ -22,7 +22,7 @@ public class OptionListScreen extends Screen {
 
     @Override
     protected void init() {
-        optionListWidget = new ConfigOptionListWidget(this.client, this.width, this.height, 36, this.height - 32, 24);
+        optionListWidget = new ConfigOptionListWidget(this.client, this.width, this.height - 75, 43, 24);
         addDrawableChild(optionListWidget);
 
         TextFieldWidget searchField = new TextFieldWidget(this.textRenderer, this.width / 2 - 100, 6, 200, 20, Text.translatable("gui." + Constants.MOD_ID +".search"));
