@@ -4,7 +4,6 @@ import dev.smootheez.scl.Constants;
 import dev.smootheez.scl.helper.OptionListHelper;
 import dev.smootheez.scl.widget.ConfigOptionListWidget;
 import dev.smootheez.scl.widget.entry.ListOptionEntries;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -60,10 +59,5 @@ public class OptionListScreen extends Screen {
     @Override
     public void close() {
         if (this.client != null) this.client.setScreen(screen);
-    }
-
-    @Override
-    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackgroundTexture(context);
     }
 }

@@ -79,11 +79,6 @@ public class AddListScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackgroundTexture(context);
-    }
-
-    @Override
     public void close() {
         if (client != null) this.client.setScreen(screen);
     }

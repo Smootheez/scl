@@ -32,7 +32,7 @@ public class ConfigOptionListWidget extends ElementListWidget<AbstractConfigWidg
     }
 
     @Override
-    protected int getScrollbarPositionX() {
+    protected int getScrollbarX() {
         return this.width / 2 + 185;
     }
 

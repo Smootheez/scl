@@ -36,7 +36,7 @@ jobs:
           name: SCL ${{ env.VERSION }}
           draft: false
           prerelease: false
-          generate_release_notes: true
+          body_path: CHANGELOG.md
           files: |
             build/libs/*.jar
             LICENSE
