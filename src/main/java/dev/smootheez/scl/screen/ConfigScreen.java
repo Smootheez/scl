@@ -1,46 +1,35 @@
 package dev.smootheez.scl.screen;
 
-import dev.smootheez.scl.Constants;
-import dev.smootheez.scl.widget.ConfigListWidget;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
+import dev.smootheez.scl.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.screens.*;
+import net.minecraft.network.chat.*;
 
 public class ConfigScreen extends Screen {
     private final Screen screen;
-    private ConfigListWidget configListWidget;
-    private final String configIdentifier;
 
     public ConfigScreen(Screen screen, String configIdentifier) {
-        super(Text.translatable("config.screen." + configIdentifier + ".title"));
+        super(Component.translatable("config.screen." + configIdentifier + ".title"));
         this.screen = screen;
-        this.configIdentifier = configIdentifier;
     }
 
     @Override
     protected void init() {
-        configListWidget = new ConfigListWidget(this.client, this.width, this.height - 75, 43, 24, configIdentifier);
-        addDrawableChild(configListWidget);
-
-        TextFieldWidget searchField = new TextFieldWidget(this.textRenderer, this.width / 2 - 100, 6, 200, 20, Text.translatable("config.gui." + Constants.MOD_ID +".search"));
-        searchField.setMaxLength(50);
-        searchField.setChangedListener(this::filterEntries);
-        addDrawableChild(searchField);
-
-        var width = 220;
-        addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, button -> close())
-                .dimensions(this.width / 2 - width / 2, this.height - 27, width, 20)
+        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, button -> onClose())
+                .width(220)
+                .pos(this.width / 2 - 220 / 2, this.height - 27)
                 .build());
     }
 
-    private void filterEntries(String search) {
-        configListWidget.setFilter(search);
+    @Override
+    public void render(GuiGraphics guiGraphics, int i, int j, float f) {
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, i, j, f);
     }
 
     @Override
-    public void close() {
-        if (this.client != null) this.client.setScreen(screen);
+    public void onClose() {
+        if (this.minecraft != null) this.minecraft.setScreen(screen);
     }
 }

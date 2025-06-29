@@ -1,239 +1,101 @@
 package dev.smootheez.scl.config;
 
-import dev.smootheez.scl.config.option.OptionList;
-import dev.smootheez.scl.handler.*;
-import dev.smootheez.scl.registry.ConfigRegistry;
-import dev.smootheez.scl.serializer.*;
+import dev.smootheez.scl.*;
+import dev.smootheez.scl.config.serializer.*;
+import dev.smootheez.scl.config.serializer.options.*;
 
-import java.util.Arrays;
+import java.util.*;
 
-/**
- * Represents a generic configuration option with type safety and metadata.
- * Provides features like serialization, deserialization, GUI widget handling,
- * value validation, and localization support.
- *
- * @param <T> The type of the configuration value (e.g., Boolean, Integer, String)
- */
 public class ConfigOption<T> {
-    protected final String key;
-    protected final T defaultValue;
-    protected T value;
-    protected T minValue;
-    protected T maxValue;
+    private final String key;
+    private final T defaultValue;
+    private T value;
+    private T maxValue;
+    private T minValue;
 
-    protected final Class<T> type;
-    protected final ConfigSerializer<T> serializer;
-    protected final WidgetHandler<T> widgetHandler;
-    protected String translation;
-    protected String configIdentifier;
+    private final Class<T> type;
+    private final ConfigSerializer<T> serializer;
+    private String configIdentifier;
 
-    /**
-     * Constructs a new ConfigOption instance with the specified key, default value,
-     * and configuration metadata.
-     *
-     * @param <T>       The type of the configuration value
-     * @param key       The unique identifier for this configuration option
-     * @param defaultValue The default value to use when no value is set
-     * @param type      The class representing the type of the configuration value
-     * @param serializer The serializer used to convert values to/from JSON
-     * @param widgetHandler The handler used to create the configuration GUI widget
-     */
-    public ConfigOption(String key, T defaultValue, Class<T> type, ConfigSerializer<T> serializer, WidgetHandler<T> widgetHandler) {
+    protected ConfigOption(String key, T defaultValue, Class<T> type, ConfigSerializer<T> serializer) {
         this.key = key;
-        this.value = defaultValue;
         this.defaultValue = defaultValue;
         this.type = type;
         this.serializer = serializer;
-        this.widgetHandler = widgetHandler;
+        this.value = defaultValue;
     }
 
-    /**
-     * Constructs a new ConfigOption instance with the specified key, default value,
-     * and configuration metadata, including minimum and maximum values.
-     *
-     * @param <T>       The type of the configuration value
-     * @param key       The unique identifier for this configuration option
-     * @param defaultValue The default value to use when no value is set
-     * @param type      The class representing the type of the configuration value
-     * @param serializer The serializer used to convert values to/from JSON
-     * @param widgetHandler The handler used to create the configuration GUI widget
-     * @param minValue  The minimum allowed value for this configuration option
-     * @param maxValue  The maximum allowed value for this configuration option
-     */
-    public ConfigOption(String key, T defaultValue, Class<T> type, ConfigSerializer<T> serializer, WidgetHandler<T> widgetHandler, T minValue, T maxValue) {
+    protected ConfigOption(String key, T defaultValue, T minValue, T maxValue, Class<T> type, ConfigSerializer<T> serializer) {
         this.key = key;
-        this.value = defaultValue;
         this.defaultValue = defaultValue;
-        this.type = type;
-        this.serializer = serializer;
-        this.widgetHandler = widgetHandler;
-        this.minValue = minValue;
         this.maxValue = maxValue;
+        this.minValue = minValue;
+        this.type = type;
+        this.serializer = serializer;
+        this.value = defaultValue;
     }
 
-    /**
-     * Returns the key of this configuration option.
-     * @return the unique identifier for this configuration option
-     */
+    public static ConfigOption<Boolean> create(String key, Boolean defaultValue) {
+        return new ConfigOption<>(key, defaultValue, Boolean.class, new BooleanSerializer());
+    }
+
+    public static ConfigOption<Integer> create(String key, Integer defaultValue, Integer minValue, Integer maxValue) {
+        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Integer.class, new IntegerSerializer());
+    }
+
+    public static ConfigOption<Double> create(String key, Double defaultValue, Double minValue, Double maxValue) {
+        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Double.class, new DoubleSerializer());
+    }
+
+    public static ConfigOption<OptionList> create(String key, String... defaultValue) {
+        return new ConfigOption<>(key, new OptionList(Arrays.asList(defaultValue)), OptionList.class, new OptionListSerializer());
+    }
+
+    public static <E extends Enum<E>> ConfigOption<E> create(String key, E defaultValue) {
+        Class<E> enumClass = getEnumClass(defaultValue);
+        return new ConfigOption<>(key, defaultValue, enumClass, new EnumSerializer<>(enumClass));
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <E extends Enum<E>> Class<E> getEnumClass(E enumValue) {
+        return (Class<E>) enumValue.getClass();
+    }
+
     public String getKey() {
         return key;
     }
 
-    /**
-     * Sets the translation key for this configuration option to a value of the form
-     * "options.$modId.$key". This translation key is typically used for localization
-     * purposes in the configuration GUI.
-     *
-     * @param configIdentifier The config name this configuration option belongs to
-     */
-    public void setConfigIdentifier(String configIdentifier) {
-        this.configIdentifier = configIdentifier;
-    }
-
-    /**
-     * Retrieves the translation key for this configuration option.
-     * The translation key is automatically generated in the format "options.$configName.$key"
-     * @return the generated translation key for this configuration option
-     */
-    public String getTranslation() {
-        return this.translation = "options." + configIdentifier + "." + key;
-    }
-
-    /**
-     * Retrieves the default value of this configuration option.
-     * This value is used when no specific value has been set.
-     * @return the default value of this configuration option
-     */
     public T getDefaultValue() {
         return defaultValue;
     }
 
-    /**
-     * Retrieves the current value of this configuration option.
-     * This value may have been modified from the default value.
-     * @return the current value of this configuration option
-     */
     public T getValue() {
         return value;
     }
 
-    /**
-     * Retrieves the minimum value for this configuration option, if specified.
-     * @return the minimum allowed value, or null if no minimum is specified
-     */
-    public T getMinValue() {
-        return minValue;
-    }
-
-    /**
-     * Retrieves the maximum value for this configuration option, if specified.
-     * @return the maximum allowed value, or null if no maximum is specified
-     */
     public T getMaxValue() {
         return maxValue;
     }
 
-    /**
-     * Sets the value of this configuration option to the given value.
-     * @param value the value to set
-     * @throws IllegalArgumentException if the value is not of type T
-     */
+    public T getMinValue() {
+        return minValue;
+    }
+
     public void setValue(T value) {
-        if (type.isInstance(value)) {
+        if (type.isInstance(value))
             this.value = value;
-            ConfigRegistry.save();
-        } else {
-            throw new IllegalArgumentException("Value must be of type " + type.getSimpleName());
-        }
+        else Constants.LOGGER.error("Value {} is not of type {}", value, type);
     }
 
-    /**
-     * Retrieves the type of the configuration option.
-     * @return the runtime class representing the type T
-     */
-    public Class<T> getType() {
-        return type;
+    public String getConfigIdentifier() {
+        return configIdentifier;
     }
 
-    /**
-     * Retrieves the widget handler associated with this configuration option.
-     * The widget handler is responsible for creating and managing the GUI widget
-     * used to edit this configuration option's value.
-     * @return the widget handler associated with this configuration option
-     */
-    public WidgetHandler<T> getWidgetHandler() {
-        return widgetHandler;
+    public void setConfigIdentifier(String configIdentifier) {
+        this.configIdentifier = configIdentifier;
     }
 
-    /**
-     * Retrieves the serializer associated with this configuration option.
-     * The serializer is responsible for converting the value to and from JSON
-     * when reading/writing configuration files.
-     * @return the serializer associated with this configuration option
-     */
     public ConfigSerializer<T> getSerializer() {
         return serializer;
-    }
-
-    /**
-     * Creates a new Boolean configuration option with the specified key and default value.
-     * This convenience method uses default handlers for Boolean values.
-     * @param key The unique identifier for this configuration option
-     * @param defaultValue The default value to use when no value is set
-     * @return A new Boolean configuration option instance
-     */
-    public static ConfigOption<Boolean> create(String key, Boolean defaultValue) {
-        return new ConfigOption<>(key, defaultValue, Boolean.class, new BooleanSerializer(), new BooleanWidgetHandler());
-    }
-
-    /**
-     * Creates a new configuration option for a list of strings with the specified key
-     * and default values.
-     * @param key The unique identifier for this configuration option
-     * @param defaultValue The default values to use when no values are set
-     * @return A new ConfigOptionList configuration option instance
-     */
-    public static ConfigOption<OptionList> create(String key, String... defaultValue) {
-        return new ConfigOption<>(key, new OptionList(Arrays.asList(defaultValue)), OptionList.class, new OptionListSerializer(), new OptionListWidgetHandler());
-    }
-
-    /**
-     * Creates a new Integer configuration option with the specified key, default value,
-     * minimum, and maximum values.
-     * @param key The unique identifier for this configuration option
-     * @param defaultValue The default value to use when no value is set
-     * @param minValue The minimum allowed value for this configuration option
-     * @param maxValue The maximum allowed value for this configuration option
-     * @return A new Integer configuration option instance
-     */
-    public static ConfigOption<Integer> create(String key, Integer defaultValue, Integer minValue, Integer maxValue) {
-        return new ConfigOption<>(key, defaultValue, Integer.class, new IntegerSerializer(), new IntWidgetHandler(), minValue, maxValue);
-    }
-
-    /**
-     * Creates a new Double configuration option with the specified key, default value,
-     * minimum, and maximum values.
-     * @param key The unique identifier for this configuration option
-     * @param defaultValue The default value to use when no value is set
-     * @param minValue The minimum allowed value for this configuration option
-     * @param maxValue The maximum allowed value for this configuration option
-     * @return A new Double configuration option instance
-     */
-    public static ConfigOption<Double> create(String key, Double defaultValue, Double minValue, Double maxValue) {
-        return new ConfigOption<>(key, defaultValue, Double.class, new DoubleSerializer(), new DoubleWidgetHandler(), minValue, maxValue);
-    }
-
-    /**
-     * Creates a new configuration option for an Enum type with the specified key
-     * and default value.
-     * @param <E> The Enum type
-     * @param key The unique identifier for this configuration option
-     * @param defaultValue The default Enum value to use
-     * @return A new Enum configuration option instance
-     */
-    public static <E extends Enum<E>> ConfigOption<E> create(String key, E defaultValue) {
-        @SuppressWarnings("unchecked")
-        Class<E> clazz = (Class<E>) defaultValue.getClass();
-        return new ConfigOption<>(key, defaultValue, clazz, new EnumSerializer<>(clazz), new CycleWidgetHandler<>());
     }
 }

@@ -1,9 +1,0 @@
-{
-  "config.gui.scl.search": "Search...",
-  "config.gui.scl.editOptionList": "Edit",
-  "config.gui.scl.removeOptionList": "Remove",
-  "config.gui.scl.addOptionList": "Add Value",
-  "config.gui.scl.enterValue": "Add",
-  "config.screen.scl.title.optionList": "Option List",
-  "config.screen.scl.title.addList": "Add List"
-}
