@@ -1,4 +1,4 @@
-package dev.smootheez.scl.gui.widget;
+package dev.smootheez.scl.gui.widget.entry;
 
 import net.minecraft.client.gui.components.*;
 import net.minecraft.util.*;
@@ -6,11 +6,11 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public abstract class AbstractConfigWidget extends ContainerObjectSelectionList.Entry<AbstractConfigWidget> {
+public abstract class ConfigWidgetEntry extends ContainerObjectSelectionList.Entry<ConfigWidgetEntry> {
     @Nullable
     final List<FormattedCharSequence> description;
 
-    protected AbstractConfigWidget(@Nullable List<FormattedCharSequence> description) {
+    protected ConfigWidgetEntry(@Nullable List<FormattedCharSequence> description) {
         this.description = description;
     }
 }
