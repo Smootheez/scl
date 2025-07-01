@@ -18,7 +18,7 @@ public abstract class LabeledWidgetEntry extends ConfigWidgetEntry {
     private final Font font = Minecraft.getInstance().font;
     private final Button resetButton;
 
-    protected LabeledWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description) {
+    public LabeledWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description) {
         super(description);
         this.label = this.font.split(label, 350);
 
@@ -36,8 +36,9 @@ public abstract class LabeledWidgetEntry extends ConfigWidgetEntry {
         return this.children;
     }
 
-    public void resetButtonAction() {
-    }
+    public void resetButtonAction() {}
+
+    public void updateResetButton() {}
 
     public Button getResetButton() {
         return resetButton;

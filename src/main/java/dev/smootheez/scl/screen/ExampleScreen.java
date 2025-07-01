@@ -14,7 +14,7 @@ public class ExampleScreen extends Screen {
     private ConfigListWidget listWidget;
 
     public ExampleScreen(Screen parent) {
-        super(Component.literal("Example Screen")); //TODO: Change it into translatable `config.screen.[modid].[title]`
+        super(Component.literal("Example Screen")); //TODO: Change it into translatable `config.screen.[modid].title`
         this.parent = parent;
     }
 
