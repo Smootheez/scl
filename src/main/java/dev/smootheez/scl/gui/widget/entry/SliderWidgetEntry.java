@@ -8,7 +8,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry {
+public class SliderWidgetEntry<T> extends LabeledWidgetEntry {
     protected final ConfigOption<T> option;
     protected final ConfigSliderWidget slider;
 
@@ -16,9 +16,9 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry {
         super(label, description);
         this.option = option;
 
-        double min = option.getMinValue().doubleValue();
-        double max = option.getMaxValue().doubleValue();
-        double initial = option.getValue().doubleValue();
+        double min = (double) option.getMinValue();
+        double max = (double) option.getMaxValue();
+        double initial = (double) option.getValue();
 
         double step = switch (mode) {
             case INTEGER -> 1.0;
@@ -50,7 +50,7 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry {
     public void resetButtonAction() {
         T defaultValue = option.getDefaultValue();
         option.setValue(defaultValue);
-        slider.setSliderValue(defaultValue.doubleValue());
+        slider.setSliderValue((Double) defaultValue);
         updateResetButton();
     }
 

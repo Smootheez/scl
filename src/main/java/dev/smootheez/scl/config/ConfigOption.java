@@ -3,6 +3,7 @@ package dev.smootheez.scl.config;
 import dev.smootheez.scl.*;
 import dev.smootheez.scl.config.serializer.*;
 import dev.smootheez.scl.config.serializer.options.*;
+import dev.smootheez.scl.gui.widget.*;
 import dev.smootheez.scl.gui.widget.handler.*;
 
 import java.util.*;
@@ -16,7 +17,7 @@ public class ConfigOption<T> {
 
     private final Class<T> type;
     private final ConfigSerializer<T> serializer;
-    private final WidgetHandler<T> widgetHandler;
+    private WidgetHandler<T> widgetHandler;
     private String configIdentifier;
 
     protected ConfigOption(String key, T defaultValue, Class<T> type, ConfigSerializer<T> serializer, WidgetHandler<T> widgetHandler) {
@@ -44,11 +45,11 @@ public class ConfigOption<T> {
     }
 
     public static ConfigOption<Integer> create(String key, Integer defaultValue, Integer minValue, Integer maxValue) {
-        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Integer.class, new IntegerSerializer(), new SliderIntegerWidgetHandler());
+        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Integer.class, new IntegerSerializer(), new TextIntegerWidgetHandler());
     }
 
     public static ConfigOption<Double> create(String key, Double defaultValue, Double minValue, Double maxValue) {
-        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Double.class, new DoubleSerializer(), new SliderDoubleWidgetHandler());
+        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Double.class, new DoubleSerializer(), new TextDoubleWidgetHandler());
     }
 
     public static ConfigOption<OptionList> create(String key, String... defaultValue) {
@@ -79,6 +80,10 @@ public class ConfigOption<T> {
 
     public WidgetHandler<T> getWidgetHandler() {
         return widgetHandler;
+    }
+
+    public void setWidgetHandler(WidgetHandler<T> widgetHandler) {
+        this.widgetHandler = widgetHandler;
     }
 
     public T getDefaultValue() {
