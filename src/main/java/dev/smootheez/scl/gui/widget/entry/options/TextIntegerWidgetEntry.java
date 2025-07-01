@@ -8,8 +8,8 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class IntegerWidgetEntry extends TextWidgetEntry<Integer> {
-    public IntegerWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<Integer> option) {
+public class TextIntegerWidgetEntry extends TextWidgetEntry<Integer> {
+    public TextIntegerWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<Integer> option) {
         super(label, description, option);
     }
 

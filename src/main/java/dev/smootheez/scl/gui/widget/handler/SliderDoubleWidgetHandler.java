@@ -9,9 +9,9 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class DoubleWidgetHandler implements WidgetHandler<Double> {
+public class SliderDoubleWidgetHandler implements WidgetHandler<Double>{
     @Override
     public ConfigWidgetEntry createWidget(ConfigOption<Double> option, @Nullable List<FormattedCharSequence> description) {
-        return new DoubleWidgetEntry(Component.translatable(option.getTranslation()), description, option);
+        return new SliderDoubleWidgetEntry(Component.translatable(option.getTranslation()), description, option);
     }
 }

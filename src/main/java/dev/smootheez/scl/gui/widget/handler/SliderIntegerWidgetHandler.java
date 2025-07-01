@@ -9,9 +9,9 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class IntegerWidgetHandler implements WidgetHandler<Integer> {
+public class SliderIntegerWidgetHandler implements WidgetHandler<Integer>{
     @Override
     public ConfigWidgetEntry createWidget(ConfigOption<Integer> option, @Nullable List<FormattedCharSequence> description) {
-        return new IntegerWidgetEntry(Component.translatable(option.getTranslation()), description, option);
+        return new SliderIntegerWidgetEntry(Component.translatable(option.getTranslation()), description, option);
     }
 }

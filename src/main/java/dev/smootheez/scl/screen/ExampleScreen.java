@@ -12,10 +12,12 @@ import java.util.stream.*;
 public class ExampleScreen extends Screen {
     private final Screen parent;
     private ConfigListWidget listWidget;
+    private final String configIdentifier;
 
-    public ExampleScreen(Screen parent) {
+    public ExampleScreen(Screen parent, String configIdentifier) {
         super(Component.literal("Example Screen")); //TODO: Change it into translatable `config.screen.[modid].title`
         this.parent = parent;
+        this.configIdentifier = configIdentifier;
     }
 
     @Override
@@ -23,7 +25,7 @@ public class ExampleScreen extends Screen {
         super.init();
         this.clearWidgets();
 
-        this.listWidget = new ConfigListWidget(this.minecraft, this.width, this.height, 32, this.height - 34, 24);
+        this.listWidget = new ConfigListWidget(this.minecraft, this.width, this.height, 32, this.height - 34, 24, configIdentifier);
         this.addRenderableWidget(listWidget);
 
         EditBox searchField = new EditBox(this.font, this.width / 2 + 5, 10, 100, 16, Component.translatable("widget.scl.search"));

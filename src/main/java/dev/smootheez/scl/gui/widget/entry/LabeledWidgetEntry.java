@@ -16,7 +16,7 @@ public abstract class LabeledWidgetEntry extends ConfigWidgetEntry {
     private final List<FormattedCharSequence> label;
     protected final List<AbstractWidget> children = Lists.newArrayList();
     private final Font font = Minecraft.getInstance().font;
-    private final Button resetButton;
+    protected final Button resetButton;
 
     public LabeledWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description) {
         super(description);

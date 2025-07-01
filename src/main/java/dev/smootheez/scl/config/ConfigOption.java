@@ -44,11 +44,11 @@ public class ConfigOption<T> {
     }
 
     public static ConfigOption<Integer> create(String key, Integer defaultValue, Integer minValue, Integer maxValue) {
-        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Integer.class, new IntegerSerializer(), new IntegerWidgetHandler());
+        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Integer.class, new IntegerSerializer(), new TextIntegerWidgetHandler());
     }
 
     public static ConfigOption<Double> create(String key, Double defaultValue, Double minValue, Double maxValue) {
-        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Double.class, new DoubleSerializer(), new DoubleWidgetHandler());
+        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Double.class, new DoubleSerializer(), new SliderDoubleWidgetHandler());
     }
 
     public static ConfigOption<OptionList> create(String key, String... defaultValue) {
@@ -75,6 +75,10 @@ public class ConfigOption<T> {
 
     public Class<T> getType() {
         return type;
+    }
+
+    public WidgetHandler<T> getWidgetHandler() {
+        return widgetHandler;
     }
 
     public T getDefaultValue() {

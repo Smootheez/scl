@@ -8,8 +8,8 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class DoubleWidgetEntry extends TextWidgetEntry<Double> {
-    public DoubleWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<Double> option) {
+public class TextDoubleWidgetEntry extends TextWidgetEntry<Double> {
+    public TextDoubleWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<Double> option) {
         super(label, description, option);
     }
 
