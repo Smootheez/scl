@@ -12,7 +12,7 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry {
     protected final ConfigOption<T> option;
     protected final ConfigSliderWidget slider;
 
-    public SliderWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<T> option) {
+    public SliderWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<T> option, SliderMode mode) {
         super(label, description);
         this.option = option;
 
@@ -20,13 +20,19 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry {
         double max = option.getMaxValue().doubleValue();
         double initial = option.getValue().doubleValue();
 
+        double step = switch (mode) {
+            case INTEGER -> 1.0;
+            case PERCENTAGE -> 0.01;
+            case DECIMAL -> 0.1;
+        };
+
         this.slider = new ConfigSliderWidget(
                 0, 0, 80, 20,
                 min, max, initial,
-                this::formatValue,
+                step, mode,
                 value -> {
-                    T val = castToType(value);
-                    option.setValue(val);
+                    T newValue = castToType(value);
+                    option.setValue(newValue);
                     updateResetButton();
                 }
         );
@@ -62,7 +68,7 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry {
         } else if (option.getDefaultValue() instanceof Double) {
             return (T) Double.valueOf(value);
         } else {
-            throw new IllegalStateException("Unsupported number type: " + option.getDefaultValue().getClass());
+            throw new IllegalStateException("Unsupported type: " + option.getDefaultValue().getClass());
         }
     }
 }

@@ -44,7 +44,7 @@ public class ConfigOption<T> {
     }
 
     public static ConfigOption<Integer> create(String key, Integer defaultValue, Integer minValue, Integer maxValue) {
-        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Integer.class, new IntegerSerializer(), new TextIntegerWidgetHandler());
+        return new ConfigOption<>(key, defaultValue, minValue, maxValue, Integer.class, new IntegerSerializer(), new SliderIntegerWidgetHandler());
     }
 
     public static ConfigOption<Double> create(String key, Double defaultValue, Double minValue, Double maxValue) {
