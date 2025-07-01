@@ -56,7 +56,10 @@ public class ConfigSliderWidget extends AbstractSliderButton {
     private String formatValue(double value) {
         return switch (mode) {
             case INTEGER -> Integer.toString((int) value);
-            case PERCENTAGE -> String.format("%.0f%%", value * 100);
+            case PERCENTAGE -> {
+                double percent = (value - min) / (max - min);
+                yield String.format("%.0f%%", percent * 100);
+            }
             case DECIMAL -> String.format("%.2f", value);
         };
     }

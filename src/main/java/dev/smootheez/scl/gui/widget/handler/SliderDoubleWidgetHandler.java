@@ -13,6 +13,6 @@ import java.util.*;
 public class SliderDoubleWidgetHandler implements WidgetHandler<Double>{
     @Override
     public ConfigWidgetEntry createWidget(ConfigOption<Double> option, @Nullable List<FormattedCharSequence> description) {
-        return new SliderDoubleWidgetEntry(Component.translatable(option.getTranslation()), description, option, SliderMode.DECIMAL);
+        return new SliderDoubleWidgetEntry(Component.translatable(option.getTranslation()), description, option, SliderMode.PERCENTAGE);
     }
 }

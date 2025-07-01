@@ -9,7 +9,7 @@ import java.util.*;
 public class ModMenuApiImpl implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> new ExampleScreen(parent, "example_config");
+        return parent -> new ConfigScreen(parent, "example_config");
     }
 
     @Override

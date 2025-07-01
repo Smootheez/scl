@@ -54,11 +54,6 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry {
         updateResetButton();
     }
 
-    private String formatValue(double value) {
-        if (option.getValue() instanceof Integer) return Integer.toString((int) value);
-        return String.format("%.2f", value);
-    }
-
     @SuppressWarnings("unchecked")
     private T castToType(double value) {
         if (option.getDefaultValue() instanceof Integer) {
