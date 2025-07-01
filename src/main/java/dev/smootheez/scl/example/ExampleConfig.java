@@ -1,6 +1,5 @@
 package dev.smootheez.scl.example;
 
-import dev.smootheez.scl.*;
 import dev.smootheez.scl.api.*;
 import dev.smootheez.scl.config.*;
 
