@@ -119,4 +119,26 @@ public class ConfigOption<T> {
     public ConfigSerializer<T> getSerializer() {
         return serializer;
     }
+
+    @SuppressWarnings("unchecked")
+    public ConfigOption<T> asSlider() {
+        if (!(this.defaultValue instanceof Number))
+            Constants.LOGGER.error("Cannot use.asSlider() on a non-numeric ConfigOption with key: {}", this.key);
+
+        SliderMode mode = SliderMode.DECIMAL; // Default to decimal
+        if (this.type == Integer.class) mode = SliderMode.INTEGER;
+
+        this.setWidgetHandler((WidgetHandler<T>) new SliderWidgetHandler<>(mode));
+        return this;
+
+    }
+
+    @SuppressWarnings("unchecked")
+    public ConfigOption<T> asSliderPercentage() {
+        if (!(this.defaultValue instanceof Number))
+            Constants.LOGGER.error("Cannot use.percentage() on a non-numeric ConfigOption with key: {}", this.key);
+
+        this.setWidgetHandler((WidgetHandler<T>) new SliderWidgetHandler<>(SliderMode.PERCENTAGE));
+        return this;
+    }
 }

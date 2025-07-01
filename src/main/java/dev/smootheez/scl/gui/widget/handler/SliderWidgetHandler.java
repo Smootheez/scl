@@ -9,7 +9,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class SliderWidgetHandler<T> implements WidgetHandler<T> {
+public class SliderWidgetHandler<T extends Number> implements WidgetHandler<T> {
     private final SliderMode mode;
 
     public SliderWidgetHandler(SliderMode mode) {
