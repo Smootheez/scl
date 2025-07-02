@@ -31,6 +31,7 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry<T> {
                 value -> {
                     T newValue = castToType(value);
                     option.setValue(newValue);
+                    ConfigRegistry.markConfigAsDirty();
                     updateResetButton();
                 }
         );
@@ -40,15 +41,11 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry<T> {
     }
 
     @Override
-    public T getValue() {
-        return castToType(slider.getActualValue());
-    }
-
-    @Override
     public void resetButtonAction() {
         T defaultValue = option.getDefaultValue();
         option.setValue(defaultValue);
         slider.setSliderValue(defaultValue.doubleValue());
+        ConfigRegistry.markConfigAsDirty();
         updateResetButton();
     }
 

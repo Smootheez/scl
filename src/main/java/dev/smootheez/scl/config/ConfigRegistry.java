@@ -15,6 +15,7 @@ public class ConfigRegistry {
     private static final Map<String, List<ConfigOption<?>>> configOptions = new HashMap<>();
     private static final Map<String, ConfigScreenFactory<?>> configScreenFactories = new HashMap<>();
     private static final Map<String, ConfigFileWriter> configWriters = new HashMap<>();
+    private static boolean markConfigDirty = false;
 
     public static void registerConfigs(Class<?> configClass) {
         Config annotation = configClass.getAnnotation(Config.class);
@@ -48,15 +49,29 @@ public class ConfigRegistry {
         }
     }
 
+    public static boolean isMarkConfigDirty() {
+        return markConfigDirty;
+    }
+
+    public static void setMarkConfigDirty(boolean markConfigDirty) {
+        ConfigRegistry.markConfigDirty = markConfigDirty;
+    }
+
+    public static void markConfigAsDirty() {
+        markConfigDirty = true;
+    }
+
     public static void saveConfig(String configIdentifier) {
         ConfigFileWriter writer = configWriters.get(configIdentifier);
         if (writer!= null) writer.saveConfig();
+        markConfigDirty = false;
         Constants.LOGGER.info("Saved config for {}", configIdentifier);
     }
 
     public static void reloadConfig(String configIdentifier) {
         ConfigFileWriter writer = configWriters.get(configIdentifier);
         if (writer != null) writer.loadConfig();
+        markConfigDirty = false;
         Constants.LOGGER.info("Reloaded config for {}", configIdentifier);
     }
 

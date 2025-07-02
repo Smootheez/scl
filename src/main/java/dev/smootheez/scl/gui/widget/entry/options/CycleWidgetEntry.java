@@ -23,6 +23,7 @@ public class CycleWidgetEntry<T extends Enum<T>> extends LabeledWidgetEntry<T> {
                 .create(0, 0, 80, 20, Component.literal(""),
                         (toggleButton, value) -> {
                     option.setValue(value);
+                    ConfigRegistry.markConfigAsDirty();
                     updateResetButton();
                 });
 
@@ -31,15 +32,11 @@ public class CycleWidgetEntry<T extends Enum<T>> extends LabeledWidgetEntry<T> {
     }
 
     @Override
-    public T getValue() {
-        return cycleButton.getValue();
-    }
-
-    @Override
     public void resetButtonAction() {
         T defaultValue = option.getDefaultValue();
         option.setValue(defaultValue);
         cycleButton.setValue(defaultValue);
+        ConfigRegistry.markConfigAsDirty();
         updateResetButton();
     }
 

@@ -23,9 +23,4 @@ public class OptionListWidgetEntry extends LabeledWidgetEntry<OptionList> {
         this.children.add(button);
         updateResetButton();
     }
-
-    @Override
-    public OptionList getValue() {
-        return option.getValue();
-    }
 }

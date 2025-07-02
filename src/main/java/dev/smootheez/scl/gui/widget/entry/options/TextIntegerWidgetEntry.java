@@ -14,15 +14,6 @@ public class TextIntegerWidgetEntry extends TextWidgetEntry<Integer> {
     }
 
     @Override
-    public Integer getValue() {
-        String val = editBox.getValue();
-        if (val.isEmpty()) {
-            return option.getValue(); // or return a safe default
-        }
-        return Integer.parseInt(val);
-    }
-
-    @Override
     protected void onTextChange(String value) {
         if (validateInteger(value) && Integer.parseInt(value) >= option.getMinValue() && Integer.parseInt(value) <= option.getMaxValue()) {
             option.setValue(Integer.valueOf(value));

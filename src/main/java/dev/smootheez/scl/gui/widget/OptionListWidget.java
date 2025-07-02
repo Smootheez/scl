@@ -32,6 +32,7 @@ public class OptionListWidget extends ContainerObjectSelectionList<ConfigWidgetE
 
     public void removeList(ConfigWidgetEntry entry) {
         removeEntry(entry);
+        ConfigRegistry.markConfigAsDirty();
     }
 
     public void refreshEntries() {
