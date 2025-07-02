@@ -1,6 +1,5 @@
 package dev.smootheez.scl.screen;
 
-import dev.smootheez.scl.config.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
@@ -9,7 +8,6 @@ import net.minecraft.network.chat.*;
 public class BaseConfigScreen extends Screen {
     protected final Screen parent;
     protected EditBox searchField;
-    private String configIdentifier;
 
     public BaseConfigScreen(Component title, Screen parent) {
         super(title);
@@ -26,39 +24,7 @@ public class BaseConfigScreen extends Screen {
         this.setFocused(this.searchField);
     }
 
-    protected void initAddValueButton() {
-        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.addValue"),
-                btn -> handleAddValueButton())
-                .pos(this.width / 2 - 135, this.height - 25)
-                .size(130, 20)
-                .build());
-    }
-
     protected void handleAddValueButton() {
-    }
-
-    protected void initBackButton() {
-        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.back"),
-                btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
-    }
-
-    protected void initSaveAndExit() {
-        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
-            if (this.minecraft != null) {
-                this.minecraft.setScreen(parent);
-                if (this.configIdentifier != null)
-                    ConfigRegistry.saveConfig(this.configIdentifier);
-            }
-        }).pos(this.width / 2 - 135, this.height - 25).size(130, 20).build()); //TODO: Enable when there is changes to save
-    }
-
-    protected void initCancelButton() {
-        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.cancel"),
-                btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
-    }
-
-    public void setConfigIdentifier(String configIdentifier) {
-        this.configIdentifier = configIdentifier;
     }
 
     protected void handleSearchField(String search) {

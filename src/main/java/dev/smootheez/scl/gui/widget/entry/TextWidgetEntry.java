@@ -10,13 +10,11 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class TextWidgetEntry<T extends Number> extends LabeledWidgetEntry {
-    protected final ConfigOption<T> option;
-    public final EditBox editBox;
+public class TextWidgetEntry<T extends Number> extends LabeledWidgetEntry<T> {
+    protected final EditBox editBox;
 
     public TextWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<T> option) {
-        super(label, description);
-        this.option = option;
+        super(label, description, option);
 
         this.editBox = new EditBox(Minecraft.getInstance().font, 0, 0, 76, 16, Component.literal(""));
         this.editBox.setValue(option.getValue().toString());
@@ -64,4 +62,7 @@ public class TextWidgetEntry<T extends Number> extends LabeledWidgetEntry {
         updateResetButton();
     }
 
+    public EditBox getEditBox() {
+        return editBox;
+    }
 }

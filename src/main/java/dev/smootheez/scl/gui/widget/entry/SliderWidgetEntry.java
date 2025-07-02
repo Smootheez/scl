@@ -8,13 +8,11 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry {
-    protected final ConfigOption<T> option;
+public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry<T> {
     protected final ConfigSliderWidget slider;
 
     public SliderWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<T> option, SliderMode mode) {
-        super(label, description);
-        this.option = option;
+        super(label, description, option);
 
         double min = option.getMinValue().doubleValue();
         double max = option.getMaxValue().doubleValue();
@@ -39,11 +37,6 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry {
 
         this.children.add(this.slider);
         updateResetButton();
-    }
-
-    @Override
-    public void updateResetButton() {
-        this.resetButton.active = !option.getValue().equals(option.getDefaultValue());
     }
 
     @Override

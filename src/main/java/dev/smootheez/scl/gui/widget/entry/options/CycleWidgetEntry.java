@@ -9,13 +9,11 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class CycleWidgetEntry<T extends Enum<T>> extends LabeledWidgetEntry {
+public class CycleWidgetEntry<T extends Enum<T>> extends LabeledWidgetEntry<T> {
     private final CycleButton<T> cycleButton;
-    private final ConfigOption<T> option;
 
     public CycleWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<T> option) {
-        super(label, description);
-        this.option = option;
+        super(label, description, option);
         T[] enumValues = option.getType().getEnumConstants();
 
         this.cycleButton = CycleButton.<T>builder(e -> Component.translatable(option.getTranslation() + "." + toCammelCase(e.name())))
@@ -38,11 +36,6 @@ public class CycleWidgetEntry<T extends Enum<T>> extends LabeledWidgetEntry {
         option.setValue(defaultValue);
         cycleButton.setValue(defaultValue);
         updateResetButton();
-    }
-
-    @Override
-    public void updateResetButton() {
-        this.resetButton.active = !option.getValue().equals(option.getDefaultValue());
     }
 
     private String toCammelCase(String name) {

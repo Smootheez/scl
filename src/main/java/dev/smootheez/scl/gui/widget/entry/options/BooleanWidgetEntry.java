@@ -9,38 +9,20 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class BooleanWidgetEntry extends LabeledWidgetEntry {
-    private final CycleButton<Boolean> toggleButton;
-    private final ConfigOption<Boolean> option;
+public class BooleanWidgetEntry extends LabeledWidgetEntry<Boolean> {
 
     public BooleanWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<Boolean> option) {
-        super(label, description);
-        this.option = option;
+        super(label, description, option);
 
-        this.toggleButton = CycleButton.onOffBuilder(option.getValue())
+        CycleButton<Boolean> toggleButton = CycleButton.onOffBuilder(option.getValue())
                 .displayOnlyValue()
                 .create(0, 0, 80, 20, Component.literal(""),
-                        (toggleButton, value) -> {
+                        (button, value) -> {
                             option.setValue(value);
                             updateResetButton();
                         });
 
-        this.children.add(this.toggleButton);
+        this.children.add(toggleButton);
         updateResetButton();
-    }
-
-    @Override
-    public void resetButtonAction() {
-        boolean defaultValue = option.getDefaultValue();
-        option.setValue(defaultValue);
-        toggleButton.setValue(defaultValue);
-        updateResetButton();
-    }
-
-    @Override
-    public void updateResetButton() {
-        boolean currentValue = option.getValue();
-        boolean defaultValue = option.getDefaultValue();
-        this.resetButton.active = currentValue != defaultValue;
     }
 }
