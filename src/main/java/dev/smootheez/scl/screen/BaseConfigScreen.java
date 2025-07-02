@@ -1,8 +1,6 @@
 package dev.smootheez.scl.screen;
 
-import dev.smootheez.scl.*;
 import dev.smootheez.scl.config.*;
-import dev.smootheez.scl.config.file.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
@@ -21,11 +19,27 @@ public class BaseConfigScreen extends Screen {
     @Override
     protected void init() {
         super.init();
-
         this.searchField = new EditBox(this.font, this.width / 2 + 5, 10, 100, 16, Component.translatable("config.widget.scl.search"));
         this.searchField.setMaxLength(50);
-        this.searchField.setResponder(this::searchFieldChanged);
+        this.searchField.setResponder(this::handleSearchField);
         this.addRenderableWidget(this.searchField);
+        this.setFocused(this.searchField);
+    }
+
+    protected void initAddValueButton() {
+        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.addValue"),
+                btn -> handleAddValueButton())
+                .pos(this.width / 2 - 135, this.height - 25)
+                .size(130, 20)
+                .build());
+    }
+
+    protected void handleAddValueButton() {
+    }
+
+    protected void initBackButton() {
+        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.back"),
+                btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
     }
 
     protected void initSaveAndExit() {
@@ -47,12 +61,18 @@ public class BaseConfigScreen extends Screen {
         this.configIdentifier = configIdentifier;
     }
 
-    protected void searchFieldChanged(String search) {
+    protected void handleSearchField(String search) {
     }
 
     @Override
     public void onClose() {
         if (this.minecraft != null) this.minecraft.setScreen(parent);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.searchField.tick();
     }
 
     @Override

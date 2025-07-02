@@ -12,7 +12,7 @@ import java.util.*;
 
 public class TextWidgetEntry<T extends Number> extends LabeledWidgetEntry {
     protected final ConfigOption<T> option;
-    protected final EditBox editBox;
+    public final EditBox editBox;
 
     public TextWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<T> option) {
         super(label, description);
@@ -24,6 +24,10 @@ public class TextWidgetEntry<T extends Number> extends LabeledWidgetEntry {
 
         this.children.add(this.editBox);
         updateResetButton();
+    }
+
+    public void tick() {
+        this.editBox.tick();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package dev.smootheez.scl.gui.widget;
 
 import dev.smootheez.scl.config.*;
-import dev.smootheez.scl.config.file.*;
 import dev.smootheez.scl.gui.widget.entry.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.components.*;
@@ -27,6 +26,14 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
 
     public <T> ConfigWidgetEntry createWidget(ConfigOption<T> option) {
         return option.getWidgetHandler().createWidget(option, null);
+    }
+
+    public void tick() {
+        for (ConfigWidgetEntry entry : this.children()) {
+            if (entry instanceof TextWidgetEntry<?> tickable) {
+                tickable.tick();
+            }
+        }
     }
 
     public void search(String search) {

@@ -1,7 +1,6 @@
 package dev.smootheez.scl.screen;
 
 import dev.smootheez.scl.config.*;
-import dev.smootheez.scl.config.file.*;
 import dev.smootheez.scl.gui.widget.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
@@ -27,13 +26,19 @@ public class ConfigScreen extends BaseConfigScreen {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        listWidget.tick();
+    }
+
+    @Override
     public void onClose() {
         super.onClose();
         ConfigRegistry.reloadConfig(configIdentifier);
     }
 
     @Override
-    protected void searchFieldChanged(String search) {
+    protected void handleSearchField(String search) {
         this.listWidget.search(search);
     }
 }
