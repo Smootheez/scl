@@ -1,5 +1,6 @@
 package dev.smootheez.scl.screen;
 
+import dev.smootheez.scl.config.file.*;
 import dev.smootheez.scl.gui.widget.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;

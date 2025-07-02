@@ -14,7 +14,7 @@ public class ConfigRegistry {
     private static final Set<String> usedConfigIdentifiers = new HashSet<>();
     private static final Map<String, List<ConfigOption<?>>> configOptions = new HashMap<>();
     private static final Map<String, ConfigScreenFactory<?>> configScreenFactories = new HashMap<>();
-//    private static final Map<String, ConfigFileWriter> configWriters = new HashMap<>();
+    private static final Map<String, ConfigFileWriter> configWriters = new HashMap<>();
 
     public static void registerConfigs(Class<?> configClass) {
         Config annotation = configClass.getAnnotation(Config.class);
@@ -37,7 +37,7 @@ public class ConfigRegistry {
             }
             configOptions.put(configIdentifier, options);
             ConfigFileWriter configFileWriter = new ConfigFileWriter(configIdentifier);
-//            configWriters.put(configIdentifier, configFileWriter);
+            configWriters.put(configIdentifier, configFileWriter);
             configFileWriter.loadConfig();
 
             if (ModChecker.isModInstalled(configIdentifier) && ModChecker.isModInstalled("modmenu") && annotation.gui())
@@ -46,6 +46,11 @@ public class ConfigRegistry {
         } catch (IllegalAccessException e) {
             Constants.LOGGER.error("Failed to register configs", e);
         }
+    }
+
+    public static void reloadConfig(String configIdentifier) {
+        ConfigFileWriter writer = configWriters.get(configIdentifier);
+        if (writer != null) writer.loadConfig();
     }
 
     public static Map<String, ConfigScreenFactory<?>> getConfigScreenFactories() {

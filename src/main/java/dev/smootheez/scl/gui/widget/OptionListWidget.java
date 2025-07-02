@@ -30,4 +30,11 @@ public class OptionListWidget extends ContainerObjectSelectionList<ConfigWidgetE
     public void removeList(ConfigWidgetEntry entry) {
         removeEntry(entry);
     }
+
+    public void refreshEntries() {
+        clearEntries();
+        for (String s : option.getValue().values()) {
+            addEntry(new ValueListWidgetEntry(Component.literal(s), this, option));
+        }
+    }
 }

@@ -40,6 +40,7 @@ public class ValueListWidgetEntry extends ConfigWidgetEntry {
         this.optionListWidget.removeList(this);
         option.setValue(new OptionList(values));
     }
+
     @Override
     public @NotNull List<? extends NarratableEntry> narratables() {
         return this.children;

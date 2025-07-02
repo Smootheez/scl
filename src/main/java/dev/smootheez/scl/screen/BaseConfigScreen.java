@@ -1,5 +1,7 @@
 package dev.smootheez.scl.screen;
 
+import dev.smootheez.scl.*;
+import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.config.file.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.*;
@@ -20,19 +22,24 @@ public class BaseConfigScreen extends Screen {
     protected void init() {
         super.init();
 
-        this.searchField = new EditBox(this.font, this.width / 2 + 5, 10, 100, 16, Component.translatable("config.widget.scl.search"));
-        this.searchField.setMaxLength(50);
-        this.searchField.setResponder(this::searchFieldChanged);
-        this.addRenderableWidget(this.searchField);
+        initSearchField();
 
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
             onClose();
             if (this.configIdentifier != null)
                 new ConfigFileWriter(this.configIdentifier).saveConfig();
+            Constants.LOGGER.info("Saved config");
         }).pos(this.width / 2 - 135, this.height - 25).size(130, 20).build()); //TODO: Enable when there is changes to save
 
-        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.cancel"), btn ->
-                onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
+        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.cancel"),
+                btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
+    }
+
+    protected void initSearchField() {
+        this.searchField = new EditBox(this.font, this.width / 2 + 5, 10, 100, 16, Component.translatable("config.widget.scl.search"));
+        this.searchField.setMaxLength(50);
+        this.searchField.setResponder(this::searchFieldChanged);
+        this.addRenderableWidget(this.searchField);
     }
 
     public void setConfigIdentifier(String configIdentifier) {

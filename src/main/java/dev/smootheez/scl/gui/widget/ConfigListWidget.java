@@ -1,6 +1,7 @@
 package dev.smootheez.scl.gui.widget;
 
 import dev.smootheez.scl.config.*;
+import dev.smootheez.scl.config.file.*;
 import dev.smootheez.scl.gui.widget.entry.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.components.*;
