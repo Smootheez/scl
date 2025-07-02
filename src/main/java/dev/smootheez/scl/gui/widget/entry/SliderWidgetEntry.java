@@ -43,7 +43,7 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry {
 
     @Override
     public void updateResetButton() {
-        getResetButton().active = !option.getValue().equals(option.getDefaultValue());
+        this.resetButton.active = !option.getValue().equals(option.getDefaultValue());
     }
 
     @Override

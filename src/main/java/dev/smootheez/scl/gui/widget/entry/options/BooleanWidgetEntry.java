@@ -41,6 +41,6 @@ public class BooleanWidgetEntry extends LabeledWidgetEntry {
     public void updateResetButton() {
         boolean currentValue = option.getValue();
         boolean defaultValue = option.getDefaultValue();
-        getResetButton().active = currentValue != defaultValue;
+        this.resetButton.active = currentValue != defaultValue;
     }
 }

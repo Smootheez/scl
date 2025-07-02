@@ -42,7 +42,7 @@ public class CycleWidgetEntry<T extends Enum<T>> extends LabeledWidgetEntry {
 
     @Override
     public void updateResetButton() {
-        getResetButton().active = !option.getValue().equals(option.getDefaultValue());
+        this.resetButton.active = !option.getValue().equals(option.getDefaultValue());
     }
 
     private String toCammelCase(String name) {

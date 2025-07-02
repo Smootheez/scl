@@ -44,7 +44,7 @@ public class TextWidgetEntry<T extends Number> extends LabeledWidgetEntry {
     public void updateResetButton() {
         T currentValue = option.getValue();
         T defaultValue = option.getDefaultValue();
-        getResetButton().active = !currentValue.equals(defaultValue);
+        this.resetButton.active = !currentValue.equals(defaultValue);
     }
 
     @Override

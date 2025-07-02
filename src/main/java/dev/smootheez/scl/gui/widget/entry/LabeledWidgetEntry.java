@@ -40,10 +40,6 @@ public abstract class LabeledWidgetEntry extends ConfigWidgetEntry {
 
     public void updateResetButton() {}
 
-    public Button getResetButton() {
-        return resetButton;
-    }
-
     @Override
     public void render(GuiGraphics guiGraphics, int i, int j, int k, int l, int m, int n, int o, boolean bl, float f) {
         renderLabel(guiGraphics, j, k);

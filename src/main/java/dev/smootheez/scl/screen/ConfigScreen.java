@@ -33,7 +33,6 @@ public class ConfigScreen extends Screen {
 
         this.addRenderableWidget(Button.builder(Component.translatable("widget.scl.save&exit"), btn -> {
             onClose();
-            //TODO: Save config
             new ConfigFileWriter(configIdentifier).saveConfig();
         }).pos(this.width / 2 - 135, this.height - 25).size(130, 20).build()); //TODO: Enable when there is changes to save
 

@@ -1,5 +1,7 @@
 {
   "widget.scl.save&exit": "Save & Exit",
   "widget.scl.cancel": "Cancel",
-  "widget.scl.search": "Search"
+  "widget.scl.search": "Search",
+  "widget.scl.addValue": "Add Value",
+  "widget.scl.editValue": "Edit Value"
 }
