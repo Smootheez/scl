@@ -48,9 +48,16 @@ public class ConfigRegistry {
         }
     }
 
+    public static void saveConfig(String configIdentifier) {
+        ConfigFileWriter writer = configWriters.get(configIdentifier);
+        if (writer!= null) writer.saveConfig();
+        Constants.LOGGER.info("Saved config for {}", configIdentifier);
+    }
+
     public static void reloadConfig(String configIdentifier) {
         ConfigFileWriter writer = configWriters.get(configIdentifier);
         if (writer != null) writer.loadConfig();
+        Constants.LOGGER.info("Reloaded config for {}", configIdentifier);
     }
 
     public static Map<String, ConfigScreenFactory<?>> getConfigScreenFactories() {

@@ -21,7 +21,11 @@ public class OptionListScreen extends BaseConfigScreen{
     protected void init() {
         this.widget = new OptionListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 24, this.option);
         this.addRenderableWidget(this.widget);
-
         super.init();
+    }
+
+    @Override
+    protected void searchFieldChanged(String search) {
+        super.searchFieldChanged(search); //TODO: implement search for option list
     }
 }

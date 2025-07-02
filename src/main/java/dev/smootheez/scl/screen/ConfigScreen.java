@@ -1,5 +1,6 @@
 package dev.smootheez.scl.screen;
 
+import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.config.file.*;
 import dev.smootheez.scl.gui.widget.*;
 import net.minecraft.client.gui.screens.*;
@@ -20,7 +21,15 @@ public class ConfigScreen extends BaseConfigScreen {
         this.listWidget = new ConfigListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 24, configIdentifier);
         this.addRenderableWidget(this.listWidget);
 
+        this.initSaveAndExit();
+        this.initCancelButton();
         super.init();
+    }
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        ConfigRegistry.reloadConfig(configIdentifier);
     }
 
     @Override
