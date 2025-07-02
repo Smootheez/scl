@@ -1,7 +1,10 @@
 {
-  "widget.scl.save&exit": "Save & Exit",
-  "widget.scl.cancel": "Cancel",
-  "widget.scl.search": "Search",
-  "widget.scl.addValue": "Add Value",
-  "widget.scl.editValue": "Edit Value"
+  "config.widget.scl.save&exit": "Save & Exit",
+  "config.widget.scl.cancel": "Cancel",
+  "config.widget.scl.search": "Search",
+  "config.widget.scl.addValue": "Add Value",
+  "config.widget.scl.editValue": "Edit Value",
+  "config.widget.scl.removeValue": "Remove",
+  "config.screen.example_config.title": "Example Config",
+  "config.screen.scl.editValue.title": "Edit Value"
 }

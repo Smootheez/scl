@@ -71,7 +71,7 @@ public class ConfigOption<T> {
     }
 
     public String getTranslation() {
-        return "config." + getConfigIdentifier() + "." + key;
+        return "config.option." + getConfigIdentifier() + "." + key;
     }
 
     public Class<T> getType() {

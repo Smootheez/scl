@@ -12,6 +12,6 @@ import java.util.*;
 public class OptionListWidgetHandler implements WidgetHandler<OptionList> {
     @Override
     public ConfigWidgetEntry createWidget(ConfigOption<OptionList> option, @Nullable List<FormattedCharSequence> description) {
-        return new OptionListWidgetEntrty(Component.translatable(option.getTranslation()), option);
+        return new OptionListWidgetEntry(Component.translatable(option.getTranslation()), option);
     }
 }

@@ -15,10 +15,6 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
         }
     }
 
-    public <T> ConfigWidgetEntry createWidget(ConfigOption<T> option) {
-        return option.getWidgetHandler().createWidget(option, null);
-    }
-
     @Override
     protected int getScrollbarPosition() {
         return this.width / 2 + 185;
@@ -27,5 +23,12 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
     @Override
     public int getRowWidth() {
         return 350;
+    }
+
+    public <T> ConfigWidgetEntry createWidget(ConfigOption<T> option) {
+        return option.getWidgetHandler().createWidget(option, null);
+    }
+
+    public void search(String search) {
     }
 }
