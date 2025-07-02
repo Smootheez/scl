@@ -1,7 +1,6 @@
 package dev.smootheez.scl.screen;
 
 import dev.smootheez.scl.config.file.*;
-import dev.smootheez.scl.gui.widget.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
@@ -10,6 +9,7 @@ import net.minecraft.network.chat.*;
 public class BaseConfigScreen extends Screen {
     protected final Screen parent;
     protected EditBox searchField;
+    private String configIdentifier;
 
     public BaseConfigScreen(Component title, Screen parent) {
         super(title);
@@ -27,11 +27,16 @@ public class BaseConfigScreen extends Screen {
 
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
             onClose();
-            //TODO: Save config
+            if (this.configIdentifier != null)
+                new ConfigFileWriter(this.configIdentifier).saveConfig();
         }).pos(this.width / 2 - 135, this.height - 25).size(130, 20).build()); //TODO: Enable when there is changes to save
 
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.cancel"), btn ->
                 onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
+    }
+
+    public void setConfigIdentifier(String configIdentifier) {
+        this.configIdentifier = configIdentifier;
     }
 
     protected void searchFieldChanged(String search) {

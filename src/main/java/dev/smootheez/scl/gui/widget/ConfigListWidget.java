@@ -4,7 +4,6 @@ import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.widget.entry.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.components.*;
-import net.minecraft.network.chat.*;
 
 public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetEntry> {
     public ConfigListWidget(Minecraft minecraft, int i, int j, int k, int l, int m, String configIdentifier) {

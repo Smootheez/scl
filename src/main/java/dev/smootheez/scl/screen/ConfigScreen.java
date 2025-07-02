@@ -11,6 +11,7 @@ public class ConfigScreen extends BaseConfigScreen {
     public ConfigScreen(Screen parent, String configIdentifier) {
         super(Component.translatable("config.screen." + configIdentifier + ".title"), parent);
         this.configIdentifier = configIdentifier;
+        this.setConfigIdentifier(configIdentifier);
     }
 
     @Override

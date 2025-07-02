@@ -6,7 +6,7 @@ import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
 
 public class OptionListScreen extends BaseConfigScreen{
-    private OptionListWidget widget;
+    protected OptionListWidget widget;
     private final ConfigOption<OptionList> option;
 
     public OptionListScreen(Screen parent, ConfigOption<OptionList> option) {
