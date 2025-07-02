@@ -8,10 +8,12 @@ import net.minecraft.client.gui.components.*;
 import net.minecraft.network.chat.*;
 
 public class OptionListWidgetEntry extends LabeledWidgetEntry<OptionList> {
+    protected final Button button;
+
     public OptionListWidgetEntry(Component label, ConfigOption<OptionList> option) {
         super(label, null, option);
 
-        Button button = Button.builder(Component.translatable("config.widget.scl.editValue"), b -> {
+        button = Button.builder(Component.translatable("config.widget.scl.editValue"), b -> {
             var client = Minecraft.getInstance();
             var screen = client.screen;
             if (screen != null) client.setScreen(new OptionListScreen(screen, option));
@@ -20,5 +22,10 @@ public class OptionListWidgetEntry extends LabeledWidgetEntry<OptionList> {
 
         this.children.add(button);
         updateResetButton();
+    }
+
+    @Override
+    public OptionList getValue() {
+        return option.getValue();
     }
 }

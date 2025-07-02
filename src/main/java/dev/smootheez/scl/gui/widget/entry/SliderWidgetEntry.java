@@ -40,6 +40,11 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry<T> {
     }
 
     @Override
+    public T getValue() {
+        return castToType(slider.getActualValue());
+    }
+
+    @Override
     public void resetButtonAction() {
         T defaultValue = option.getDefaultValue();
         option.setValue(defaultValue);

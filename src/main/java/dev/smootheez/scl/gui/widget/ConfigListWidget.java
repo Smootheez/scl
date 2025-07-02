@@ -14,6 +14,15 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
         }
     }
 
+    public boolean hasChanged() {
+        for (ConfigWidgetEntry entry : this.children()) {
+            if (entry instanceof LabeledWidgetEntry<?> labeledEntry && labeledEntry.hasChanged()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     protected int getScrollbarPosition() {
         return this.width / 2 + 185;
@@ -30,9 +39,8 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
 
     public void tick() {
         for (ConfigWidgetEntry entry : this.children()) {
-            if (entry instanceof TextWidgetEntry<?> tickable) {
+            if (entry instanceof TextWidgetEntry<?> tickable)
                 tickable.tick();
-            }
         }
     }
 

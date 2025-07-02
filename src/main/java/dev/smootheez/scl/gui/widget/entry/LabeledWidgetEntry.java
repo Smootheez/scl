@@ -19,15 +19,26 @@ public abstract class LabeledWidgetEntry<T> extends ConfigWidgetEntry {
     private final Font font = Minecraft.getInstance().font;
     protected final Button resetButton;
     protected final ConfigOption<T> option;
+    private final T originalValue;
 
     public LabeledWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<T> option) {
         super(description);
         this.label = this.font.split(label, 350);
         this.option = option;
+        this.originalValue = option.getValue();
 
         this.resetButton = Button.builder(Component.literal("⭮"), button -> this.resetButtonAction()).size(20, 20).build();
         this.children.add(this.resetButton);
     }
+
+    public boolean hasChanged() {
+        T currentValue = getValue();
+        if (currentValue == null)
+            return originalValue != null;
+        return !currentValue.equals(originalValue);
+    }
+
+    public abstract T getValue();
 
     @Override
     public @NotNull List<? extends GuiEventListener> children() {

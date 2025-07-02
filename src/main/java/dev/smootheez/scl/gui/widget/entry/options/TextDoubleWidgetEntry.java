@@ -14,6 +14,15 @@ public class TextDoubleWidgetEntry extends TextWidgetEntry<Double> {
     }
 
     @Override
+    public Double getValue() {
+        String val = editBox.getValue();
+        if (val.isEmpty()) {
+            return option.getValue(); // or return a safe default
+        }
+        return Double.parseDouble(val);
+    }
+
+    @Override
     protected void onTextChange(String value) {
         if (validateDuble(value) && Double.parseDouble(value) >= option.getMinValue() && Double.parseDouble(value) <= option.getMaxValue()) {
             option.setValue(Double.valueOf(value));

@@ -31,6 +31,11 @@ public class CycleWidgetEntry<T extends Enum<T>> extends LabeledWidgetEntry<T> {
     }
 
     @Override
+    public T getValue() {
+        return cycleButton.getValue();
+    }
+
+    @Override
     public void resetButtonAction() {
         T defaultValue = option.getDefaultValue();
         option.setValue(defaultValue);

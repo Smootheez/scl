@@ -10,6 +10,7 @@ import net.minecraft.network.chat.*;
 public class ConfigScreen extends BaseConfigScreen {
     private final String configIdentifier;
     private ConfigListWidget listWidget;
+    private Button saveExitButton;
 
     public ConfigScreen(Screen parent, String configIdentifier) {
         super(Component.translatable("config.screen." + configIdentifier + ".title"), parent);
@@ -21,12 +22,13 @@ public class ConfigScreen extends BaseConfigScreen {
         this.listWidget = new ConfigListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 24, configIdentifier);
         this.addRenderableWidget(this.listWidget);
 
-        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
+        saveExitButton = this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
             if (this.minecraft != null) {
                 this.minecraft.setScreen(parent);
                 ConfigRegistry.saveConfig(this.configIdentifier);
             }
-        }).pos(this.width / 2 - 135, this.height - 25).size(130, 20).build()); //TODO: Enable when there is changes to save
+        }).pos(this.width / 2 - 135, this.height - 25).size(130, 20).build());
+
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.cancel"),
                 btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
 
@@ -69,6 +71,9 @@ public class ConfigScreen extends BaseConfigScreen {
     public void tick() {
         super.tick();
         listWidget.tick();
+
+        if (this.saveExitButton != null)
+            this.saveExitButton.active = listWidget.hasChanged();
     }
 
     @Override

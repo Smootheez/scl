@@ -6,6 +6,9 @@ import net.minecraft.client.*;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.network.chat.*;
 
+import java.util.*;
+import java.util.stream.*;
+
 public class OptionListWidget extends ContainerObjectSelectionList<ConfigWidgetEntry> {
     protected final ConfigOption<OptionList> option;
 
