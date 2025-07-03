@@ -1,4 +1,4 @@
-package dev.smootheez.scl.screen;
+package dev.smootheez.scl.gui.screen;
 
 import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.widget.*;
@@ -74,7 +74,7 @@ public class ConfigScreen extends BaseConfigScreen {
         listWidget.tick();
 
         if (this.saveExitButton != null)
-            this.saveExitButton.active = ConfigRegistry.isMarkConfigDirty();
+            this.saveExitButton.active = this.listWidget.hasChanged();
     }
 
     @Override

@@ -20,11 +20,15 @@ public class BooleanWidgetEntry extends LabeledWidgetEntry<Boolean> {
                         (button, value) -> {
                             option.setValue(value);
                             updateResetButton();
-                            ConfigRegistry.markConfigAsDirty();
                         });
 
         this.children.add(toggleButton);
         updateResetButton();
+    }
+
+    @Override
+    public Boolean getValue() {
+        return toggleButton.getValue();
     }
 
     @Override

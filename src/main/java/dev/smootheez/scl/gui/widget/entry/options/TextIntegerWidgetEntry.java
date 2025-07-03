@@ -22,6 +22,11 @@ public class TextIntegerWidgetEntry extends TextWidgetEntry<Integer> {
         super.onTextChange(value);
     }
 
+    @Override
+    public Integer getValue() {
+        return Integer.valueOf(this.editBox.getValue());
+    }
+
     private boolean validateInteger(String input) {
         try {
             Integer.parseInt(input);

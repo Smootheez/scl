@@ -1,4 +1,4 @@
-package dev.smootheez.scl.screen;
+package dev.smootheez.scl.gui.screen;
 
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screens.*;

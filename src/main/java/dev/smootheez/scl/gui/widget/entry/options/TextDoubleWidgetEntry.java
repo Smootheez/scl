@@ -22,6 +22,11 @@ public class TextDoubleWidgetEntry extends TextWidgetEntry<Double> {
         super.onTextChange(value);
     }
 
+    @Override
+    public Double getValue() {
+        return Double.valueOf(this.editBox.getValue());
+    }
+
     private boolean validateDuble(String input) {
         try {
             Double.parseDouble(input);

@@ -1,7 +1,6 @@
 package dev.smootheez.scl.gui.widget.entry;
 
-import dev.smootheez.scl.config.*;
-import dev.smootheez.scl.gui.widget.*;
+import dev.smootheez.scl.gui.screen.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.*;
@@ -18,27 +17,15 @@ public class ValueListWidgetEntry extends ConfigWidgetEntry {
     private final List<FormattedCharSequence> label;
     protected final List<AbstractWidget> children = Lists.newArrayList();
     private final Font font = Minecraft.getInstance().font;
-    private final OptionListWidget optionListWidget;
-    private final ConfigOption<OptionList> option;
 
-    public ValueListWidgetEntry(Component label, OptionListWidget optionListWidget, ConfigOption<OptionList> option) {
+    public ValueListWidgetEntry(Component label, OptionListScreen optionListScreen) {
         super(null);
         this.label = this.font.split(label, 175);
-        this.optionListWidget = optionListWidget;
-        this.option = option;
 
         Button removeButton = Button.builder(Component.translatable("config.widget.scl.removeValue"),
-                        button -> removeValue(label.getString())).size(44, 20).build();
+                        button -> optionListScreen.handleRemoveValueButton(label.getString(), this)).size(44, 20).build();
 
         this.children.add(removeButton);
-    }
-
-    private void removeValue(String value) {
-        OptionList optionList = this.option.getValue();
-        List<String> values = new ArrayList<>(optionList.values());
-        values.remove(value);
-        this.optionListWidget.removeList(this);
-        option.setValue(new OptionList(values));
     }
 
     @Override

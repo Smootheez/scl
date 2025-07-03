@@ -55,12 +55,10 @@ public abstract class TextWidgetEntry<T extends Number> extends LabeledWidgetEnt
         option.setValue(defaultValue);
         this.editBox.setValue(defaultValue.toString());
         this.editBox.setTextColor(14737632);
-        ConfigRegistry.markConfigAsDirty();
         updateResetButton();
     }
 
     protected void onTextChange(String value) {
-        ConfigRegistry.markConfigAsDirty();
         updateResetButton();
     }
 

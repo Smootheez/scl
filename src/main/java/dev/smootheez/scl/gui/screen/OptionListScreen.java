@@ -1,15 +1,19 @@
-package dev.smootheez.scl.screen;
+package dev.smootheez.scl.gui.screen;
 
 import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.widget.*;
+import dev.smootheez.scl.gui.widget.entry.*;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
+
+import java.util.*;
 
 public class OptionListScreen extends BaseConfigScreen{
     protected OptionListWidget widget;
     private final ConfigOption<OptionList> option;
     protected final String configIdentifier;
+    private OptionList newValue;
 
     public OptionListScreen(Screen parent, ConfigOption<OptionList> option) {
         super(Component.translatable("config.screen.scl.editValue.title"), parent);
@@ -19,7 +23,7 @@ public class OptionListScreen extends BaseConfigScreen{
 
     @Override
     protected void init() {
-        this.widget = new OptionListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 24, this.option);
+        this.widget = new OptionListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 24, this.option, this);
         this.addRenderableWidget(this.widget);
 
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.addValue"),
@@ -31,6 +35,24 @@ public class OptionListScreen extends BaseConfigScreen{
                 btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
 
         super.init();
+    }
+
+    public OptionList getNewValue() {
+        return newValue;
+    }
+
+    public void setNewValue(OptionList newValue) {
+        this.newValue = newValue;
+    }
+
+    public void handleRemoveValueButton(String value, ValueListWidgetEntry entry) {
+        OptionList optionList = this.option.getValue();
+        List<String> values = new ArrayList<>(optionList.values());
+        values.remove(value);
+        this.widget.removeList(entry);
+        var newValues = new OptionList(values);
+        setNewValue(newValues);
+        option.setValue(newValues);
     }
 
     protected void handleAddValueButton() {
