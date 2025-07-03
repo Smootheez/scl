@@ -1,17 +1,25 @@
 package dev.smootheez.scl.gui.widget;
 
+import com.google.common.collect.*;
 import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.widget.entry.*;
 import net.minecraft.client.*;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.*;
+import net.minecraft.client.resources.language.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.util.*;
+
+import java.util.*;
 
 public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetEntry> {
+    private final String configIdentifier;
+    private String filter = "";
+
     public ConfigListWidget(Minecraft minecraft, int i, int j, int k, int l, int m, String configIdentifier) {
         super(minecraft, i, j, k, l, m);
-
-        for (ConfigOption<?> option : ConfigRegistry.getConfigOptions(configIdentifier)) {
-            addEntry(createWidget(option));
-        }
+        this.configIdentifier = configIdentifier;
+        updateEntries();
     }
 
     public boolean hasChanged() {
@@ -34,7 +42,19 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
     }
 
     public <T> ConfigWidgetEntry createWidget(ConfigOption<T> option) {
-        return option.getWidgetHandler().createWidget(option, null);
+        List<FormattedCharSequence> description = createDescription(option);
+        return option.getWidgetHandler().createWidget(option, description);
+    }
+
+    private List<FormattedCharSequence> createDescription(ConfigOption<?> option) {
+        String descriptionKey = option.getTranslation() + ".description";
+        Component translateable = Component.translatable(descriptionKey);
+        if (I18n.exists(descriptionKey)) {
+            ImmutableList.Builder<FormattedCharSequence> builder = ImmutableList.builder();
+            this.minecraft.font.split(translateable, 200).forEach(builder::add);
+            return builder.build();
+        }
+        return Collections.emptyList();
     }
 
     public void tick() {
@@ -44,6 +64,37 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
         }
     }
 
+    private void updateEntries() {
+        clearEntries();
+        List<ConfigOption<?>> configOptions = ConfigRegistry.getConfigOptions(configIdentifier);
+        List<ConfigOption<?>> filteredOptions = configOptions.stream()
+                .filter(option -> matchesSearchTerm(option, filter))
+                .toList();
+        for (ConfigOption<?> option : filteredOptions) {
+            addEntry(createWidget(option));
+        }
+    }
+
+    private boolean matchesSearchTerm(ConfigOption<?> option, String search) {
+        String lowerCaseSearch = search.toLowerCase();
+
+        String translation = option.getTranslation();
+        String translatedText = Component.translatable(translation).toString();
+
+        return translatedText.toLowerCase().contains(lowerCaseSearch) ||
+                option.getKey().toLowerCase().contains(lowerCaseSearch);
+    }
+
     public void search(String search) {
+        this.filter = search;
+        updateEntries();
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int i, int j, float f) {
+        super.render(guiGraphics, i, j, f);
+        ConfigWidgetEntry hoveredWidget = this.getHovered();
+        if (hoveredWidget != null && hoveredWidget.description != null && this.minecraft.screen != null)
+            this.minecraft.screen.setTooltipForNextRenderPass(hoveredWidget.description);
     }
 }

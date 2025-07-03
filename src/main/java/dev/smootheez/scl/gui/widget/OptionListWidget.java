@@ -7,19 +7,18 @@ import net.minecraft.client.*;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.network.chat.*;
 
+import java.util.*;
+
 public class OptionListWidget extends ContainerObjectSelectionList<ConfigWidgetEntry> {
     protected final ConfigOption<OptionList> option;
     private final OptionListScreen screen;
+    private String filter = "";
 
     public OptionListWidget(Minecraft minecraft, int i, int j, int k, int l, int m, ConfigOption<OptionList> option, OptionListScreen screen) {
         super(minecraft, i, j, k, l, m);
         this.option = option;
         this.screen = screen;
-        var optionList = option.getValue().values();
-
-        for (String s : optionList) {
-            addEntry(new ValueListWidgetEntry(Component.literal(s), this.screen));
-        }
+        updateEntries();
     }
 
     public void addList(ConfigWidgetEntry entry) {
@@ -34,10 +33,23 @@ public class OptionListWidget extends ContainerObjectSelectionList<ConfigWidgetE
         removeEntry(entry);
     }
 
-    public void refreshEntries() {
+    public void updateEntries() {
         clearEntries();
-        for (String s : option.getValue().values()) {
+        List<String> list = option.getValue().values();
+        List<String> filteredList = list.stream()
+                .filter(s -> matchesSearchTerm(s, filter))
+                .toList();
+        for (String s : filteredList) {
             addEntry(new ValueListWidgetEntry(Component.literal(s), this.screen));
         }
+    }
+
+    private boolean matchesSearchTerm(String searchTerm, String value) {
+        return searchTerm.toLowerCase().contains(value);
+    }
+
+    public void search(String search) {
+        this.filter = search;
+        updateEntries();
     }
 }

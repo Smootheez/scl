@@ -8,7 +8,7 @@ import java.util.*;
 
 public abstract class ConfigWidgetEntry extends ContainerObjectSelectionList.Entry<ConfigWidgetEntry> {
     @Nullable
-    final List<FormattedCharSequence> description;
+    public final List<FormattedCharSequence> description;
 
     protected ConfigWidgetEntry(@Nullable List<FormattedCharSequence> description) {
         this.description = description;

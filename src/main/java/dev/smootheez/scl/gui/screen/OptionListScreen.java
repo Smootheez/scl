@@ -13,7 +13,6 @@ public class OptionListScreen extends BaseConfigScreen{
     protected OptionListWidget widget;
     private final ConfigOption<OptionList> option;
     protected final String configIdentifier;
-    private OptionList newValue;
 
     public OptionListScreen(Screen parent, ConfigOption<OptionList> option) {
         super(Component.translatable("config.screen.scl.editValue.title"), parent);
@@ -37,22 +36,13 @@ public class OptionListScreen extends BaseConfigScreen{
         super.init();
     }
 
-    public OptionList getNewValue() {
-        return newValue;
-    }
-
-    public void setNewValue(OptionList newValue) {
-        this.newValue = newValue;
-    }
-
     public void handleRemoveValueButton(String value, ValueListWidgetEntry entry) {
-        OptionList optionList = this.option.getValue();
-        List<String> values = new ArrayList<>(optionList.values());
+        OptionList newValue = this.option.getValue();
+        List<String> values = newValue.values();
         values.remove(value);
         this.widget.removeList(entry);
         var newValues = new OptionList(values);
-        setNewValue(newValues);
-        option.setValue(newValues);
+        this.option.setValue(newValues);
     }
 
     protected void handleAddValueButton() {
@@ -66,6 +56,6 @@ public class OptionListScreen extends BaseConfigScreen{
 
     @Override
     protected void handleSearchField(String search) {
-        super.handleSearchField(search); //TODO: implement search for option list
+        this.widget.search(search);
     }
 }
