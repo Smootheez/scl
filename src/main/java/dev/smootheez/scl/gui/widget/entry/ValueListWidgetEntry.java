@@ -23,7 +23,7 @@ public class ValueListWidgetEntry extends ConfigWidgetEntry {
         this.label = this.font.split(label, 175);
 
         Button removeButton = Button.builder(Component.translatable("config.widget.scl.removeValue"),
-                        button -> optionListScreen.handleRemoveValueButton(label.getString(), this)
+                        button -> optionListScreen.handleRemoveValueButton(label.getString())
         ).size(44, 20).build();
 
         this.children.add(removeButton);

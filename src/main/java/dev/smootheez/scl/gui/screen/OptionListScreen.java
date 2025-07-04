@@ -1,29 +1,22 @@
 package dev.smootheez.scl.gui.screen;
 
-import dev.smootheez.scl.*;
 import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.widget.*;
-import dev.smootheez.scl.gui.widget.entry.*;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
 
 import java.util.*;
-import java.util.function.*;
 
 public class OptionListScreen extends BaseConfigScreen{
     protected OptionListWidget widget;
     private final ConfigOption<OptionList> option;
     protected final String configIdentifier;
-    private OptionList currentValue;
-    private final Consumer<OptionList> listConsumer;
 
-    public OptionListScreen(Screen parent, ConfigOption<OptionList> option, OptionList currentValue, Consumer<OptionList> listConsumer) {
+    public OptionListScreen(Screen parent, ConfigOption<OptionList> option) {
         super(Component.translatable("config.screen.scl.editValue.title"), parent);
         this.option = option;
         this.configIdentifier = option.getConfigIdentifier();
-        this.currentValue = currentValue;
-        this.listConsumer = listConsumer;
     }
 
     @Override
@@ -32,7 +25,12 @@ public class OptionListScreen extends BaseConfigScreen{
         this.addRenderableWidget(this.widget);
 
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.addValue"),
-                        btn -> handleAddValueButton())
+                        btn -> {
+                            if (this.minecraft == null)
+                                return;
+                            this.minecraft.setScreen(new AddValueScreen(this));
+                            handleAddValueButton();
+                        })
                 .pos(this.width / 2 - 135, this.height - 25)
                 .size(130, 20)
                 .build());
@@ -42,29 +40,21 @@ public class OptionListScreen extends BaseConfigScreen{
         super.init();
     }
 
-    public void handleRemoveValueButton(String value, ValueListWidgetEntry entry) {
-        List<String> newValues = new ArrayList<>(this.option.getValue().values());
+    public void handleRemoveValueButton(String value) {
+        List<String> newValues = this.option.getValue().values();
         newValues.remove(value);
-        this.widget.removeList(entry);
-        OptionList newValue = new OptionList(newValues);
-        Constants.LOGGER.info("New Value: {}", newValue);
-        this.currentValue = newValue;
-        this.listConsumer.accept(newValue);
+        updateWidget(newValues);
     }
 
-    @Override
-    public void onClose() {
-        super.onClose();
-        this.listConsumer.accept(this.currentValue);
+    protected void handleAddValueButton(String value) {
+        List<String> newValues = this.option.getValue().values();
+        newValues.add(value);
+        updateWidget(newValues);
     }
 
-    protected void handleAddValueButton() {
-        if (this.minecraft != null)
-            this.minecraft.setScreen(new AddValueScreen(this));
-    }
-
-    public void refreshListWidget() {
-        widget.clearList();
+    private void updateWidget(List<String> newValues) {
+        this.option.setValue(new OptionList(newValues));
+        this.widget.updateEntries();
     }
 
     @Override

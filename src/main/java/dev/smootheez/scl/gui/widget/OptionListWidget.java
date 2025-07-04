@@ -21,18 +21,6 @@ public class OptionListWidget extends ContainerObjectSelectionList<ConfigWidgetE
         updateEntries();
     }
 
-    public void addList(ConfigWidgetEntry entry) {
-        addEntry(entry);
-    }
-
-    public void clearList() {
-        clearEntries();
-    }
-
-    public void removeList(ConfigWidgetEntry entry) {
-        removeEntry(entry);
-    }
-
     public void updateEntries() {
         clearEntries();
         List<String> list = option.getValue().values();
