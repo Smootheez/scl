@@ -50,9 +50,7 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
         String descriptionKey = option.getTranslation() + ".description";
         Component translateable = Component.translatable(descriptionKey);
         if (I18n.exists(descriptionKey)) {
-            ImmutableList.Builder<FormattedCharSequence> builder = ImmutableList.builder();
-            this.minecraft.font.split(translateable, 200).forEach(builder::add);
-            return builder.build();
+            return this.minecraft.font.split(translateable, 200);
         }
         return Collections.emptyList();
     }
