@@ -25,7 +25,7 @@ public abstract class LabeledWidgetEntry<T> extends ConfigWidgetEntry {
         super(description);
         this.label = this.font.split(label, 350);
         this.option = option;
-        this.savedValue = option.getValue();
+        this.savedValue = ConfigRegistry.getOriginalValue(this.option.getConfigIdentifier(), this.option.getKey());
 
         this.resetButton = Button.builder(Component.literal("⭮"), button -> this.resetButtonAction()).size(20, 20).build();
         this.children.add(this.resetButton);

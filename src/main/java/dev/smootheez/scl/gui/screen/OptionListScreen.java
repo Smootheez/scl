@@ -50,7 +50,6 @@ public class OptionListScreen extends BaseConfigScreen{
         Constants.LOGGER.info("New Value: {}", newValue);
         this.currentValue = newValue;
         this.listConsumer.accept(newValue);
-//        this.option.setValue(newValue);
     }
 
     @Override

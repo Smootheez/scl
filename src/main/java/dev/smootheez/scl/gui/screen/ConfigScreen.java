@@ -11,6 +11,7 @@ public class ConfigScreen extends BaseConfigScreen {
     private final String configIdentifier;
     private ConfigListWidget listWidget;
     private Button saveExitButton;
+    private boolean hasSnapshot = false;
 
     public ConfigScreen(Screen parent, String configIdentifier) {
         super(Component.translatable("config.screen." + configIdentifier + ".title"), parent);
@@ -19,6 +20,10 @@ public class ConfigScreen extends BaseConfigScreen {
 
     @Override
     protected void init() {
+        if (!this.hasSnapshot) {
+            ConfigRegistry.createSnapshot(this.configIdentifier);
+            this.hasSnapshot = true;
+        }
         this.listWidget = new ConfigListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 24, configIdentifier);
         this.addRenderableWidget(this.listWidget);
 
