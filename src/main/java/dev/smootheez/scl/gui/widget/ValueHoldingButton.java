@@ -22,15 +22,14 @@ public class ValueHoldingButton<T> extends Button {
         return new Builder<>(message, onPress, initialValue);
     }
 
-    // A custom Builder that extends the default Button.Builder
     public static class Builder<T> {
         private final Component message;
         private final OnPress onPress;
         private final T initialValue;
         private int x;
         private int y;
-        private int width = 150; // Default width
-        private int height = 20; // Default height
+        private int width = 80;
+        private int height = 20;
 
         public Builder(Component message, OnPress onPress, T initialValue) {
             this.message = message;

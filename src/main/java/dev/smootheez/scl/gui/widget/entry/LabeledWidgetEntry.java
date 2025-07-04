@@ -35,10 +35,7 @@ public abstract class LabeledWidgetEntry<T> extends ConfigWidgetEntry {
         T currentValue = getValue();
         if (currentValue == null)
             return savedValue != null;
-        /*Constants.LOGGER.info("Current Value: {}", currentValue);
-        Constants.LOGGER.info("Original Value: {}", savedValue);*/
         return !currentValue.equals(savedValue);
-//        return false;
     }
 
     public abstract T getValue();

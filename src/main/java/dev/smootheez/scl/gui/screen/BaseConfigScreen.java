@@ -5,7 +5,7 @@ import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
 
-public class BaseConfigScreen extends Screen {
+public abstract class BaseConfigScreen extends Screen {
     protected final Screen parent;
     protected EditBox searchField;
 
@@ -24,11 +24,7 @@ public class BaseConfigScreen extends Screen {
         this.setFocused(this.searchField);
     }
 
-    protected void handleAddValueButton() {
-    }
-
-    protected void handleSearchField(String search) {
-    }
+    protected abstract void handleSearchField(String search);
 
     @Override
     public void onClose() {

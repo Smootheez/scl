@@ -6,8 +6,6 @@ import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
 
-import java.util.*;
-
 public class OptionListScreen extends BaseConfigScreen{
     protected OptionListWidget widget;
     private final ConfigOption<OptionList> option;
@@ -26,10 +24,8 @@ public class OptionListScreen extends BaseConfigScreen{
 
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.addValue"),
                         btn -> {
-                            if (this.minecraft == null)
-                                return;
-                            this.minecraft.setScreen(new AddValueScreen(this));
-                            handleAddValueButton();
+                            if (this.minecraft != null)
+                                this.minecraft.setScreen(new AddValueScreen(this));
                         })
                 .pos(this.width / 2 - 135, this.height - 25)
                 .size(130, 20)
@@ -41,19 +37,19 @@ public class OptionListScreen extends BaseConfigScreen{
     }
 
     public void handleRemoveValueButton(String value) {
-        List<String> newValues = this.option.getValue().values();
-        newValues.remove(value);
-        updateWidget(newValues);
+        OptionList optionList = this.option.getValue();
+        optionList.removeValue(value);
+        updateWidget(optionList);
     }
 
     protected void handleAddValueButton(String value) {
-        List<String> newValues = this.option.getValue().values();
-        newValues.add(value);
-        updateWidget(newValues);
+        OptionList optionList = this.option.getValue();
+        optionList.addValue(value);
+        updateWidget(optionList);
     }
 
-    private void updateWidget(List<String> newValues) {
-        this.option.setValue(new OptionList(newValues));
+    private void updateWidget(OptionList newValues) {
+        this.option.setValue(newValues);
         this.widget.updateEntries();
     }
 
