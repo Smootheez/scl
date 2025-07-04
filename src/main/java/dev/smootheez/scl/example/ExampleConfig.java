@@ -3,6 +3,7 @@ package dev.smootheez.scl.example;
 import dev.smootheez.scl.api.*;
 import dev.smootheez.scl.config.*;
 
+//TODO: Handle for category in screen and file
 @Config(name = "example_config", gui = true)
 public class ExampleConfig {
     public static final ConfigOption<Integer> INT_TEXT = ConfigOption.create("intText", 0, -5, 100);
