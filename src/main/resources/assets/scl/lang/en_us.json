@@ -1,6 +1,7 @@
 {
   "config.widget.scl.save&exit": "Save & Exit",
   "config.widget.scl.cancel": "Cancel",
+  "config.widget.scl.discard&exit": "Discard & Exit",
   "config.widget.scl.search": "Search",
   "config.widget.scl.addValue": "Add Value",
   "config.widget.scl.editValue": "Edit Value",
@@ -9,5 +10,6 @@
   "config.screen.scl.editValue.title": "Edit Value",
   "config.widget.scl.back": "Back",
   "config.screen.scl.addValue.title": "Add New Value",
+  "config.screen.scl.confirmExit.title": "There are unsaved changes, are you sure want to leave?",
   "config.option.example_config.example_bool.description": "This is an example how the description will look like"
 }

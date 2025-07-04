@@ -42,6 +42,7 @@ public class ConfigRegistry {
             configWriters.put(configIdentifier, configFileWriter);
             configFileWriter.loadConfig();
 
+            //TODO: check if it's actually work or not to auto generate config screen
             if (ModChecker.isModInstalled(configIdentifier) && ModChecker.isModInstalled("modmenu") && annotation.gui())
                 configScreenFactories.put(configIdentifier, screen -> new ConfigScreen(screen, configIdentifier));
             else Constants.LOGGER.info("Skipping gui registration");

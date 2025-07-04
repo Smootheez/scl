@@ -29,12 +29,12 @@ public class ConfigScreen extends BaseConfigScreen {
 
         saveExitButton = this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
             if (this.minecraft != null) {
-                this.minecraft.setScreen(parent);
                 ConfigRegistry.saveConfig(this.configIdentifier);
+                this.minecraft.setScreen(parent);
             }
         }).pos(this.width / 2 - 135, this.height - 25).size(130, 20).build());
 
-        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.cancel"),
+        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.back"),
                 btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
 
         super.init();
@@ -83,8 +83,35 @@ public class ConfigScreen extends BaseConfigScreen {
 
     @Override
     public void onClose() {
-        super.onClose();
-        ConfigRegistry.reloadConfig(configIdentifier);
+        if (this.listWidget.hasChanged()) {
+            if (this.minecraft != null) {
+                Runnable saveAndExitAction = () -> {
+                    ConfigRegistry.saveConfig(configIdentifier);
+                    if (this.minecraft != null) {
+                        this.minecraft.setScreen(this.parent);
+                    }
+                };
+
+                Runnable discardAndExitAction = () -> {
+                    ConfigRegistry.reloadConfig(configIdentifier);
+                    if (this.minecraft != null) {
+                        this.minecraft.setScreen(this.parent);
+                    }
+                };
+
+                this.minecraft.setScreen(new ConfirmExitScreen(
+                        this,
+                        saveAndExitAction,
+                        discardAndExitAction
+                ));
+
+            }
+        } else {
+            ConfigRegistry.discardSnapshot(configIdentifier);
+            if (this.minecraft != null) {
+                this.minecraft.setScreen(this.parent);
+            }
+        }
     }
 
     @Override
