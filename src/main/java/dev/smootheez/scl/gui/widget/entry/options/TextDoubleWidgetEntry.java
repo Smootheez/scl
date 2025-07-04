@@ -24,7 +24,7 @@ public class TextDoubleWidgetEntry extends TextWidgetEntry<Double> {
 
     @Override
     public Double getValue() {
-        return Double.valueOf(this.editBox.getValue());
+        return editBox.getValue().isEmpty() ? null : Double.parseDouble(editBox.getValue());
     }
 
     private boolean validateDuble(String input) {

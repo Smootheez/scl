@@ -24,7 +24,7 @@ public class TextIntegerWidgetEntry extends TextWidgetEntry<Integer> {
 
     @Override
     public Integer getValue() {
-        return Integer.valueOf(this.editBox.getValue());
+        return editBox.getValue().isEmpty() ? null : Integer.parseInt(editBox.getValue());
     }
 
     private boolean validateInteger(String input) {

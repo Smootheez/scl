@@ -19,7 +19,6 @@ public class ConfigScreen extends BaseConfigScreen {
 
     @Override
     protected void init() {
-//        if (this.listWidget != null) ConfigRegistry.setMarkConfigDirty(false);
         this.listWidget = new ConfigListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 24, configIdentifier);
         this.addRenderableWidget(this.listWidget);
 

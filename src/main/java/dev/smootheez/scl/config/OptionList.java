@@ -7,6 +7,10 @@ public record OptionList(List<String> values) {
         this.values = new ArrayList<>(values);
     }
 
+    public OptionList copy() {
+        return new OptionList(this.values);
+    }
+
     public List<String> values() {
         return new ArrayList<>(values);
     }

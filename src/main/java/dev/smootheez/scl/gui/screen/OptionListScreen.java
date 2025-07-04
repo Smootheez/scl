@@ -1,5 +1,6 @@
 package dev.smootheez.scl.gui.screen;
 
+import dev.smootheez.scl.*;
 import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.widget.*;
 import dev.smootheez.scl.gui.widget.entry.*;
@@ -8,16 +9,21 @@ import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
 
 import java.util.*;
+import java.util.function.*;
 
 public class OptionListScreen extends BaseConfigScreen{
     protected OptionListWidget widget;
     private final ConfigOption<OptionList> option;
     protected final String configIdentifier;
+    private OptionList currentValue;
+    private final Consumer<OptionList> listConsumer;
 
-    public OptionListScreen(Screen parent, ConfigOption<OptionList> option) {
+    public OptionListScreen(Screen parent, ConfigOption<OptionList> option, OptionList currentValue, Consumer<OptionList> listConsumer) {
         super(Component.translatable("config.screen.scl.editValue.title"), parent);
         this.option = option;
         this.configIdentifier = option.getConfigIdentifier();
+        this.currentValue = currentValue;
+        this.listConsumer = listConsumer;
     }
 
     @Override
@@ -37,12 +43,20 @@ public class OptionListScreen extends BaseConfigScreen{
     }
 
     public void handleRemoveValueButton(String value, ValueListWidgetEntry entry) {
-        OptionList newValue = this.option.getValue();
-        List<String> values = newValue.values();
-        values.remove(value);
+        List<String> newValues = new ArrayList<>(this.option.getValue().values());
+        newValues.remove(value);
         this.widget.removeList(entry);
-        var newValues = new OptionList(values);
-        this.option.setValue(newValues);
+        OptionList newValue = new OptionList(newValues);
+        Constants.LOGGER.info("New Value: {}", newValue);
+        this.currentValue = newValue;
+        this.listConsumer.accept(newValue);
+//        this.option.setValue(newValue);
+    }
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        this.listConsumer.accept(this.currentValue);
     }
 
     protected void handleAddValueButton() {
