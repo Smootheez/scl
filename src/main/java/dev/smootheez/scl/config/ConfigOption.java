@@ -86,10 +86,7 @@ public class ConfigOption<T> {
         this.widgetHandler = widgetHandler;
     }
 
-    @SuppressWarnings("unchecked")
     public T getDefaultValue() {
-        if (defaultValue instanceof OptionList list)
-            return (T) list.copy();
         return defaultValue;
     }
 
