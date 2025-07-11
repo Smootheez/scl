@@ -18,18 +18,14 @@
           "dev.smootheez.scl.SmootheezConfigLib"
 		],
 		"modmenu": [
-			"dev.smootheez.scl.example.ModMenuApiImpl"
-		],
-		"scl": [
-			"dev.smootheez.scl.example.ExampleConfig"
+			"dev.smootheez.scl.modmenu.ModMenuApiImpl"
 		]
 	},
 	"accessWideners": [
 		"scl.accesswideners"
 	],
 	"depends": {
-		"fabricloader": ">=0.16.14",
-		"minecraft": "~1.20.1",
-		"java": ">=17"
+		"fabricloader": ">={loader_version}",
+		"minecraft": ">={minecraft_version}",
 	}
 }
