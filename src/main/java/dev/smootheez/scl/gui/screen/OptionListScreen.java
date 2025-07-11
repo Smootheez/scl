@@ -37,13 +37,13 @@ public class OptionListScreen extends BaseConfigScreen{
     }
 
     public void handleRemoveValueButton(String value) {
-        OptionList optionList = this.option.getValue();
+        OptionList optionList = this.option.getValue().copy();
         optionList.removeValue(value);
         updateWidget(optionList);
     }
 
     protected void handleAddValueButton(String value) {
-        OptionList optionList = this.option.getValue();
+        OptionList optionList = this.option.getValue().copy();
         optionList.addValue(value);
         updateWidget(optionList);
     }
