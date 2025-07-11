@@ -24,10 +24,6 @@ public abstract class TextWidgetEntry<T extends Number> extends LabeledWidgetEnt
         updateResetButton();
     }
 
-    public void tick() {
-        this.editBox.tick();
-    }
-
     @Override
     public void render(GuiGraphics guiGraphics, int i, int j, int k, int l, int m, int n, int o, boolean bl, float f) {
         renderLabel(guiGraphics, j, k);

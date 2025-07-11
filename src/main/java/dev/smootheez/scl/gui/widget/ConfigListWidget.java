@@ -54,13 +54,6 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
         return Collections.emptyList();
     }
 
-    public void tick() {
-        for (ConfigWidgetEntry entry : this.children()) {
-            if (entry instanceof TextWidgetEntry<?> tickable)
-                tickable.tick();
-        }
-    }
-
     private void updateEntries() {
         clearEntries();
         List<ConfigOption<?>> configOptions = ConfigRegistry.getConfigOptions(configIdentifier);

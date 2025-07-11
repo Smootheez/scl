@@ -75,7 +75,6 @@ public class ConfigScreen extends BaseConfigScreen {
     @Override
     public void tick() {
         super.tick();
-        listWidget.tick();
 
         if (this.saveExitButton != null)
             this.saveExitButton.active = this.listWidget.hasChanged();
