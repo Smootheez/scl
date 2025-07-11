@@ -18,7 +18,7 @@
           "dev.smootheez.scl.SmootheezConfigLib"
 		],
 		"modmenu": [
-			"dev.smootheez.scl.example.ModMenuApiImpl"
+			"dev.smootheez.scl.modmenu.ModMenuApiImpl"
 		],
 		"scl": [
 			"dev.smootheez.scl.example.ExampleConfig"

@@ -1,4 +1,4 @@
-package dev.smootheez.scl.example;
+package dev.smootheez.scl.modmenu;
 
 import com.terraformersmc.modmenu.api.*;
 import dev.smootheez.scl.config.*;
