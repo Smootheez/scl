@@ -56,7 +56,7 @@ public class ValueListWidgetEntry extends ConfigWidgetEntry {
 
     protected void renderLabel(GuiGraphics guiGraphics, int i, int j) {
         if (this.label.size() == 1) {
-            guiGraphics.drawString(this.font, this.label.get(0), j, i + 5, 16777215, false);
+            guiGraphics.drawString(this.font, this.label.getFirst(), j, i + 5, 16777215, false);
         } else {
             int totalTextHeight = this.label.size() * this.font.lineHeight;
             int rowHeight = 24;

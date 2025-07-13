@@ -15,8 +15,8 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
     private final String configIdentifier;
     private String filter = "";
 
-    public ConfigListWidget(Minecraft minecraft, int i, int j, int k, int l, int m, String configIdentifier) {
-        super(minecraft, i, j, k, l, m);
+    public ConfigListWidget(Minecraft minecraft, int i, int j, int k, int l, String configIdentifier) {
+        super(minecraft, i, j, k, l);
         this.configIdentifier = configIdentifier;
         updateEntries();
     }
@@ -81,8 +81,8 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int i, int j, float f) {
-        super.render(guiGraphics, i, j, f);
+    public void renderWidget(GuiGraphics guiGraphics, int i, int j, float f) {
+        super.renderWidget(guiGraphics, i, j, f);
         ConfigWidgetEntry hoveredWidget = this.getHovered();
         if (hoveredWidget != null && hoveredWidget.description != null && this.minecraft.screen != null)
             this.minecraft.screen.setTooltipForNextRenderPass(hoveredWidget.description);

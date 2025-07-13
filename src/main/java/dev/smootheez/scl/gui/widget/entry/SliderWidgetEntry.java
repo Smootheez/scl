@@ -54,15 +54,12 @@ public class SliderWidgetEntry<T extends Number> extends LabeledWidgetEntry<T> {
 
     @SuppressWarnings("unchecked")
     private T castToType(double value) {
-        if (option.getDefaultValue() instanceof Integer) {
-            return (T) Integer.valueOf((int) value);
-        } else if (option.getDefaultValue() instanceof Float) {
-            return (T) Float.valueOf((float) value);
-        } else if (option.getDefaultValue() instanceof Double) {
-            return (T) Double.valueOf(value);
-        } else {
-            throw new IllegalStateException("Unsupported type: " + option.getDefaultValue().getClass());
-        }
+        return switch (option.getDefaultValue()) {
+            case Integer i -> (T) Integer.valueOf((int) value);
+            case Float v -> (T) Float.valueOf((float) value);
+            case Double v -> (T) Double.valueOf(value);
+            default -> throw new IllegalStateException("Unsupported type: " + option.getDefaultValue().getClass());
+        };
     }
 }
 

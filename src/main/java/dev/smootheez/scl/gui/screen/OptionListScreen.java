@@ -19,7 +19,7 @@ public class OptionListScreen extends BaseConfigScreen{
 
     @Override
     protected void init() {
-        this.widget = new OptionListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 24, this.option, this);
+        this.widget = new OptionListWidget(this.minecraft, this.width, this.height - 64, 32, 24, this.option, this);
         this.addRenderableWidget(this.widget);
 
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.addValue"),

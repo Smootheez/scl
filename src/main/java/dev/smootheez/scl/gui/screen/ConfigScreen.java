@@ -24,7 +24,7 @@ public class ConfigScreen extends BaseConfigScreen {
             ConfigRegistry.createSnapshot(this.configIdentifier);
             this.hasSnapshot = true;
         }
-        this.listWidget = new ConfigListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 24, configIdentifier);
+        this.listWidget = new ConfigListWidget(this.minecraft, this.width, this.height - 64, 32, 24, configIdentifier);
         this.addRenderableWidget(this.listWidget);
 
         saveExitButton = this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
