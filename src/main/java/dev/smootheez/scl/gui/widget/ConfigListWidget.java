@@ -31,7 +31,7 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
     }
 
     @Override
-    protected int getScrollbarPosition() {
+    protected int scrollBarX() {
         return this.width / 2 + 185;
     }
 
@@ -85,6 +85,6 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
         super.renderWidget(guiGraphics, i, j, f);
         ConfigWidgetEntry hoveredWidget = this.getHovered();
         if (hoveredWidget != null && hoveredWidget.description != null && this.minecraft.screen != null)
-            this.minecraft.screen.setTooltipForNextRenderPass(hoveredWidget.description);
+            guiGraphics.setTooltipForNextFrame(hoveredWidget.description, i, j);
     }
 }
