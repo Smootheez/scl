@@ -10,15 +10,5 @@
   "config.screen.scl.editValue.title": "Edit Value",
   "config.widget.scl.back": "Back",
   "config.screen.scl.addValue.title": "Add New Value",
-  "config.screen.scl.confirmExit.title": "There are unsaved changes, are you sure want to leave?",
-
-  "config.option.example_config.intText": "Example Integer With Text Box",
-  "config.option.example_config.doubleText": "Example Double With Text Box",
-  "config.option.example_config.intSlider": "Example Integer With Slider",
-  "config.option.example_config.doubleSlider": "Example Double With Slider",
-  "config.option.example_config.doubleSliderPercentage": "Example Double With Slider Percentage",
-  "config.option.example_config.boolean": "Example Boolean",
-  "config.option.example_config.list": "Example List Option",
-  "config.option.example_config.enum": "Example Enum",
-  "config.option.example_config.boolean.description": "This is an example how the description will look like"
+  "config.screen.scl.confirmExit.title": "There are unsaved changes, are you sure want to leave?"
 }
