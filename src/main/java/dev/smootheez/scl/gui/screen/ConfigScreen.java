@@ -38,7 +38,17 @@ public class ConfigScreen extends BaseConfigScreen {
         linearLayout.addChild(Button.builder(Component.translatable("config.widget.scl.back"),
                 btn -> onClose()).size(130, 20).build());
 
-        super.init();
+        LinearLayout headerLinearLayout = this.layout.addToHeader(LinearLayout.horizontal().spacing(8));
+
+        headerLinearLayout.addChild(new StringWidget(this.title, this.font));
+
+        this.searchField = headerLinearLayout.addChild(new EditBox(this.font,100, 20, Component.translatable("config.widget.scl.search")));
+        this.searchField.setMaxLength(50);
+        this.searchField.setResponder(this::handleSearchField);
+        this.setFocused(this.searchField);
+
+        this.layout.visitWidgets(this::addRenderableWidget);
+        this.repositionElements();
     }
 
     @Override

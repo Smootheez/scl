@@ -56,16 +56,10 @@ public class ValueListWidgetEntry extends ConfigWidgetEntry {
 
     protected void renderLabel(GuiGraphics guiGraphics, int i, int j) {
         if (this.label.size() == 1) {
-            guiGraphics.drawString(this.font, this.label.getFirst(), j, i + 5, 16777215, false);
-        } else {
-            int totalTextHeight = this.label.size() * this.font.lineHeight;
-            int rowHeight = 24;
-            int startY = i + (rowHeight - totalTextHeight) / 2;
-
-            for (int lineIndex = 0; lineIndex < this.label.size(); lineIndex++) {
-                FormattedCharSequence line = this.label.get(lineIndex);
-                int lineY = startY + (lineIndex * this.font.lineHeight);
-                guiGraphics.drawString(this.font, line, j, lineY, 0xFFFFFF, false);
-            }
+            guiGraphics.drawString(this.font, this.label.getFirst(), j, i + 5, -1);
+        } else if (this.label.size() >= 2) {
+            guiGraphics.drawString(this.font, this.label.get(0), j, i, -1);
+            guiGraphics.drawString(this.font, this.label.get(1), j, i + 10, -1);
         }
-    }}
+    }
+}
