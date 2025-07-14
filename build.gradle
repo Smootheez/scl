@@ -17,8 +17,11 @@ repositories {
 }
 
 dependencies {
-	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+	modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+	modCompileOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modLocalRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.officialMojangMappings()

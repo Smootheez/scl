@@ -1,13 +1,14 @@
 package dev.smootheez.scl.gui.screen;
 
-import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.layouts.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
 
 public abstract class BaseConfigScreen extends Screen {
     protected final Screen parent;
     protected EditBox searchField;
+    public final HeaderAndFooterLayout layout = new HeaderAndFooterLayout(this);
 
     public BaseConfigScreen(Component title, Screen parent) {
         super(title);
@@ -16,12 +17,14 @@ public abstract class BaseConfigScreen extends Screen {
 
     @Override
     protected void init() {
-        super.init();
-        this.searchField = new EditBox(this.font, this.width / 2 + 5, 10, 100, 16, Component.translatable("config.widget.scl.search"));
+        LinearLayout linearLayout = this.layout.addToHeader(LinearLayout.horizontal().spacing(8));
+        this.searchField = linearLayout.addChild(new EditBox(this.font,100, 20, Component.translatable("config.widget.scl.search")));
         this.searchField.setMaxLength(50);
         this.searchField.setResponder(this::handleSearchField);
-        this.addRenderableWidget(this.searchField);
         this.setFocused(this.searchField);
+
+        this.layout.visitWidgets(this::addRenderableWidget);
+        this.repositionElements();
     }
 
     protected abstract void handleSearchField(String search);
@@ -29,16 +32,5 @@ public abstract class BaseConfigScreen extends Screen {
     @Override
     public void onClose() {
         if (this.minecraft != null) this.minecraft.setScreen(parent);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-    }
-
-    @Override
-    public void render(GuiGraphics guiGraphics, int i, int j, float f) {
-        super.render(guiGraphics, i, j, f);
-        guiGraphics.drawString(this.font, this.title, this.width / 2 - this.font.width(this.title) - 10, 13, 0xFFFFFF);
     }
 }

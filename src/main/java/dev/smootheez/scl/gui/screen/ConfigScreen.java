@@ -4,6 +4,7 @@ import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.widget.*;
 import dev.smootheez.scl.gui.widget.entry.*;
 import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.layouts.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
 
@@ -24,20 +25,27 @@ public class ConfigScreen extends BaseConfigScreen {
             ConfigRegistry.createSnapshot(this.configIdentifier);
             this.hasSnapshot = true;
         }
-        this.listWidget = new ConfigListWidget(this.minecraft, this.width, this.height - 64, 32, 24, configIdentifier);
-        this.addRenderableWidget(this.listWidget);
+        this.listWidget = this.layout.addToContents(new ConfigListWidget(this.minecraft, this.width, this.height - 64, 32, 24, configIdentifier));
 
-        saveExitButton = this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
+        LinearLayout linearLayout = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
+        this.saveExitButton = linearLayout.addChild(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
             if (this.minecraft != null) {
                 ConfigRegistry.saveConfig(this.configIdentifier);
                 this.minecraft.setScreen(parent);
             }
-        }).pos(this.width / 2 - 135, this.height - 25).size(130, 20).build());
+        }).size(130, 20).build());
 
-        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.back"),
-                btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
+        linearLayout.addChild(Button.builder(Component.translatable("config.widget.scl.back"),
+                btn -> onClose()).size(130, 20).build());
 
         super.init();
+    }
+
+    @Override
+    protected void repositionElements() {
+        this.layout.arrangeElements();
+        if (this.listWidget != null)
+            this.listWidget.updateSize(this.width, this.layout);
     }
 
     @Override

@@ -16,7 +16,7 @@ public abstract class TextWidgetEntry<T extends Number> extends LabeledWidgetEnt
     public TextWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<T> option) {
         super(label, description, option);
 
-        this.editBox = new EditBox(Minecraft.getInstance().font, 0, 0, 76, 16, Component.literal(""));
+        this.editBox = new EditBox(Minecraft.getInstance().font, 0, 0, 80, 20, Component.literal(""));
         this.editBox.setValue(option.getValue().toString());
         this.editBox.setResponder(this::onTextChange);
 
@@ -33,8 +33,8 @@ public abstract class TextWidgetEntry<T extends Number> extends LabeledWidgetEnt
         this.resetButton.setY(j);
         this.resetButton.render(guiGraphics, n, o, f);
 
-        this.editBox.setX(k + l - editBox.getWidth() - 5 - resetButtonWidth);
-        this.editBox.setY(j + 2);
+        this.editBox.setX(k + l - editBox.getWidth() - 3 - resetButtonWidth);
+        this.editBox.setY(j);
         this.editBox.render(guiGraphics, n, o, f);
     }
 
