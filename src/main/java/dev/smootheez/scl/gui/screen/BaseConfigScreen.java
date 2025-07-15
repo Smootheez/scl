@@ -41,6 +41,6 @@ public abstract class BaseConfigScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int i, int j, float f) {
         this.renderBackground(guiGraphics);
         super.render(guiGraphics, i, j, f);
-        guiGraphics.drawString(this.font, this.title, this.width / 2 - this.font.width(this.title) - 10, 13, 0xFFFFFF);
+        guiGraphics.drawString(this.font, this.title, this.width / 2 - this.font.width(this.title) - 10, 10, 0xFFFFFF);
     }
 }

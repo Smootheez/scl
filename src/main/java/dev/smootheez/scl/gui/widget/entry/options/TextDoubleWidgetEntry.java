@@ -24,7 +24,11 @@ public class TextDoubleWidgetEntry extends TextWidgetEntry<Double> {
 
     @Override
     public Double getValue() {
-        return editBox.getValue().isEmpty() ? null : Double.parseDouble(editBox.getValue());
+        try {
+            return Double.parseDouble(editBox.getValue());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     private boolean validateDuble(String input) {
