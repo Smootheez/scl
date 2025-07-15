@@ -27,7 +27,14 @@ public class AddValueScreen extends Screen {
         this.addRenderableWidget(stringWidget);
 
         EditBox addValueField = new EditBox(this.font, widgetPositionX, this.height / 2 - 35, widgetWidth - 4, widgetHeight, Component.translatable("config.widget.scl.addValue"));
-        addValueField.setResponder(listener -> this.value = listener);
+        addValueField.setResponder(listener -> {
+            try {
+                addValueField.setTextColor(-2039584);
+                this.value = listener;
+            } catch (Exception e) {
+                addValueField.setTextColor(-65536);
+            }
+        });
         this.setFocused(addValueField);
         this.addRenderableWidget(addValueField);
 
