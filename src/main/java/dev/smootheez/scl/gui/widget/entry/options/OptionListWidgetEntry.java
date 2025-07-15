@@ -1,6 +1,5 @@
 package dev.smootheez.scl.gui.widget.entry.options;
 
-import dev.smootheez.scl.*;
 import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.screen.*;
 import dev.smootheez.scl.gui.widget.*;

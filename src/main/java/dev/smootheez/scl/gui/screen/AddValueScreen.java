@@ -1,13 +1,11 @@
 package dev.smootheez.scl.gui.screen;
 
-import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
 
 public class AddValueScreen extends Screen {
     private final OptionListScreen parent;
-    private EditBox addValueField;
     private String value;
 
     protected AddValueScreen(OptionListScreen parent) {
@@ -23,18 +21,15 @@ public class AddValueScreen extends Screen {
         var widgetHeight = 20;
         var widgetPositionX = this.width / 2 - widgetWidth / 2;
 
-        this.addValueField = new EditBox(this.font, widgetPositionX + 2, this.height / 2 - 30, widgetWidth - 4, widgetHeight, Component.translatable("config.widget.scl.addValue"));
-        this.addValueField.setResponder(
-                listener -> {
-                    try {
-                        addValueField.setTextColor(14737632);
-                        this.value = listener;
-                    } catch (Exception e) {
-                        addValueField.setTextColor(16736352);
-                    }
-                }
-        );
-        this.addRenderableWidget(this.addValueField);
+        StringWidget stringWidget = new StringWidget(this.title, this.font);
+        stringWidget.setX(this.width / 2 - stringWidget.getWidth() / 2);
+        stringWidget.setY(this.height / 2 - 50);
+        this.addRenderableWidget(stringWidget);
+
+        EditBox addValueField = new EditBox(this.font, widgetPositionX, this.height / 2 - 35, widgetWidth - 4, widgetHeight, Component.translatable("config.widget.scl.addValue"));
+        addValueField.setResponder(listener -> this.value = listener);
+        this.setFocused(addValueField);
+        this.addRenderableWidget(addValueField);
 
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.addValue"),
                         b -> {
@@ -49,11 +44,5 @@ public class AddValueScreen extends Screen {
     @Override
     public void onClose() {
         if (this.minecraft != null) this.minecraft.setScreen(parent);
-    }
-
-    @Override
-    public void render(GuiGraphics guiGraphics, int i, int j, float f) {
-        super.render(guiGraphics, i, j, f);
-        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, this.height / 2 - 50, 0xFFFFFF);
     }
 }
