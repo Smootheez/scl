@@ -19,9 +19,6 @@
 		],
 		"modmenu": [
 			"dev.smootheez.scl.modmenu.ModMenuApiImpl"
-		],
-		"scl": [
-			"dev.smootheez.scl.example.ExampleConfig"
 		]
 	},
 	"accessWideners": [
