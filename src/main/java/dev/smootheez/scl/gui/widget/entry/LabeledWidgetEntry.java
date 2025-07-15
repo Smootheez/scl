@@ -1,5 +1,6 @@
 package dev.smootheez.scl.gui.widget.entry;
 
+import dev.smootheez.scl.*;
 import dev.smootheez.scl.config.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
@@ -56,7 +57,7 @@ public abstract class LabeledWidgetEntry<T> extends ConfigWidgetEntry {
     }
 
     public void updateResetButton() {
-        this.resetButton.active = !this.option.getValue().equals(this.option.getDefaultValue());
+        this.resetButton.active = !this.option.getValue().equals(option.getDefaultValue());
     }
 
     @Override

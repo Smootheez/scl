@@ -1,5 +1,6 @@
 package dev.smootheez.scl.gui.widget.entry.options;
 
+import dev.smootheez.scl.*;
 import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.screen.*;
 import dev.smootheez.scl.gui.widget.*;
@@ -25,19 +26,17 @@ public class OptionListWidgetEntry extends LabeledWidgetEntry<OptionList> {
         var client = Minecraft.getInstance();
         var screen = client.screen;
         if (screen != null) {
-            updateResetButton();
-            client.setScreen(new OptionListScreen(screen, option));
+            client.setScreen(new OptionListScreen(screen, option, this::updateResetButton));
         }
     }
 
     @Override
     public void resetButtonAction() {
         super.resetButtonAction();
-        button.setValue(this.option.getDefaultValue());
     }
 
     @Override
     public OptionList getValue() {
-        return button.getValue();
+        return option.getValue();
     }
 }
