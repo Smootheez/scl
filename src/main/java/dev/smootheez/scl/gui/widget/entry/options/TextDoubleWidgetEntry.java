@@ -17,14 +17,18 @@ public class TextDoubleWidgetEntry extends TextWidgetEntry<Double> {
     protected void onTextChange(String value) {
         if (validateDuble(value) && Double.parseDouble(value) >= option.getMinValue() && Double.parseDouble(value) <= option.getMaxValue()) {
             option.setValue(Double.valueOf(value));
-            editBox.setTextColor(14737632);
-        } else editBox.setTextColor(16736352);
+            editBox.setTextColor(-2039584);
+        } else editBox.setTextColor(-65536);
         super.onTextChange(value);
     }
 
     @Override
     public Double getValue() {
-        return editBox.getValue().isEmpty() ? null : Double.parseDouble(editBox.getValue());
+        try {
+            return Double.parseDouble(editBox.getValue());
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
     }
 
     private boolean validateDuble(String input) {

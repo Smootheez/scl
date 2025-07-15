@@ -17,14 +17,18 @@ public class TextIntegerWidgetEntry extends TextWidgetEntry<Integer> {
     protected void onTextChange(String value) {
         if (validateInteger(value) && Integer.parseInt(value) >= option.getMinValue() && Integer.parseInt(value) <= option.getMaxValue()) {
             option.setValue(Integer.valueOf(value));
-            editBox.setTextColor(14737632);
-        } else editBox.setTextColor(16736352);
+            editBox.setTextColor(-2039584);
+        } else editBox.setTextColor(-65536);
         super.onTextChange(value);
     }
 
     @Override
     public Integer getValue() {
-        return editBox.getValue().isEmpty() ? null : Integer.parseInt(editBox.getValue());
+        try {
+            return Integer.parseInt(editBox.getValue());
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     private boolean validateInteger(String input) {
