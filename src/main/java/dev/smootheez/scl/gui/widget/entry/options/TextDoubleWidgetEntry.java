@@ -27,7 +27,7 @@ public class TextDoubleWidgetEntry extends TextWidgetEntry<Double> {
         try {
             return Double.parseDouble(editBox.getValue());
         } catch (NumberFormatException e) {
-            return 0.0;
+            return null;
         }
     }
 

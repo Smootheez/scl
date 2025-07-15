@@ -27,7 +27,7 @@ public class TextIntegerWidgetEntry extends TextWidgetEntry<Integer> {
         try {
             return Integer.parseInt(editBox.getValue());
         } catch (NumberFormatException e) {
-            return 0;
+            return null;
         }
     }
 
