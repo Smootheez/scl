@@ -2,7 +2,7 @@ package dev.smootheez.scl.gui.widget.entry.options;
 
 import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.screen.*;
-import dev.smootheez.scl.gui.widget.*;
+import dev.smootheez.scl.gui.widget.clickable.*;
 import dev.smootheez.scl.gui.widget.entry.*;
 import net.minecraft.client.*;
 import net.minecraft.network.chat.*;
@@ -26,7 +26,7 @@ public class OptionListWidgetEntry extends LabeledWidgetEntry<OptionList> {
         var screen = client.screen;
         if (screen != null) {
             updateResetButton();
-            client.setScreen(new OptionListScreen(screen, option));
+            client.setScreen(new OptionListScreen(screen, option, this::updateResetButton));
         }
     }
 

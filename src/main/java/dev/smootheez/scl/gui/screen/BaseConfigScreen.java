@@ -17,6 +17,11 @@ public abstract class BaseConfigScreen extends Screen {
     @Override
     protected void init() {
         super.init();
+        StringWidget titleWidget = new StringWidget(this.title, this.font);
+        titleWidget.setX(this.width / 2 - titleWidget.getWidth() - 10);
+        titleWidget.setY(10);
+        this.addRenderableWidget(titleWidget);
+
         this.searchField = new EditBox(this.font, this.width / 2 + 5, 10, 100, 16, Component.translatable("config.widget.scl.search"));
         this.searchField.setMaxLength(50);
         this.searchField.setResponder(this::handleSearchField);
@@ -41,6 +46,5 @@ public abstract class BaseConfigScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int i, int j, float f) {
         this.renderBackground(guiGraphics);
         super.render(guiGraphics, i, j, f);
-        guiGraphics.drawString(this.font, this.title, this.width / 2 - this.font.width(this.title) - 10, 10, 0xFFFFFF);
     }
 }

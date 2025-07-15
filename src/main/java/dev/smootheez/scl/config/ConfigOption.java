@@ -3,7 +3,7 @@ package dev.smootheez.scl.config;
 import dev.smootheez.scl.*;
 import dev.smootheez.scl.config.serializer.*;
 import dev.smootheez.scl.config.serializer.options.*;
-import dev.smootheez.scl.gui.widget.*;
+import dev.smootheez.scl.gui.widget.clickable.*;
 import dev.smootheez.scl.gui.widget.handler.*;
 
 import java.util.*;

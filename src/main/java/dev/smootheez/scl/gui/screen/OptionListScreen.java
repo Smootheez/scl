@@ -10,11 +10,13 @@ public class OptionListScreen extends BaseConfigScreen{
     protected OptionListWidget widget;
     private final ConfigOption<OptionList> option;
     protected final String configIdentifier;
+    private final Runnable onCloseCallback;
 
-    public OptionListScreen(Screen parent, ConfigOption<OptionList> option) {
+    public OptionListScreen(Screen parent, ConfigOption<OptionList> option, Runnable onCloseCallback) {
         super(Component.translatable("config.screen.scl.editValue.title"), parent);
         this.option = option;
         this.configIdentifier = option.getConfigIdentifier();
+        this.onCloseCallback = onCloseCallback;
     }
 
     @Override
@@ -34,6 +36,13 @@ public class OptionListScreen extends BaseConfigScreen{
                 btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
 
         super.init();
+    }
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        if (onCloseCallback != null)
+            onCloseCallback.run();
     }
 
     public void handleRemoveValueButton(String value) {

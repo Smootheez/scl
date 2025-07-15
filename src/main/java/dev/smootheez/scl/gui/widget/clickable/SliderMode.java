@@ -1,4 +1,4 @@
-package dev.smootheez.scl.gui.widget;
+package dev.smootheez.scl.gui.widget.clickable;
 
 public enum SliderMode {
     INTEGER,

@@ -1,7 +1,7 @@
 package dev.smootheez.scl.gui.widget.handler;
 
 import dev.smootheez.scl.config.*;
-import dev.smootheez.scl.gui.widget.*;
+import dev.smootheez.scl.gui.widget.clickable.*;
 import dev.smootheez.scl.gui.widget.entry.*;
 import net.minecraft.network.chat.*;
 import net.minecraft.util.*;
