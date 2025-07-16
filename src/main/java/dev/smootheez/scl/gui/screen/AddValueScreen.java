@@ -17,13 +17,16 @@ public class AddValueScreen extends Screen {
 
     @Override
     protected void init() {
-        super.init();
-
         var widgetWidth = 200;
         var widgetHeight = 20;
         var widgetPositionX = this.width / 2 - widgetWidth / 2;
 
-        this.addValueField = new EditBox(this.font, widgetPositionX + 2, this.height / 2 - 30, widgetWidth - 4, widgetHeight, Component.translatable("config.widget.scl.addValue"));
+        StringWidget titleWidget = new StringWidget(this.title, this.font);
+        titleWidget.setX(this.width / 2 - titleWidget.getWidth() / 2);
+        titleWidget.setY(this.height / 2 - 50);
+        this.addRenderableWidget(titleWidget);
+
+        this.addValueField = new EditBox(this.font, widgetPositionX + 2, this.height / 2 - 35, widgetWidth - 4, widgetHeight, Component.translatable("config.widget.scl.addValue"));
         this.addValueField.setResponder(
                 listener -> {
                     try {
@@ -54,7 +57,6 @@ public class AddValueScreen extends Screen {
     @Override
     public void render(GuiGraphics guiGraphics, int i, int j, float f) {
         this.renderBackground(guiGraphics);
-        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, this.height / 2 - 50, 0xFFFFFF);
         super.render(guiGraphics, i, j, f);
     }
 }
