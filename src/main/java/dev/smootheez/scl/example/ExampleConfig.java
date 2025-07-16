@@ -12,6 +12,7 @@ public class ExampleConfig {
     public static final ConfigOption<Double> DOUBLE_SLIDER_PERCENTAGE = ConfigOption.create("doubleSliderPercentage", 0.0, 0.0, 2.0).asSliderPercentage();
     public static final ConfigOption<Boolean> BOOLEAN = ConfigOption.create("boolean", false);
     public static final ConfigOption<OptionList> LIST = ConfigOption.create("list", "example_value_1", "example_value_2", "example_value_3");
+    public static final ConfigOption<String> STRING = ConfigOption.create("string", "");
     public static final ConfigOption<ExampleEnum> ENUM = ConfigOption.create("enum", ExampleEnum.EXAMPLE_VALUE_1);
 
     @Config.Category(ConfigCategory.CATEGORY_1)

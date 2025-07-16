@@ -10,7 +10,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public abstract class TextWidgetEntry<T extends Number> extends LabeledWidgetEntry<T> {
+public abstract class TextWidgetEntry<T> extends LabeledWidgetEntry<T> {
     protected final EditBox editBox;
 
     public TextWidgetEntry(Component label, @Nullable List<FormattedCharSequence> description, ConfigOption<T> option) {

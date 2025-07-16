@@ -57,6 +57,10 @@ public class ConfigOption<T> {
         return new ConfigOption<>(key, new OptionList(Arrays.asList(defaultValue)), OptionList.class, new OptionListSerializer(), new OptionListWidgetHandler());
     }
 
+    public static ConfigOption<String> create(String key, String defaultValue) {
+        return new ConfigOption<>(key, defaultValue, String.class, new StringSerializer(), new StringWidgetHandler());
+    }
+
     public static <E extends Enum<E>> ConfigOption<E> create(String key, E defaultValue) {
         Class<E> enumClass = getEnumClass(defaultValue);
         return new ConfigOption<>(key, defaultValue, enumClass, new EnumSerializer<>(enumClass), new CycleWidgetHandler<>());
