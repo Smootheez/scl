@@ -31,14 +31,27 @@ public class ConfigRegistry {
         try {
             List<Field> configFields = getConfigFields(configClass);
             List<ConfigOption<?>> options = new ArrayList<>();
+
+            String currentCategory = null;
+
             for (Field field : configFields) {
                 field.setAccessible(true);
+
+                if (field.isAnnotationPresent(Config.Category.class)
+                        && !ConfigOption.class.isAssignableFrom(field.getType())) {
+                    currentCategory = field.getAnnotation(Config.Category.class).value();
+                    continue;
+                }
+
                 ConfigOption<?> option = (ConfigOption<?>) field.get(configClass);
                 option.setConfigIdentifier(configIdentifier);
 
                 Config.Category categoryAnnotation = field.getAnnotation(Config.Category.class);
                 if (categoryAnnotation != null) {
                     option.setCategory(categoryAnnotation.value());
+                    currentCategory = categoryAnnotation.value();
+                } else if (currentCategory != null) {
+                    option.setCategory(currentCategory);
                 }
 
                 options.add(option);
@@ -49,14 +62,16 @@ public class ConfigRegistry {
             configWriters.put(configIdentifier, configFileWriter);
             configFileWriter.loadConfig();
 
-            //TODO: check if it's actually work or not to auto generate config screen
-            if (ModChecker.isModInstalled(configIdentifier) && ModChecker.isModInstalled("modmenu") && annotation.gui())
+            if (ModChecker.isModInstalled(configIdentifier) && ModChecker.isModInstalled("modmenu") && annotation.gui()) {
                 configScreenFactories.put(configIdentifier, screen -> new ConfigScreen(screen, configIdentifier));
-            else Constants.LOGGER.info("Skipping gui registration");
+            } else {
+                Constants.LOGGER.info("Skipping gui registration");
+            }
         } catch (IllegalAccessException e) {
             Constants.LOGGER.error("Failed to register configs", e);
         }
     }
+
 
     public static void saveConfig(String configIdentifier) {
         ConfigFileWriter writer = configWriters.get(configIdentifier);

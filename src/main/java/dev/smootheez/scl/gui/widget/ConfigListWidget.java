@@ -2,6 +2,7 @@ package dev.smootheez.scl.gui.widget;
 
 import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.widget.entry.*;
+import net.minecraft.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.*;
@@ -63,14 +64,44 @@ public class ConfigListWidget extends ContainerObjectSelectionList<ConfigWidgetE
 
     private void updateEntries() {
         clearEntries();
+
         List<ConfigOption<?>> configOptions = ConfigRegistry.getConfigOptions(configIdentifier);
         List<ConfigOption<?>> filteredOptions = configOptions.stream()
                 .filter(option -> matchesSearchTerm(option, filter))
                 .toList();
+
+        Map<String, List<ConfigOption<?>>> categorized = new TreeMap<>();
+        List<ConfigOption<?>> rootOptions = new ArrayList<>();
+
         for (ConfigOption<?> option : filteredOptions) {
+            String category = option.getCategory();
+            if (category == null) {
+                rootOptions.add(option);
+            } else {
+                categorized.computeIfAbsent(category, k -> new ArrayList<>()).add(option);
+            }
+        }
+
+        for (ConfigOption<?> option : rootOptions) {
             addEntry(createWidget(option));
         }
+
+        for (Map.Entry<String, List<ConfigOption<?>>> entry : categorized.entrySet()) {
+            String categoryKey = entry.getKey();
+            List<ConfigOption<?>> options = entry.getValue();
+
+            String modId = options.get(0).getConfigIdentifier();
+            Component categoryLabel = Component.translatable("config.option."+ modId +".categories." + categoryKey)
+                    .withStyle(ChatFormatting.BOLD, ChatFormatting.AQUA, ChatFormatting.UNDERLINE);
+
+            addEntry(new CategoryWidgetEntry(categoryLabel));
+
+            for (ConfigOption<?> option : options) {
+                addEntry(createWidget(option));
+            }
+        }
     }
+
 
     private boolean matchesSearchTerm(ConfigOption<?> option, String search) {
         String lowerCaseSearch = search.toLowerCase();
