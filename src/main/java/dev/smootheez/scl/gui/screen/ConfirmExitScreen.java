@@ -1,5 +1,6 @@
 package dev.smootheez.scl.gui.screen;
 
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
@@ -18,15 +19,11 @@ public class ConfirmExitScreen extends Screen {
 
     @Override
     protected void init() {
+        super.init();
+
         var widgetWidth = 150;
         var widgetHeight = 20;
         var widgetPositionX = this.width / 2;
-
-        StringWidget stringWidget = new StringWidget(this.title, this.font);
-        stringWidget.setX(widgetPositionX - stringWidget.getWidth() / 2);
-        stringWidget.setY(this.height / 2 - 20);
-        this.addRenderableWidget(stringWidget);
-
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.save&exit"),
                 btn -> this.onCorfirm.run()).pos(widgetPositionX - widgetWidth - 5, this.height / 2 + 5).size(widgetWidth, widgetHeight).build());
 
@@ -37,5 +34,12 @@ public class ConfirmExitScreen extends Screen {
     @Override
     public void onClose() {
         if (this.minecraft!= null) this.minecraft.setScreen(parent);
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int i, int j, float f) {
+        this.renderBackground(guiGraphics);
+        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, this.height / 2 - 20, 0xFFFFFF);
+        super.render(guiGraphics, i, j, f);
     }
 }

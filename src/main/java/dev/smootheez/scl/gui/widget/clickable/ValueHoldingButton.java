@@ -1,4 +1,4 @@
-package dev.smootheez.scl.gui.widget;
+package dev.smootheez.scl.gui.widget.clickable;
 
 import net.minecraft.client.gui.components.*;
 import net.minecraft.network.chat.*;

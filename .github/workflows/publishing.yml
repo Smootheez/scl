@@ -87,6 +87,5 @@ jobs:
 
           loaders: fabric
           game-versions: |
-            1.21.6
-            1.21.7
+            1.20.1
           java: ${{ steps.properties.outputs.java_version }}

@@ -4,7 +4,6 @@ import dev.smootheez.scl.config.*;
 import dev.smootheez.scl.gui.widget.*;
 import dev.smootheez.scl.gui.widget.entry.*;
 import net.minecraft.client.gui.components.*;
-import net.minecraft.client.gui.layouts.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.*;
 
@@ -25,37 +24,20 @@ public class ConfigScreen extends BaseConfigScreen {
             ConfigRegistry.createSnapshot(this.configIdentifier);
             this.hasSnapshot = true;
         }
-        this.listWidget = this.layout.addToContents(new ConfigListWidget(this.minecraft, this.width, this.height - 64, 32, 24, configIdentifier));
+        this.listWidget = new ConfigListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 24, configIdentifier);
+        this.addRenderableWidget(this.listWidget);
 
-        LinearLayout linearLayout = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
-        this.saveExitButton = linearLayout.addChild(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
+        saveExitButton = this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.save&exit"), btn -> {
             if (this.minecraft != null) {
                 ConfigRegistry.saveConfig(this.configIdentifier);
                 this.minecraft.setScreen(parent);
             }
-        }).size(130, 20).build());
+        }).pos(this.width / 2 - 135, this.height - 25).size(130, 20).build());
 
-        linearLayout.addChild(Button.builder(Component.translatable("config.widget.scl.back"),
-                btn -> onClose()).size(130, 20).build());
+        this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.back"),
+                btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
 
-        LinearLayout headerLinearLayout = this.layout.addToHeader(LinearLayout.horizontal().spacing(8));
-
-        headerLinearLayout.addChild(new StringWidget(this.title, this.font));
-
-        this.searchField = headerLinearLayout.addChild(new EditBox(this.font,100, 20, Component.translatable("config.widget.scl.search")));
-        this.searchField.setMaxLength(50);
-        this.searchField.setResponder(this::handleSearchField);
-        this.setFocused(this.searchField);
-
-        this.layout.visitWidgets(this::addRenderableWidget);
-        this.repositionElements();
-    }
-
-    @Override
-    protected void repositionElements() {
-        this.layout.arrangeElements();
-        if (this.listWidget != null)
-            this.listWidget.updateSize(this.width, this.layout);
+        super.init();
     }
 
     @Override
@@ -93,6 +75,7 @@ public class ConfigScreen extends BaseConfigScreen {
     @Override
     public void tick() {
         super.tick();
+        listWidget.tick();
 
         if (this.saveExitButton != null)
             this.saveExitButton.active = this.listWidget.hasChanged();

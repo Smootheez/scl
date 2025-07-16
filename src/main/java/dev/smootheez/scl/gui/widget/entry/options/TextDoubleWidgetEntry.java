@@ -17,8 +17,8 @@ public class TextDoubleWidgetEntry extends TextWidgetEntry<Double> {
     protected void onTextChange(String value) {
         if (validateDuble(value) && Double.parseDouble(value) >= option.getMinValue() && Double.parseDouble(value) <= option.getMaxValue()) {
             option.setValue(Double.valueOf(value));
-            editBox.setTextColor(-2039584);
-        } else editBox.setTextColor(-65536);
+            editBox.setTextColor(14737632);
+        } else editBox.setTextColor(16736352);
         super.onTextChange(value);
     }
 

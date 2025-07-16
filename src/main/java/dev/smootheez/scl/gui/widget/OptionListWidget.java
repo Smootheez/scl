@@ -14,8 +14,8 @@ public class OptionListWidget extends ContainerObjectSelectionList<ConfigWidgetE
     private final OptionListScreen screen;
     private String filter = "";
 
-    public OptionListWidget(Minecraft minecraft, int i, int j, int k, int l, ConfigOption<OptionList> option, OptionListScreen screen) {
-        super(minecraft, i, j, k, l);
+    public OptionListWidget(Minecraft minecraft, int i, int j, int k, int l, int m, ConfigOption<OptionList> option, OptionListScreen screen) {
+        super(minecraft, i, j, k, l, m);
         this.option = option;
         this.screen = screen;
         updateEntries();

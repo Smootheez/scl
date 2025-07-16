@@ -17,8 +17,8 @@ public class TextIntegerWidgetEntry extends TextWidgetEntry<Integer> {
     protected void onTextChange(String value) {
         if (validateInteger(value) && Integer.parseInt(value) >= option.getMinValue() && Integer.parseInt(value) <= option.getMaxValue()) {
             option.setValue(Integer.valueOf(value));
-            editBox.setTextColor(-2039584);
-        } else editBox.setTextColor(-65536);
+            editBox.setTextColor(14737632);
+        } else editBox.setTextColor(16736352);
         super.onTextChange(value);
     }
 

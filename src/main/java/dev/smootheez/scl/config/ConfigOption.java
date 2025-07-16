@@ -3,7 +3,7 @@ package dev.smootheez.scl.config;
 import dev.smootheez.scl.*;
 import dev.smootheez.scl.config.serializer.*;
 import dev.smootheez.scl.config.serializer.options.*;
-import dev.smootheez.scl.gui.widget.*;
+import dev.smootheez.scl.gui.widget.clickable.*;
 import dev.smootheez.scl.gui.widget.handler.*;
 
 import java.util.*;
@@ -19,6 +19,7 @@ public class ConfigOption<T> {
     private final ConfigSerializer<T> serializer;
     private WidgetHandler<T> widgetHandler;
     private String configIdentifier;
+    private String category;
 
     protected ConfigOption(String key, T defaultValue, Class<T> type, ConfigSerializer<T> serializer, WidgetHandler<T> widgetHandler) {
         this.key = key;
@@ -72,6 +73,14 @@ public class ConfigOption<T> {
 
     public String getTranslation() {
         return "config.option." + getConfigIdentifier() + "." + key;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Class<T> getType() {

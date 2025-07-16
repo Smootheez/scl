@@ -14,4 +14,13 @@ public @interface Config {
     * Note: Make sure the config name is the same as the mod id
     */
     boolean gui() default false;
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.FIELD)
+    @interface Category {
+        /**
+        * The name of the category
+        */
+        String value();
+    }
 }
