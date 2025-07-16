@@ -35,8 +35,15 @@ public class ConfigRegistry {
                 field.setAccessible(true);
                 ConfigOption<?> option = (ConfigOption<?>) field.get(configClass);
                 option.setConfigIdentifier(configIdentifier);
+
+                Config.Category categoryAnnotation = field.getAnnotation(Config.Category.class);
+                if (categoryAnnotation != null) {
+                    option.setCategory(categoryAnnotation.value());
+                }
+
                 options.add(option);
             }
+
             configOptions.put(configIdentifier, options);
             ConfigFileWriter configFileWriter = new ConfigFileWriter(configIdentifier);
             configWriters.put(configIdentifier, configFileWriter);

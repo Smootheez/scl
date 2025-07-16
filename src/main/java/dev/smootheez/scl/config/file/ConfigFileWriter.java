@@ -11,22 +11,40 @@ import java.util.*;
 public class ConfigFileWriter {
     private final Gson gson;
     private final File configFile;
-    private final Map<String, ConfigOptionAdapter<?>> options;
+    private final Map<String, Map<String, ConfigOptionAdapter<?>>> categorizedOptions = new TreeMap<>();
+    private final Map<String, ConfigOptionAdapter<?>> rootOptions = new TreeMap<>();
+
 
     public ConfigFileWriter(String configIdentifier) {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
-        this.options = new TreeMap<>();
         this.configFile = FabricLoader.getInstance().getConfigDir().resolve(configIdentifier + ".json").toFile();
 
         Set<String> usedKeys = new HashSet<>();
         List<ConfigOption<?>> configOptions = ConfigRegistry.getConfigOptions(configIdentifier);
         for (ConfigOption<?> option : configOptions) {
             String key = option.getKey();
-            if (usedKeys.contains(key))
+            String category = option.getCategory();
+
+            if (usedKeys.contains(key)) {
                 Constants.LOGGER.warn("Config key {} is already used", key);
+                continue;
+            }
+
+            if (key.equals(category))
+                throw new IllegalArgumentException("Config key '" + key + "' cannot be the same as its category.");
+
             usedKeys.add(key);
-            options.put(key, createAdapter(option));
+            ConfigOptionAdapter<?> adapter = createAdapter(option);
+
+            if (category == null) {
+                rootOptions.put(key, adapter);
+            } else {
+                categorizedOptions
+                        .computeIfAbsent(category, k -> new TreeMap<>())
+                        .put(key, adapter);
+            }
         }
+
     }
 
     public void loadConfig() {
@@ -53,16 +71,34 @@ public class ConfigFileWriter {
     }
 
     private void fromJson(JsonObject jsonObject) {
-        options.forEach((key, adapter) -> {
+        rootOptions.forEach((key, adapter) -> {
             if (jsonObject.has(key)) adapter.fromJson(jsonObject.get(key));
+        });
+
+        categorizedOptions.forEach((category, map) -> {
+            if (!jsonObject.has(category)) return;
+            JsonObject categoryJson = jsonObject.getAsJsonObject(category);
+            map.forEach((key, adapter) -> {
+                if (categoryJson.has(key)) adapter.fromJson(categoryJson.get(key));
+            });
         });
     }
 
+
     private JsonObject toJson() {
-        JsonObject jsonObject = new JsonObject();
-        options.forEach((key, adapter) -> jsonObject.add(key, adapter.toJson()));
-        return jsonObject;
+        JsonObject root = new JsonObject();
+
+        rootOptions.forEach((key, adapter) -> root.add(key, adapter.toJson()));
+
+        for (Map.Entry<String, Map<String, ConfigOptionAdapter<?>>> entry : categorizedOptions.entrySet()) {
+            JsonObject categoryObject = new JsonObject();
+            entry.getValue().forEach((key, adapter) -> categoryObject.add(key, adapter.toJson()));
+            root.add(entry.getKey(), categoryObject);
+        }
+
+        return root;
     }
+
 
     private <T> ConfigOptionAdapter<T> createAdapter(ConfigOption<T> option) {
         return new ConfigOptionAdapter<>(option);
