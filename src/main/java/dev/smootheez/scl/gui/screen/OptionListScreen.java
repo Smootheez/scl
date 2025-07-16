@@ -34,6 +34,8 @@ public class OptionListScreen extends BaseConfigScreen{
                 .build());
         this.addRenderableWidget(Button.builder(Component.translatable("config.widget.scl.back"),
                 btn -> onClose()).pos(this.width / 2 + 5, this.height - 25).size(130, 20).build());
+
+        super.init();
     }
 
     @Override

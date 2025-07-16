@@ -16,7 +16,6 @@ public abstract class BaseConfigScreen extends Screen {
 
     @Override
     protected void init() {
-        super.init();
         StringWidget titleWidget = new StringWidget(this.title, this.font);
         titleWidget.setX(this.width / 2 - titleWidget.getWidth() - 10);
         titleWidget.setY(10);
